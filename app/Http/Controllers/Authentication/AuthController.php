@@ -12,15 +12,16 @@ class AuthController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function login()
     {
-        return Inertia::render("Auth/Login");
+        // return Inertia::render("Auth/Login");
+        dd('ini login');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function authenticate(Request $request)
     {
         $credentials = $request->validate([
             'username' => ['required'],
@@ -41,23 +42,13 @@ class AuthController extends Controller
         }
     }
 
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+    public function register(){
+        dd('ini register');
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function registering(){
+        
     }
-
+    
     /**
      * Remove the specified resource from storage.
      */
