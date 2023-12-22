@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Turn as Hamburger } from "hamburger-react";
 import NavbarHamburger from "@/Components/Fragments/NavbarHamburger";
 import Navbar from "@/Components/Fragments/Navbar";
-import { Head } from "@inertiajs/react";
+import { Head, router } from "@inertiajs/react";
 import LogoSMK from "../../asset/logo-smkn7-smg.png";
 import LogoProfile from "../../asset/profile-image.png";
 import HomeIllustrator from "../../asset/image-welcome.png";
@@ -18,17 +18,46 @@ import {
     Text,
     Center,
     Divider,
-    useDisclosure
+    useDisclosure,
+    Button,
+    Flex,
+    useColorModeValue,
+    Image,
+    AlertDialog,
+    AlertDialogOverlay,
+    AlertDialogContent,
+    AlertDialogHeader,
+    AlertDialogFooter,
+    AlertDialogBody,
 } from "@chakra-ui/react";
 
 const HomePage = () => {
     const [Open, setOpen] = useState(false);
+    const cancelRef = useRef();
 
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    const {
+        isOpen: isModalOpen,
+        onOpen: onModalOpen,
+        onClose: onModalClose,
+    } = useDisclosure();
+
+    const {
+        isOpen: isAlertDialogOpen,
+        onOpen: onAlertDialogOpen,
+        onClose: onAlertDialogClose,
+    } = useDisclosure();
 
     const toggle = () => {
         setOpen(!Open);
     };
+
+    const onLogOut = () => {
+        router.visit("/");
+    };
+
+    let boxBg = useColorModeValue("white !important", "#111c44 !important");
+    let mainText = useColorModeValue("gray.800", "white");
+    let secondaryText = useColorModeValue("gray.400", "gray.400");
     return (
         <>
             <Head title="Home" />
@@ -64,20 +93,148 @@ const HomePage = () => {
                             <Avatar
                                 name="Admin"
                                 src={LogoProfile}
-                                onClick={onOpen}
+                                onClick={onModalOpen}
                                 cursor="pointer"
                             />
                         </Stack>
-                        <Modal isOpen={isOpen} onClose={onClose}>
+                        <Modal isOpen={isModalOpen} onClose={onModalClose}>
                             <ModalOverlay />
                             <ModalContent>
                                 <ModalHeader>Profile</ModalHeader>
                                 <ModalCloseButton />
                                 <ModalBody>
-                                    <Stack align="center">
-                                      <Avatar name="Admin" src={LogoProfile} />
-                                      <Text fontSize="large" fontWeight="bold">Admin</Text>
-                                      <Text fontSize="medium" fontWeight="bold">XII SIJA 2</Text>
+                                    <Stack align="center" paddingBottom="20px">
+                                        <Flex
+                                            borderRadius="lg"
+                                            borderWidth="2px"
+                                            bg={boxBg}
+                                            p="20px"
+                                            h="400px"
+                                            w={{ base: "315px", md: "345px" }}
+                                            alignItems="center"
+                                            direction="column"
+                                        >
+                                            <Flex
+                                                flexDirection="column"
+                                                mb="30px"
+                                            >
+                                                <Image
+                                                    src={LogoProfile}
+                                                    border="5px solid red"
+                                                    mx="auto"
+                                                    borderColor={boxBg}
+                                                    width="68px"
+                                                    height="68px"
+                                                    borderRadius="50%"
+                                                />
+                                                <Text
+                                                    fontWeight="600"
+                                                    color={mainText}
+                                                    textAlign="center"
+                                                    fontSize="xl"
+                                                >
+                                                    Admin
+                                                </Text>
+                                                <Text
+                                                    color={secondaryText}
+                                                    textAlign="center"
+                                                    fontSize="sm"
+                                                    fontWeight="500"
+                                                >
+                                                    XIII SIJA 2
+                                                </Text>
+                                            </Flex>
+                                            <Flex
+                                                paddingBottom="20px"
+                                                justify="center"
+                                                gap="30px"
+                                                w="100%"
+                                                px="36px"
+                                            >
+                                                <Flex flexDirection="column">
+                                                    <Text
+                                                        fontWeight="600"
+                                                        color={mainText}
+                                                        fontSize="xl"
+                                                        textAlign="center"
+                                                    >
+                                                        0
+                                                    </Text>
+                                                    <Text
+                                                        color={secondaryText}
+                                                        fontWeight="500"
+                                                    >
+                                                        Peminjaman
+                                                    </Text>
+                                                </Flex>
+                                                <Flex flexDirection="column">
+                                                    <Text
+                                                        fontWeight="600"
+                                                        color={mainText}
+                                                        fontSize="xl"
+                                                        textAlign="center"
+                                                    >
+                                                        0
+                                                    </Text>
+                                                    <Text
+                                                        color={secondaryText}
+                                                        fontWeight="500"
+                                                    >
+                                                        Pengembalian
+                                                    </Text>
+                                                </Flex>
+                                            </Flex>
+                                            <Button
+                                                onClick={onAlertDialogOpen}
+                                                p="2"
+                                                borderWidth="1px"
+                                                borderRadius="lg"
+                                                w="100%"
+                                                textAlign="center"
+                                            >
+                                                Log Out
+                                            </Button>
+                                            <AlertDialog
+                                                isOpen={isAlertDialogOpen}
+                                                leastDestructiveRef={cancelRef}
+                                                onClose={onAlertDialogClose}
+                                            >
+                                                <AlertDialogOverlay>
+                                                    <AlertDialogContent>
+                                                        <AlertDialogHeader
+                                                            fontSize="lg"
+                                                            fontWeight="bold"
+                                                        >
+                                                            Log Out
+                                                        </AlertDialogHeader>
+
+                                                        <AlertDialogBody>
+                                                            You want to Log Out?
+                                                        </AlertDialogBody>
+
+                                                        <AlertDialogFooter>
+                                                            <Button
+                                                                ref={cancelRef}
+                                                                onClick={
+                                                                    onAlertDialogClose
+                                                                }
+                                                            >
+                                                                Cancel
+                                                            </Button>
+                                                            <Button
+                                                                colorScheme="red"
+                                                                onClick={
+                                                                    onLogOut
+                                                                }
+                                                                ml={3}
+                                                            >
+                                                                Log Out
+                                                            </Button>
+                                                        </AlertDialogFooter>
+                                                    </AlertDialogContent>
+                                                </AlertDialogOverlay>
+                                            </AlertDialog>
+                                        </Flex>
                                     </Stack>
                                 </ModalBody>
                             </ModalContent>

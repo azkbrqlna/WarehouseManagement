@@ -14,7 +14,7 @@ class AuthController extends Controller
      */
     public function login()
     {
-        return Inertia::render("FirstPage");
+        return Inertia::render("Index");
     }
 
     /**

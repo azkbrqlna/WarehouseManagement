@@ -24,8 +24,10 @@
         "@chakra-ui/react": "^2.8.2",
         "@emotion/react": "^11.11.1",
         "@emotion/styled": "^11.11.0",
+        "@inertiajs/inertia": "^0.11.1",
         "framer-motion": "^10.16.16",
         "hamburger-react": "^2.5.0",
+        "react-router-dom": "^6.21.1",
         "react-wavify": "^1.9.0"
     }
 }

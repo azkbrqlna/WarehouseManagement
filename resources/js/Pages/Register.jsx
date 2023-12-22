@@ -6,7 +6,7 @@ import { ArrowForwardIcon } from "@chakra-ui/icons";
 const Register = () => {
     return (
         <>
-            <Head title="Homepage" />
+            <Head title="Register" />
             <div className="bg-zinc-800 font-fira text-slate-50">
                 <div className="w-full h-screen flex justify-center items-center px-10">
                     <div className="h-2/3">
@@ -62,7 +62,7 @@ const Register = () => {
                                     type="submit"
                                     className="w-full my-4 bg-gradient-to-r from-transparent border-zinc-400 text-white uppercase px-8 py-2 rounded-md transition-all duration-200 ease-out font-semibold cursor-pointer border-2 tracking-wide shadow-md hover:from-zinc-700 hover:to-zinc-300 hover:bg-gradient-to-l hover:border-zinc-800 hover:text-zinc-800 z-10 relative"
                                 >
-                                    LOGIN
+                                    REGISTER
                                 </button>
                                 <p className="text-center text-base">
                                     Already have an account? <Link href="/" className="font-bold underline hover:text-zinc-400 relative z-10">Sign In</Link>
