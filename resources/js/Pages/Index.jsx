@@ -1,9 +1,48 @@
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import Wave from "react-wavify";
-import InputForm from "@/Components/Form/InputForm";
-import { ArrowForwardIcon } from "@chakra-ui/icons";
+import {
+    FormControl,
+    FormLabel,
+    FormErrorMessage,
+    Input,
+    VStack,
+    Button,
+} from "@chakra-ui/react";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 const FirstPage = () => {
+    const formik = useFormik({
+        initialValues: {
+            username: "",
+            nis: "",
+            password: "",
+        },
+        onSubmit: (values) => {
+            console.log(values);
+            router.visit("/home");
+            // const { username, nis, password } = formik.values;
+
+            // router.post("/", {
+            //     username,
+            //     nis,
+            //     password,
+            // });
+
+            // formik.setFieldValue("username", "");
+            // formik.setFieldValue("nis", "");
+            // formik.setFieldValue("password", "");
+        },
+        validationSchema: yup.object().shape({
+            username: yup.string().required("Username is required"),
+            nis: yup.string().required("NIS is required").min(10).max(10),
+            password: yup.string().required("Password is required"),
+        })
+    });
+
+    const handleFormInput = (event) => {
+        formik.setFieldValue(event.target.name, event.target.value);
+    };
     return (
         <>
             <Head title="Login" />
@@ -17,39 +56,51 @@ const FirstPage = () => {
                             <p className="font-light text-lg 2xl:mb-10">
                                 Enter your Name, NIS and Password to Login.
                             </p>
-                            <form>
-                                <InputForm
-                                    htmlFor="fullname"
-                                    name="fullname"
-                                    type="text"
-                                    placeholder="Masukan Nama Panjang"
-                                >
-                                    Fullname
-                                </InputForm>
-                                <InputForm
-                                    htmlFor="nis"
-                                    name="nis"
-                                    type="text"
-                                    placeholder="Masukan NIS"
-                                >
-                                    NIS
-                                </InputForm>
-                                <InputForm
-                                    htmlFor="password"
-                                    name="password"
-                                    type="password"
-                                    placeholder="*****"
-                                >
-                                    Password
-                                </InputForm>
-                                <button
-                                    type="submit"
-                                    className="w-full my-4 bg-gradient-to-r from-transparent border-zinc-400 text-white uppercase px-8 py-2 rounded-md transition-all duration-200 ease-out font-semibold cursor-pointer border-2 tracking-wide shadow-md hover:from-zinc-700 hover:to-zinc-300 hover:bg-gradient-to-l hover:border-zinc-800 hover:text-zinc-800 z-10 relative"
-                                >
-                                    LOGIN
-                                </button>
-                                <p className="text-center text-base">
-                                    Don't have an account? <Link href="/register" className="font-bold underline hover:text-zinc-400 relative z-10">Sign Up</Link>
+                            <form onSubmit={formik.handleSubmit}>
+                                <VStack spacing={3}>
+                                    <FormControl isInvalid={formik.errors.username}>
+                                        <FormLabel>Username</FormLabel>
+                                        <Input
+                                            onChange={handleFormInput}
+                                            value={formik.values.username}
+                                            name="username"
+                                            placeholder="Masukan Username"
+                                        />
+                                        <FormErrorMessage>{formik.errors.username}</FormErrorMessage>
+                                    </FormControl>
+
+                                    <FormControl isInvalid={formik.errors.nis}>
+                                        <FormLabel>NIS</FormLabel>
+                                        <Input
+                                            onChange={handleFormInput}
+                                            value={formik.values.nis}
+                                            name="nis"
+                                            placeholder="Masukan NIS"
+                                        />
+                                        <FormErrorMessage>{formik.errors.nis}</FormErrorMessage>
+                                    </FormControl>
+
+                                    <FormControl isInvalid={formik.errors.password}>
+                                        <FormLabel>Password</FormLabel>
+                                        <Input
+                                            onChange={handleFormInput}
+                                            value={formik.values.password}
+                                            name="password"
+                                            type="password"
+                                            placeholder="*****"
+                                        />
+                                        <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
+                                    </FormControl>
+                                    <Button type="submit" colorScheme="gray" w="full">Login</Button>
+                                </VStack>
+                                <p className="text-center text-base mt-5">
+                                    Don't have an account?{" "}
+                                    <Link
+                                        href="/register"
+                                        className="font-bold underline hover:text-zinc-400 relative z-10"
+                                    >
+                                        Sign Up
+                                    </Link>
                                 </p>
                             </form>
                         </div>
