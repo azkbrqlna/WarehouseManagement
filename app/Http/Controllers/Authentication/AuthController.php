@@ -9,18 +9,15 @@ use Inertia\Inertia;
 
 class AuthController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    //untuk tampilan login
     public function login()
     {
         // return Inertia::render("Auth/Login");
         dd('ini login');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    //untuk validasi saat login
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
@@ -38,21 +35,25 @@ class AuthController extends Controller
             if (Auth::user()->role_id == 2) {
                 return redirect('/home');
             }
-            
+
         }
     }
 
-    public function register(){
+    //untuk tampilan register
+    public function register()
+    {
         dd('ini register');
     }
-    public function registering(){
-        
+
+    //untuk validasi register
+    public function registering()
+    {
+
     }
-    
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+
+
+    //untuk logout
+    public function logout(string $id)
     {
         //
     }
