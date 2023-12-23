@@ -23,14 +23,12 @@ const Register = () => {
         onSubmit: () => {
             const { username, nis, kelas, password } = formik.values;
             
-            router.post("/", {
+            router.post("/register", {
                 username,
                 nis,
                 kelas,
                 password,
             });
-            router.visit("/");
-            console.log(username, nis, kelas, password)
 
             formik.setFieldValue("username", "");
             formik.setFieldValue("nis", "");
