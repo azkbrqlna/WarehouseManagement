@@ -16,33 +16,32 @@ const Register = () => {
         initialValues: {
             username: "",
             nis: "",
-            class: "",
+            kelas: "",
             password: "",
             confirmpassword: ""
         },
-        onSubmit: (values) => {
-            console.log(values);
-            router.visit("/home");
-            // const { username, nis, password } = formik.values;
+        onSubmit: () => {
+            const { username, nis, kelas, password } = formik.values;
+            
+            router.post("/", {
+                username,
+                nis,
+                kelas,
+                password,
+            });
+            router.visit("/");
+            console.log(username, nis, kelas, password)
 
-            // router.post("/", {
-            //     username,
-            //     nis,
-            //     class,
-            //     password,
-            //     confirmpassword
-            // });
-
-            // formik.setFieldValue("username", "");
-            // formik.setFieldValue("nis", "");
-            // formik.setFieldValue("class", "");
-            // formik.setFieldValue("password", "");
-            // formik.setFieldValue("confirmpassword", "");
+            formik.setFieldValue("username", "");
+            formik.setFieldValue("nis", "");
+            formik.setFieldValue("kelas", "");
+            formik.setFieldValue("password", "");
+            formik.setFieldValue("confirmpassword", "");
         },
         validationSchema: yup.object().shape({
             username: yup.string().required("Username is required"),
             nis: yup.string().required("NIS is required").min(10).max(10),
-            class: yup.string().required("Class is required"),
+            kelas: yup.string().required("Class is required"),
             password: yup.string().required("Password is required"),
             confirmpassword: yup.string().oneOf([yup.ref("password"), null], "Passwords must match")
         })
@@ -85,14 +84,14 @@ const Register = () => {
                                         />
                                         <FormErrorMessage>{formik.errors.nis}</FormErrorMessage>
                                     </FormControl>
-                                    <FormControl isInvalid={formik.errors.class}>
+                                    <FormControl isInvalid={formik.errors.kelas}>
                                         <Input
                                             onChange={handleFormInput}
-                                            value={formik.values.class}
-                                            name="class"
+                                            value={formik.values.kelas}
+                                            name="kelas"
                                             placeholder="Kelas"
                                         />
-                                        <FormErrorMessage>{formik.errors.class}</FormErrorMessage>
+                                        <FormErrorMessage>{formik.errors.kelas}</FormErrorMessage>
                                     </FormControl>
 
                                     <FormControl isInvalid={formik.errors.password}>
@@ -107,8 +106,6 @@ const Register = () => {
                                     </FormControl>
                                     <FormControl isInvalid={formik.errors.confirmpassword}>
                                         <Input
-                                            onChange={handleFormInput}
-                                            value={formik.values.confirmpassword}
                                             name="confirmpassword"
                                             type="password"
                                             placeholder="Confirm Password"

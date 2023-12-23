@@ -36,7 +36,7 @@ const HomePage = () => {
     };
 
     const onLogOut = () => {
-        router.visit("/");
+        router.visit("/logout");
     };
 
     return (

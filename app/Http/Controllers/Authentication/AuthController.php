@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Authentication;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -43,15 +44,26 @@ class AuthController extends Controller
     }
 
     //untuk validasi register
-    public function registering()
+    public function signup(Request $request)
     {
+        $validated = $request->validate([
+            'username' => 'required|max:255',
+            'password' => 'required|max:255',
+            'class' => 'required',
+            'nis' => 'required',
+        ]);
 
+        $user = User::create($request->all());
+        return redirect('/');
     }
 
 
     //untuk logout
-    public function logout(string $id)
+    public function logout(Request $request)
     {
-        //
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/');
     }
 }

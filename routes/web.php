@@ -17,12 +17,20 @@ use Inertia\Inertia;
 |
 */
 
-Route::get("/dashboard",[DashboardController::class, "index"]);
-Route::get("/home",[HomeController::class,"index"]);
-Route::get('/', [AuthController::class,'login'])->name('login');
-Route::post('/', [AuthController::class,'authenticate']);
-Route::get('/register',[AuthController::class ,'register'] );
-Route::post('/register',[AuthController::class ,'registering'] );
+Route::middleware(['guest'])->group(function () {
+    Route::get('/', [AuthController::class,'login'])->name('login');
+    Route::post('/', [AuthController::class,'authenticate']);   
+    Route::get('/register',[AuthController::class ,'register'] );
+    Route::post('/register',[AuthController::class ,'signup'] );
+});
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get("/dashboard",[DashboardController::class, "index"])->middleware('only_admin');
+    Route::get("/home",[HomeController::class,"index"]);
+    Route::get('/logout',[AuthController::class ,'logout'] );
+    
+});
 
 // Route::middleware('auth')->group(function () {
 //     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

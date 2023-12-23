@@ -19,19 +19,18 @@ const FirstPage = () => {
             password: "",
         },
         onSubmit: (values) => {
-            console.log(values);
-            router.visit("/home");
-            // const { username, nis, password } = formik.values;
+            // router.visit("/home");
+            const { username, nis, password } = formik.values;
 
-            // router.post("/", {
-            //     username,
-            //     nis,
-            //     password,
-            // });
+            router.post("/", {
+                username,
+                nis,
+                password,
+            });
 
-            // formik.setFieldValue("username", "");
-            // formik.setFieldValue("nis", "");
-            // formik.setFieldValue("password", "");
+            formik.setFieldValue("username", "");
+            formik.setFieldValue("nis", "");
+            formik.setFieldValue("password", "");
         },
         validationSchema: yup.object().shape({
             username: yup.string().required("Username is required"),
