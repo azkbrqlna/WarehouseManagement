@@ -49,11 +49,12 @@ class AuthController extends Controller
         $validated = $request->validate([
             'username' => 'required|max:255',
             'password' => 'required|max:255',
-            'class' => 'required',
+            'kelas' => 'required',
             'nis' => 'required',
         ]);
 
-        $user = User::create($request->all());
+        User::create($request->all());
+        
         return redirect('/');
     }
 
