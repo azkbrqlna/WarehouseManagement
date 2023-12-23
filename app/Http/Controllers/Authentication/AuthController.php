@@ -14,8 +14,7 @@ class AuthController extends Controller
      */
     public function login()
     {
-        // return Inertia::render("Auth/Login");
-        dd('ini login');
+        return Inertia::render("Index");
     }
 
     /**
@@ -43,7 +42,7 @@ class AuthController extends Controller
     }
 
     public function register(){
-        dd('ini register');
+        return Inertia::render("Register");
     }
     public function registering(){
         
