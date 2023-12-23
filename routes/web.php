@@ -3,8 +3,6 @@
 use App\Http\Controllers\Authentication\AuthController;
 use App\Http\Controllers\Authentication\DashboardController;
 use App\Http\Controllers\Authentication\HomeController;
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -19,23 +17,10 @@ use Inertia\Inertia;
 |
 */
 
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
-
-// Route::get('/dashboard', function () {
-//     return Inertia::render('Dashboard');
-// })->middleware(['auth']);
-
 Route::get("/dashboard",[DashboardController::class, "index"]);
 Route::get("/home",[HomeController::class,"index"]);
-Route::get('/login', [AuthController::class,'login'])->name('login');
-Route::post('/login', [AuthController::class,'authenticate']);
+Route::get('/', [AuthController::class,'login'])->name('login');
+Route::post('/', [AuthController::class,'authenticate']);
 Route::get('/register',[AuthController::class ,'register'] );
 Route::post('/register',[AuthController::class ,'registering'] );
 

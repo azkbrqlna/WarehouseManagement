@@ -9,6 +9,6 @@ use Inertia\Inertia;
 class HomeController extends Controller
 {
     public function index(){
-        dd("ini home");
+        return Inertia::render("Home");
     }
 }

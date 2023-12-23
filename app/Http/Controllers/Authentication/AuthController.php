@@ -13,8 +13,7 @@ class AuthController extends Controller
     //untuk tampilan login
     public function login()
     {
-        // return Inertia::render("Auth/Login");
-        dd('ini login');
+        return Inertia::render("Index");
     }
 
     //untuk validasi saat login
@@ -39,10 +38,8 @@ class AuthController extends Controller
         }
     }
 
-    //untuk tampilan register
-    public function register()
-    {
-        dd('ini register');
+    public function register(){
+        return Inertia::render("Register");
     }
 
     //untuk validasi register
