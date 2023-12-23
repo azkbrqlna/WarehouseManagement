@@ -47,13 +47,13 @@ const FirstPage = () => {
         <>
             <Head title="Login" />
             <div className="bg-zinc-800 font-fira text-slate-50">
-                <div className="w-full h-screen flex justify-center items-center px-10">
+                <div className="w-full h-screen flex justify-center 2xl:items-center pt-10 2xl:pt-0 px-10">
                     <div className="h-2/3">
                         <div className="w-full">
                             <h1 className="font-bold text-4xl 2xl:text-6xl mb-2">
                                 Here you can Login
                             </h1>
-                            <p className="font-light text-lg 2xl:mb-10">
+                            <p className="font-light text-lg mb-5 2xl:mb-10">
                                 Enter your Name, NIS and Password to Login.
                             </p>
                             <form onSubmit={formik.handleSubmit}>
