@@ -47,10 +47,10 @@ class AuthController extends Controller
     public function signup(Request $request)
     {
         $validated = $request->validate([
-            'username' => 'required|max:255',
-            'password' => 'required|max:255',
-            'kelas' => 'required',
-            'nis' => 'required',
+            'username' => 'required|string',
+            'password' => 'required|string',
+            'kelas' => 'required|string',
+            'nis' => 'required|numeric|digits_between:9,10',
         ]);
 
         User::create($request->all());
