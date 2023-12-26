@@ -1,13 +1,13 @@
-import List from "../List/List";
+import List from "../ListNavbar/List";
 
 const Navbar = () => {
     return (
       <>
         <ul className="flex gap-4">
-          <List href="#">Home</List>
+          <List href="/home">Home</List>
           <List href="#">Peminjaman</List>
           <List href="#">Pengembalian</List>
-          <List href="#">About</List>
+          <List href="#visimisi">About</List>
         </ul>
       </>
     );

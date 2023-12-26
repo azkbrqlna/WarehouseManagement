@@ -2,7 +2,6 @@ import { Head, Link, router } from "@inertiajs/react";
 import Wave from "react-wavify";
 import {
     FormControl,
-    FormLabel,
     FormErrorMessage,
     Input,
     VStack,
