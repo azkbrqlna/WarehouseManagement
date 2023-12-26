@@ -13,7 +13,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        dd("ini dashboard");
+        return Inertia::render("Dashboard");
     }
 
     /**
