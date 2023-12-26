@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Authentication\AuthController;
 use App\Http\Controllers\Authentication\DashboardController;
-use App\Http\Controllers\Authentication\HomeController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\PengembalianController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -29,7 +31,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/dashboard",[DashboardController::class, "index"])->middleware('only_admin');
     Route::get("/home",[HomeController::class,"index"]);
     Route::get('/logout',[AuthController::class ,'logout'] );
-    
+    Route::get('/peminjaman',[PeminjamanController::class,'index'] );
+    Route::get('/pengembalian',[PengembalianController::class,'index'] );
 });
 
 // Route::middleware('auth')->group(function () {

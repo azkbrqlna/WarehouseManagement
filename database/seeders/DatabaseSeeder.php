@@ -22,5 +22,9 @@ class DatabaseSeeder extends Seeder
                 'password' => 'ap4_c0n4',
                 'role_id' => 1,
         ]);
+
+        $this->call([
+            RoleSeeder::class,
+        ]);
     }
 }
