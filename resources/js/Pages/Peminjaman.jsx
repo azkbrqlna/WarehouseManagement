@@ -4,11 +4,21 @@ import {
     InputLeftAddon,
     Input,
     InputGroup,
+    FormControl,
+    Box,
+    Text,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import CardProduct from "@/Components/Fragments/CardProduct";
+import { useState } from "react";
 
 const Peminjaman = () => {
+    const [value, setValue] = useState("");
+    const [isActive, setIsActive] = useState(false);
+    function handleChange(e) {
+        const text = e.target.value;
+        setValue(text);
+    }
     return (
         <>
             <Head title="Peminjaman" />
@@ -22,18 +32,17 @@ const Peminjaman = () => {
                             <InputLeftAddon>
                                 <SearchIcon />
                             </InputLeftAddon>
-                            <Input textColor="white" placeholder="Cari barang" />
+                            <Input
+                                textColor="white"
+                                placeholder="Cari barang"
+                            />
                         </InputGroup>
                     </div>
                 </section>
                 <section className="flex justify-center gap-5 mt-10">
                     <CardProduct>
                         <CardProduct.Image image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFp-aBNfpgaNhFQlSHpGHEUAfm6VrV3uyNtA&usqp=CAU" />
-                        <CardProduct.Content
-                            barang="Bola"
-                            time="16.00 - 18.00"
-                            status="Tersedia"
-                        />
+                        <CardProduct.Content barang="Bola" status="Tersedia" />
                     </CardProduct>
                 </section>
             </div>
