@@ -1,16 +1,16 @@
 import List from "../ListNavbar/List";
 
-const Navbar = () => {
+const NavbarGeneral = () => {
     return (
       <>
         <ul className="flex gap-4">
           <List href="/home">Home</List>
-          <List href="#">Peminjaman</List>
-          <List href="#">Pengembalian</List>
+          <List href="/peminjaman">Peminjaman</List>
+          <List href="/pengembalian">Pengembalian</List>
           <List href="#visimisi">About</List>
         </ul>
       </>
     );
   };
   
-  export default Navbar;
+  export default NavbarGeneral;
