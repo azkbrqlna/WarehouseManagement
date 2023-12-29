@@ -34,11 +34,9 @@ class AuthController extends Controller
             }
             if (Auth::user()->role_id == 2) {
                 return redirect('/home');
-            }
-
-            return back()->with('error','Login gagal pastikan mengisi credential dengan benar');
-
+            } 
         }
+        return back()->with('error','Login gagal pastikan mengisi credential dengan benar');
     }
 
     public function register(){
