@@ -47,4 +47,8 @@ class User extends Authenticatable
     protected $attributes =[
         'role_id'=> 2,
     ];
+
+    public function roles(){
+        return $this->hasMany(Role::class);
+    }
 }

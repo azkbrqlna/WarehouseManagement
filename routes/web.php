@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\Authentication\AuthController;
-use App\Http\Controllers\Authentication\DashboardController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PengembalianController;
@@ -17,22 +18,25 @@ use Inertia\Inertia;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
-
-Route::middleware(['guest'])->group(function () {
-    Route::get('/', [AuthController::class,'login'])->name('login');
-    Route::post('/', [AuthController::class,'authenticate']);   
-    Route::get('/register',[AuthController::class ,'register'] );
-    Route::post('/register',[AuthController::class ,'signup'] );
-});
-
-
+*/  
 Route::middleware(['auth'])->group(function () {
     Route::get("/dashboard",[DashboardController::class, "index"])->middleware('only_admin');
     Route::get("/home",[HomeController::class,"index"])->middleware('only_user');
-    Route::get('/logout',[AuthController::class ,'logout'] );
     Route::get('/peminjaman',[PeminjamanController::class,'index'] );
     Route::get('/pengembalian',[PengembalianController::class,'index'] );
+});
+
+Route::controller(AuthController::class)->middleware('guest')->group(function () {
+    Route::get('/','login')->name('login');
+    Route::post('/','authenticate');
+    Route::get('/register','register')->name('register');
+    Route::post('/register','signup');
+    Route::get('/logout' ,'logout' )->withoutMiddleware('guest')->middleware('auth');
+});
+
+Route::controller(UserController::class)->middleware('auth')->group(function () {
+    Route::get('/users','index');
+    Route::delete('/users','destroy');
 });
 
 // Route::middleware('auth')->group(function () {
