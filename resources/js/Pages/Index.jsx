@@ -1,4 +1,4 @@
-import { Head, Link, router } from "@inertiajs/react";
+import { Head, Link, router, usePage } from "@inertiajs/react";
 import Wave from "react-wavify";
 import {
     FormControl,
@@ -10,16 +10,19 @@ import {
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import Alert from "@/Components/Fragments/Alert";
 
 const FirstPage = () => {
+    const { flash } = usePage().props;
+    console.log(flash.error);
+
     const formik = useFormik({
         initialValues: {
             username: "",
             nis: "",
             password: "",
         },
-        onSubmit: (values) => {
-            // router.visit("/home");
+        onSubmit: () => {
             const { username, nis, password } = formik.values;
 
             router.post("/", {
@@ -27,21 +30,18 @@ const FirstPage = () => {
                 nis,
                 password,
             });
-
-            formik.setFieldValue("username", "");
-            formik.setFieldValue("nis", "");
-            formik.setFieldValue("password", "");
         },
         validationSchema: yup.object().shape({
             username: yup.string().required("Username is required"),
             nis: yup.string().required("NIS is required").min(10).max(10),
             password: yup.string().required("Password is required"),
-        })
+        }),
     });
 
     const handleFormInput = (event) => {
         formik.setFieldValue(event.target.name, event.target.value);
     };
+
     return (
         <>
             <Head title="Login" />
@@ -57,7 +57,12 @@ const FirstPage = () => {
                             </p>
                             <form onSubmit={formik.handleSubmit}>
                                 <VStack spacing={3}>
-                                    <FormControl isInvalid={formik.errors.username}>
+                                    <FormControl
+                                        isInvalid={
+                                            formik.errors.username &&
+                                            formik.touched.username
+                                        }
+                                    >
                                         <FormLabel>Username</FormLabel>
                                         <Input
                                             onChange={handleFormInput}
@@ -65,10 +70,17 @@ const FirstPage = () => {
                                             name="username"
                                             placeholder="Masukan Username"
                                         />
-                                        <FormErrorMessage>{formik.errors.username}</FormErrorMessage>
+                                        <FormErrorMessage>
+                                            {formik.errors.username}
+                                        </FormErrorMessage>
                                     </FormControl>
 
-                                    <FormControl isInvalid={formik.errors.nis}>
+                                    <FormControl
+                                        isInvalid={
+                                            formik.errors.nis &&
+                                            formik.touched.nis
+                                        }
+                                    >
                                         <FormLabel>NIS</FormLabel>
                                         <Input
                                             onChange={handleFormInput}
@@ -76,10 +88,17 @@ const FirstPage = () => {
                                             name="nis"
                                             placeholder="Masukan NIS"
                                         />
-                                        <FormErrorMessage>{formik.errors.nis}</FormErrorMessage>
+                                        <FormErrorMessage>
+                                            {formik.errors.nis}
+                                        </FormErrorMessage>
                                     </FormControl>
 
-                                    <FormControl isInvalid={formik.errors.password}>
+                                    <FormControl
+                                        isInvalid={
+                                            formik.errors.password &&
+                                            formik.touched.password
+                                        }
+                                    >
                                         <FormLabel>Password</FormLabel>
                                         <Input
                                             onChange={handleFormInput}
@@ -88,9 +107,24 @@ const FirstPage = () => {
                                             type="password"
                                             placeholder="*****"
                                         />
-                                        <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
+                                        <FormErrorMessage>
+                                            {formik.errors.password}
+                                        </FormErrorMessage>
                                     </FormControl>
-                                    <Button type="submit" colorScheme="gray" w="full">Login</Button>
+                                    <Button
+                                        type="submit"
+                                        colorScheme="gray"
+                                        w="full"
+                                    >
+                                        Login
+                                    </Button>
+                                    {flash.error && (
+                                        <Alert
+                                            variant="error"
+                                            title="Gagal"
+                                            message={flash.error}
+                                        />
+                                    )}
                                 </VStack>
                                 <p className="text-center text-base mt-5">
                                     Don't have an account?{" "}
