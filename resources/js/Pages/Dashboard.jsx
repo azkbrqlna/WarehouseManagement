@@ -1,10 +1,11 @@
-import { Head, Link } from "@inertiajs/react";
-import { Archive, Gauge, Users, SignOut, ShoppingCart, Hourglass } from "@phosphor-icons/react";
+import { Head, usePage } from "@inertiajs/react";
+import { Users, ShoppingCart, Hourglass } from "@phosphor-icons/react";
 import LogoDashboard from "../../asset/logo-smkn7-smg.png";
 import Sidebar from "@/Layouts/Sidebar";
 import OverviewCard from "@/Components/Fragments/OverviewCard";
 
 const Dashboard = () => {
+    const { auth } = usePage().props;
     return (
         <>
             <Head title="Dashboard" />
@@ -18,7 +19,7 @@ const Dashboard = () => {
                                 <span className="font-semibold">
                                     Selamat datang
                                 </span>{" "}
-                                <span className="font-bold">Admin</span> 👋
+                                <span className="font-bold">{auth.user.username}</span> 👋
                             </h3>
                             <p>
                                 Ayo mulai kelola setiap hal yang ada, dan jangan

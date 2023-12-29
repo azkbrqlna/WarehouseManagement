@@ -29,6 +29,8 @@ const ModalProfile = (props) => {
         cancelRef,
         isAlertDialogOpen,
         onLogOut,
+        user,
+        kelas
     } = props;
     return (
         <>
@@ -58,7 +60,7 @@ const ModalProfile = (props) => {
                                         textAlign="center"
                                         fontSize="xl"
                                     >
-                                        Admin
+                                        {user}
                                     </Text>
                                     <Text
                                         color="gray.400"
@@ -66,7 +68,7 @@ const ModalProfile = (props) => {
                                         fontSize="sm"
                                         fontWeight="500"
                                     >
-                                        XIII SIJA 2
+                                        {kelas}
                                     </Text>
                                 </Flex>
                                 <Flex
