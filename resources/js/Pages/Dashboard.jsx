@@ -6,6 +6,7 @@ import OverviewCard from "@/Components/Fragments/OverviewCard";
 
 const Dashboard = () => {
     const { auth } = usePage().props;
+    console.log(auth)
     return (
         <>
             <Head title="Dashboard" />
