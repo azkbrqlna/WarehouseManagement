@@ -36,6 +36,8 @@ class AuthController extends Controller
                 return redirect('/home');
             }
 
+            return back()->with('error','Login gagal pastikan mengisi credential dengan benar');
+
         }
     }
 
