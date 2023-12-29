@@ -14,7 +14,6 @@ import Alert from "@/Components/Fragments/Alert";
 
 const FirstPage = () => {
     const { flash } = usePage().props;
-    console.log(flash.error);
 
     const formik = useFormik({
         initialValues: {
@@ -121,7 +120,6 @@ const FirstPage = () => {
                                     {flash.error && (
                                         <Alert
                                             variant="error"
-                                            title="Gagal"
                                             message={flash.error}
                                         />
                                     )}

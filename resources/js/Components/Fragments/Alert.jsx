@@ -7,7 +7,6 @@ export default function Alert({ variant, title, message }) {
   
     return (
       <div className={alertClasses}>
-        <p className="font-bold">{title}</p>
         <p className="text-sm">{message}</p>
       </div>
     );
