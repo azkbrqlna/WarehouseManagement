@@ -11,7 +11,7 @@ import {
     Stack,
     useDisclosure,
 } from "@chakra-ui/react";
-import { router } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 import { Turn as Hamburger } from "hamburger-react";
 
 const Navbar = () => {
@@ -37,6 +37,8 @@ const Navbar = () => {
     const onLogOut = () => {
         router.visit("/logout");
     };
+
+    const { auth } = usePage().props;
     return (
         <>
             <nav className="w-full mb-10 py-5 px-5 md:px-12 flex justify-between">
@@ -51,7 +53,7 @@ const Navbar = () => {
                         <Avatar
                             w="45px"
                             h="45px"
-                            name="Admin"
+                            name={auth.user.username}
                             src={LogoProfile}
                             onClick={onModalOpen}
                             cursor="pointer"
@@ -68,7 +70,6 @@ const Navbar = () => {
                         <Avatar
                             w="40px"
                             h="40px"
-                            name="Admin"
                             src={LogoProfile}
                             onClick={onModalOpen}
                             cursor="pointer"
@@ -83,6 +84,8 @@ const Navbar = () => {
                         isAlertDialogOpen={isAlertDialogOpen}
                         onAlertDialogClose={onAlertDialogClose}
                         onLogOut={onLogOut}
+                        user={auth.user.username}
+                        kelas={auth.user.kelas}
                     />
                 </div>
             </nav>
