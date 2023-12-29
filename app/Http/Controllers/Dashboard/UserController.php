@@ -10,7 +10,7 @@ use Inertia\Inertia;
 class UserController extends Controller
 {
     public function index(){
-        return Inertia::render("users");
+        return Inertia::render("Users");
     }
 
     public function destroy($id){

@@ -12,7 +12,7 @@ const Sidebar = () => {
                 <div className="space-y-5">
                     <SidebarButton value="Dashboard" icon={Gauge} />
                     <SidebarButton value="Request" icon={Archive} />
-                    <SidebarButton value="Users" icon={Users} />
+                    <SidebarButton value="Users" icon={Users} href="/users" />
                 </div>
                 <div>
                     <button
