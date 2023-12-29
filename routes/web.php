@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PengembalianController;
@@ -30,7 +31,12 @@ Route::controller(AuthController::class)->middleware('guest')->group(function ()
     Route::post('/','authenticate');
     Route::get('/register','register')->name('register');
     Route::post('/register','signup');
-    Route::get('/logout' ,'logout' )->name('logout')->withoutMiddleware('guest')->middleware('auth');
+    Route::get('/logout' ,'logout' )->withoutMiddleware('guest')->middleware('auth');
+});
+
+Route::controller(UserController::class)->middleware('auth')->group(function () {
+    Route::get('/users','index');
+    Route::delete('/users}','destroy');
 });
 
 // Route::middleware('auth')->group(function () {
