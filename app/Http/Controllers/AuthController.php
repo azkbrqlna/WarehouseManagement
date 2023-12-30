@@ -14,7 +14,7 @@ class AuthController extends Controller
     //untuk tampilan login
     public function login()
     {
-        return Inertia::render("Index");
+        return Inertia::render("Auth/Login");
     }
 
     //untuk validasi saat login
@@ -41,7 +41,7 @@ class AuthController extends Controller
 
     public function register()
     {
-        return Inertia::render("Register");
+        return Inertia::render("Auth/Register");
     }
 
     //untuk validasi register

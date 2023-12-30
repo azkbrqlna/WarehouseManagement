@@ -10,8 +10,8 @@ const Sidebar = () => {
         <>
             <aside className="h-screen p-10 bg-white w-72 flex flex-col justify-between">
                 <div className="space-y-5">
-                    <SidebarButton value="Dashboard" icon={Gauge} />
-                    <SidebarButton value="Request" icon={Archive} />
+                    <SidebarButton value="Dashboard" icon={Gauge} href="/dashboard" />
+                    <SidebarButton value="Request" icon={Archive} href="/request" />
                     <SidebarButton value="Users" icon={Users} href="/users" />
                 </div>
                 <div>

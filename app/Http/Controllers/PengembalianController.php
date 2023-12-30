@@ -12,7 +12,7 @@ class PengembalianController extends Controller
      */
     public function index()
     {
-        return Inertia::render("Pengembalian");
+        return Inertia::render("Pengembalian/index");
     }
 
     /**

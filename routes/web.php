@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\RequestController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PeminjamanController;
@@ -37,6 +38,10 @@ Route::controller(AuthController::class)->middleware('guest')->group(function ()
 Route::controller(UserController::class)->middleware('auth')->group(function () {
     Route::get('/users','index');
     Route::delete('/users','destroy');
+});
+
+Route::controller(RequestController::class)->middleware('auth')->group(function () {
+    Route::get('/request','index');
 });
 
 // Route::middleware('auth')->group(function () {

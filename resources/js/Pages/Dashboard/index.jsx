@@ -1,6 +1,6 @@
 import { Head, usePage } from "@inertiajs/react";
 import { Users, ShoppingCart, Hourglass } from "@phosphor-icons/react";
-import LogoDashboard from "../../asset/logo-smkn7-smg.png";
+import LogoDashboard from "../../../asset/logo-smkn7-smg.png";
 import Sidebar from "@/Layouts/Sidebar";
 import OverviewCard from "@/Components/Fragments/OverviewCard";
 
