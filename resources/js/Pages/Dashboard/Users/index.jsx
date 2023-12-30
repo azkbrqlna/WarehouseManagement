@@ -1,4 +1,4 @@
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, usePage } from "@inertiajs/react";
 import { Trash } from "@phosphor-icons/react";
 import Sidebar from "@/Layouts/Sidebar";
 import { Plus } from "@phosphor-icons/react";
@@ -17,6 +17,27 @@ import {
 import { SearchIcon } from "@chakra-ui/icons";
 
 const UsersPage = () => {
+    const { user } = usePage();
+    const allUsers = user.map((user) => {
+        return (
+            <Tr>
+                <Td>{user.id}</Td>
+                <Td>Ahmad Chomsin S.</Td>
+                <Td>2006817395</Td>
+                <Td>XIII SIJA 2</Td>
+                <Td textAlign="center">
+                    <Button
+                        bgColor="red.500"
+                        textColor="white"
+                        _hover={{ background: "red.400" }}
+                    >
+                        <Trash size={20} />
+                        Delete
+                    </Button>
+                </Td>
+            </Tr>
+        );
+    });
     return (
         <>
             <Head title="Users" />
@@ -44,23 +65,12 @@ const UsersPage = () => {
                                     <Th>Username</Th>
                                     <Th>NIS</Th>
                                     <Th>Kelas</Th>
-                                    <Th w="20px" textAlign="center">Action</Th>
+                                    <Th w="20px" textAlign="center">
+                                        Action
+                                    </Th>
                                 </Tr>
                             </Thead>
-                            <Tbody>
-                                <Tr>
-                                    <Td>1</Td>
-                                    <Td>Ahmad Chomsin S.</Td>
-                                    <Td>2006817395</Td>
-                                    <Td>XIII SIJA 2</Td>
-                                    <Td textAlign="center">
-                                        <Button bgColor="red.500" textColor="white" _hover={{background: "red.400"}}>
-                                            <Trash size={20} />
-                                            Delete
-                                        </Button>
-                                    </Td>
-                                </Tr>
-                            </Tbody>
+                            <Tbody></Tbody>
                         </Table>
                     </div>
                 </main>

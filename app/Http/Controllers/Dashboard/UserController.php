@@ -9,8 +9,8 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
-    public function index(){
-        return Inertia::render("Dashboard/Users/index");
+    public function index(User $user){
+        return Inertia::render("Dashboard/Users/index",compact("user"));
     }
 
     public function destroy($id){

@@ -5,7 +5,7 @@ import Sidebar from "@/Layouts/Sidebar";
 import OverviewCard from "@/Components/Fragments/OverviewCard";
 
 const Dashboard = () => {
-    const { auth } = usePage().props;
+    const { auth,user_count,item_count } = usePage().props;
     console.log(auth)
     return (
         <>
@@ -37,9 +37,9 @@ const Dashboard = () => {
                         </div>
                     </section>
                     <section className="grid grid-flow-col gap-5 mt-10">
-                        <OverviewCard title="Total Barang" value="34" icon={ShoppingCart} />
+                        <OverviewCard title="Total Barang" value={item_count} icon={ShoppingCart} />
                         <OverviewCard title="Total Request" value="11" icon={Hourglass} />
-                        <OverviewCard title="Total Users" value="101" icon={Users} />
+                        <OverviewCard title="Total Users" value={user_count} icon={Users} />
                     </section>
                 </main>
             </div>
