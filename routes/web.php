@@ -22,7 +22,7 @@ use Inertia\Inertia;
 */  
 Route::middleware(['auth'])->group(function () {
     Route::get("/dashboard",[DashboardController::class, "index"])->middleware('only_admin');
-    Route::get("/home",[HomeController::class,"index"])->middleware('only_user');
+    Route::get("/home",[HomeController::class,"index"]);
     Route::get('/peminjaman',[PeminjamanController::class,'index'] );
     Route::get('/pengembalian',[PengembalianController::class,'index'] );
 });
