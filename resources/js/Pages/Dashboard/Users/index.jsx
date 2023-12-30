@@ -16,28 +16,27 @@ import {
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 
-const UsersPage = () => {
-    const { users } = usePage();
-    const allUsers = users.map((user) => {
-        return (
-            <Tr>
-                <Td>{user.id}</Td>
-                <Td>Ahmad Chomsin S.</Td>
-                <Td>2006817395</Td>
-                <Td>XIII SIJA 2</Td>
-                <Td textAlign="center">
-                    <Button
-                        bgColor="red.500"
-                        textColor="white"
-                        _hover={{ background: "red.400" }}
-                    >
-                        <Trash size={20} />
-                        Delete
-                    </Button>
-                </Td>
-            </Tr>
-        );
-    });
+const UsersPage = ({ users }) => {
+    const allUser = users.map((user, index) => (
+        <Tr key={index}>
+            <Td>{index + 1}</Td>
+            <Td>{user.username}</Td>
+            <Td>{user.nis}</Td>
+            <Td>{user.kelas}</Td>
+            <Td textAlign="center">
+                <Button
+                    bgColor="red.500"
+                    textColor="white"
+                    _hover={{
+                        background: "red.400",
+                    }}
+                >
+                    <Trash size={20} />
+                    Delete
+                </Button>
+            </Td>
+        </Tr>
+    ));
     return (
         <>
             <Head title="Users" />
@@ -61,7 +60,7 @@ const UsersPage = () => {
                         <Table>
                             <Thead>
                                 <Tr>
-                                    <Th>ID</Th>
+                                    <Th>Nomor</Th>
                                     <Th>Username</Th>
                                     <Th>NIS</Th>
                                     <Th>Kelas</Th>
@@ -70,7 +69,7 @@ const UsersPage = () => {
                                     </Th>
                                 </Tr>
                             </Thead>
-                            <Tbody></Tbody>
+                            <Tbody>{allUser}</Tbody>
                         </Table>
                     </div>
                 </main>
