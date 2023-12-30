@@ -15,11 +15,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $userCount = User::count();
-        $itemCount = Item::count();
         return Inertia::render("Dashboard/index",[
-            "user_count"=> $userCount,
-            "item_count"=> $itemCount,
+            "user_count"=> User::count(),
+            "item_count"=> Item::count(),
         ]);
     }
 

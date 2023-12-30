@@ -17,8 +17,8 @@ import {
 import { SearchIcon } from "@chakra-ui/icons";
 
 const UsersPage = () => {
-    const { user } = usePage();
-    const allUsers = user.map((user) => {
+    const { users } = usePage();
+    const allUsers = users.map((user) => {
         return (
             <Tr>
                 <Td>{user.id}</Td>

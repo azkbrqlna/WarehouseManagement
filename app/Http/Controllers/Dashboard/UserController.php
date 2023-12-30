@@ -10,9 +10,8 @@ use Inertia\Inertia;
 class UserController extends Controller
 {
     public function index(){
-        $users = User::all();
         return Inertia::render("Dashboard/Users/index",[
-            "users"=> $users,
+            "users"=> User::all(),
         ]);
     }
 
@@ -23,7 +22,6 @@ class UserController extends Controller
         if ($delete) {
             return redirect()->back()->with('success', 'Gagal menghapus user.');
           }
-      
           return redirect()->back()->with('error', 'Berhasil menghapus user.');
     }
     

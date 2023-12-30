@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class LogController extends Controller
+class ItemController extends Controller
 {
     public function index(){
         return Inertia::render("");
