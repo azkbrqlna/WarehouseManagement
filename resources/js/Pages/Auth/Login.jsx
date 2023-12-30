@@ -1,97 +1,186 @@
-import { useEffect } from 'react';
-import Checkbox from '@/Components/Checkbox';
-import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { Head, Link, router, usePage } from "@inertiajs/react";
+import Wave from "react-wavify";
+import {
+    FormControl,
+    FormLabel,
+    FormErrorMessage,
+    Input,
+    VStack,
+    Button,
+} from "@chakra-ui/react";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import Alert from "@/Components/Fragments/Alert";
 
-export default function Login({ status, canResetPassword }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        email: '',
-        password: '',
-        remember: false,
+const FirstPage = () => {
+    const { flash } = usePage().props;
+
+    const formik = useFormik({
+        initialValues: {
+            username: "",
+            nis: "",
+            password: "",
+        },
+        onSubmit: () => {
+            const { username, nis, password } = formik.values;
+
+            router.post("/", {
+                username,
+                nis,
+                password,
+            });
+        },
+        validationSchema: yup.object().shape({
+            username: yup.string().required("Username is required"),
+            nis: yup.string().required("NIS is required").min(10).max(10),
+            password: yup.string().required("Password is required"),
+        }),
     });
 
-    useEffect(() => {
-        return () => {
-            reset('password');
-        };
-    }, []);
-
-    const submit = (e) => {
-        e.preventDefault();
-
-        post(route('login'));
+    const handleFormInput = (event) => {
+        formik.setFieldValue(event.target.name, event.target.value);
     };
 
     return (
-        <GuestLayout>
-            <Head title="Log in" />
+        <>
+            <Head title="Login" />
+            <div className="bg-zinc-800 font-fira text-slate-50">
+                <div className="w-full h-screen flex justify-center 2xl:items-center pt-10 2xl:pt-0 px-10">
+                    <div className="h-2/3">
+                        <div className="w-full">
+                            <h1 className="font-bold text-4xl 2xl:text-6xl mb-2">
+                                Here you can Login
+                            </h1>
+                            <p className="font-light text-lg mb-5 2xl:mb-10">
+                                Enter your Name, NIS and Password to Login.
+                            </p>
+                            <form onSubmit={formik.handleSubmit}>
+                                <VStack spacing={3}>
+                                    <FormControl
+                                        isInvalid={
+                                            formik.errors.username &&
+                                            formik.touched.username
+                                        }
+                                    >
+                                        <FormLabel>Username</FormLabel>
+                                        <Input
+                                            onChange={handleFormInput}
+                                            value={formik.values.username}
+                                            name="username"
+                                            placeholder="Masukan Username"
+                                        />
+                                        <FormErrorMessage>
+                                            {formik.errors.username}
+                                        </FormErrorMessage>
+                                    </FormControl>
 
-            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+                                    <FormControl
+                                        isInvalid={
+                                            formik.errors.nis &&
+                                            formik.touched.nis
+                                        }
+                                    >
+                                        <FormLabel>NIS</FormLabel>
+                                        <Input
+                                            onChange={handleFormInput}
+                                            value={formik.values.nis}
+                                            name="nis"
+                                            placeholder="Masukan NIS"
+                                        />
+                                        <FormErrorMessage>
+                                            {formik.errors.nis}
+                                        </FormErrorMessage>
+                                    </FormControl>
 
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        isFocused={true}
-                        onChange={(e) => setData('email', e.target.value)}
-                    />
-
-                    <InputError message={errors.email} className="mt-2" />
+                                    <FormControl
+                                        isInvalid={
+                                            formik.errors.password &&
+                                            formik.touched.password
+                                        }
+                                    >
+                                        <FormLabel>Password</FormLabel>
+                                        <Input
+                                            onChange={handleFormInput}
+                                            value={formik.values.password}
+                                            name="password"
+                                            type="password"
+                                            placeholder="*****"
+                                        />
+                                        <FormErrorMessage>
+                                            {formik.errors.password}
+                                        </FormErrorMessage>
+                                    </FormControl>
+                                    <Button
+                                        type="submit"
+                                        colorScheme="gray"
+                                        w="full"
+                                    >
+                                        Login
+                                    </Button>
+                                    {flash.error && (
+                                        <Alert
+                                            variant="error"
+                                            message={flash.error}
+                                        />
+                                    )}
+                                </VStack>
+                                <p className="text-center text-base mt-5">
+                                    Don't have an account?{" "}
+                                    <Link
+                                        href="/register"
+                                        className="font-bold underline hover:text-zinc-400 relative z-10"
+                                    >
+                                        Sign Up
+                                    </Link>
+                                </p>
+                            </form>
+                        </div>
+                        <div>
+                            <div className="left-0 right-0 bottom-0 h-auto flex absolute">
+                                <Wave
+                                    fill="#adb5bd"
+                                    paused={false}
+                                    opacity="0.30"
+                                    options={{
+                                        height: 50,
+                                        amplitude: 100,
+                                        speed: 0.2,
+                                        points: 3,
+                                    }}
+                                />
+                            </div>
+                            <div className="left-0 right-0 bottom-0 h-auto flex absolute">
+                                <Wave
+                                    fill="#dee2e6"
+                                    opacity="0.80"
+                                    paused={false}
+                                    options={{
+                                        height: 100,
+                                        amplitude: 80,
+                                        speed: 0.3,
+                                        points: 2,
+                                    }}
+                                />
+                            </div>
+                            <div className="left-0 right-0 bottom-0 h-auto flex absolute">
+                                <Wave
+                                    fill="#ced4da"
+                                    paused={false}
+                                    opacity="0.5"
+                                    options={{
+                                        height: 65,
+                                        amplitude: 70,
+                                        speed: 0.17,
+                                        points: 4,
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
-                <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="current-password"
-                        onChange={(e) => setData('password', e.target.value)}
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="block mt-4">
-                    <label className="flex items-center">
-                        <Checkbox
-                            name="remember"
-                            checked={data.remember}
-                            onChange={(e) => setData('remember', e.target.checked)}
-                        />
-                        <span className="ms-2 text-sm text-gray-600">Remember me</span>
-                    </label>
-                </div>
-
-                <div className="flex items-center justify-end mt-4">
-                    {canResetPassword && (
-                        <Link
-                            href={route('password.request')}
-                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                            Forgot your password?
-                        </Link>
-                    )}
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Log in
-                    </PrimaryButton>
-                </div>
-            </form>
-        </GuestLayout>
+            </div>
+        </>
     );
-}
+};
+
+export default FirstPage;
