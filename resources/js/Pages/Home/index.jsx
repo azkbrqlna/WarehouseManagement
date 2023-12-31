@@ -1,10 +1,10 @@
 import { Head } from "@inertiajs/react";
-import HomeIllustrator from "../../asset/image-welcome.png";
-import RulesImage from "../../asset/rules-image.png";
-import WaveHomeTitle from "../../asset/wave-home-title.svg";
-import WaveHomeVisi from "../../asset/wave-home-rules.svg";
-import { ListStyle, Rules, Misi } from "../../Components/Fragments/ListStyle";
-import Navbar from "../../Layouts/Navbar";
+import HomeIllustrator from "../../../asset/image-welcome.png";
+import RulesImage from "../../../asset/rules-image.png";
+import WaveHomeTitle from "../../../asset/wave-home-title.svg";
+import WaveHomeVisi from "../../../asset/wave-home-rules.svg";
+import { Rules, ListStyle, Misi } from "@/Components/Fragments/ListStyle";
+import Navbar from "@/Layouts/Navbar";
 
 const HomePage = () => {
     const handleClickScrollRules = () => {
