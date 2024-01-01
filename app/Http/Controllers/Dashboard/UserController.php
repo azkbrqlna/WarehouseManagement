@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function index(){
         return Inertia::render("Dashboard/Users/index",[
-            "users"=> User::all(),
+            "users"=> User::where('role_id',2)->get()
         ]);
     }
 
