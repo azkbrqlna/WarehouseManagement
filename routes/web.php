@@ -37,7 +37,9 @@ Route::controller(AuthController::class)->middleware('guest')->group(function ()
 
 Route::controller(UserController::class)->middleware('auth')->group(function () {
     Route::get('/users','index');
-    Route::delete('/users','destroy');
+    Route::get('/users-create','create');
+    Route::post('/users-create','store');
+    Route::delete('/users/{slug}','destroy');
 });
 
 Route::controller(RequestController::class)->middleware('auth')->group(function () {

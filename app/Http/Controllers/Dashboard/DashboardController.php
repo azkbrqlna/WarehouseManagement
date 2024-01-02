@@ -16,7 +16,7 @@ class DashboardController extends Controller
     public function index()
     {
         return Inertia::render("Dashboard/index",[
-            "user_count"=> User::count(),
+            "user_count"=> User::where('role_id',2)->count(),
             "item_count"=> Item::count(),
         ]);
     }

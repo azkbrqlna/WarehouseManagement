@@ -1,4 +1,4 @@
-import { Link } from "@inertiajs/react";
+import { Link, useForm, router } from "@inertiajs/react";
 import { Trash } from "@phosphor-icons/react";
 import { Plus } from "@phosphor-icons/react";
 import {
@@ -15,8 +15,29 @@ import {
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import Dashboardlayout from "@/Layouts/DashboardLayout";
+import { useToast } from "@chakra-ui/react"
 
 const UsersPage = ({ users }) => {
+    const toast = useToast();
+    const { delete: destroy } = useForm();
+    const handleClick = (slug) => {
+        if (window.confirm("Ingin menghapus user ini?")) {
+            destroy(`/users/${slug}`, {
+                onSuccess: () => {
+                    toast({
+                        title: "Berhasil menghapus user",
+                        status: "success",
+                    });
+                },
+                onError: () => {
+                    toast({
+                        title: "Gagal menghapus user",
+                        status: "error",
+                    });
+                },
+            });
+        }
+    };
     return (
         <>
             <Dashboardlayout title="Users">
@@ -27,7 +48,7 @@ const UsersPage = ({ users }) => {
                         </InputLeftAddon>
                         <Input textColor="white" placeholder="Cari user" />
                     </InputGroup>
-                    <Button as={Link} href="#">
+                    <Button as={Link} href="/users-create">
                         <Plus size={24} />
                         Tambah User
                     </Button>
@@ -54,6 +75,7 @@ const UsersPage = ({ users }) => {
                                     <Td>{user.kelas}</Td>
                                     <Td textAlign="center">
                                         <Button
+                                            onClick={() => handleClick(user.slug)}
                                             bgColor="red.500"
                                             textColor="white"
                                             _hover={{

@@ -51,12 +51,14 @@ class AuthController extends Controller
             'username' => 'required|string',
             'password' => 'required|string',
             'kelas' => 'required|string',
-            'nis' => 'required|numeric|digits_between:9,10',
+            'nis' => 'required|unique:users|numeric|digits_between:9,10',
         ]);
 
-        User::create($request->all());
-
-        return redirect('/');
+        if ($validated == true) {
+            User::create($request->all());
+            return redirect('/');
+        }
+        return back()->with('error', 'SignUp gagal pastikan mengisi credential dengan benar');
     }
 
 
