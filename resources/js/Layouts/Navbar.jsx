@@ -15,8 +15,10 @@ import { router, usePage } from "@inertiajs/react";
 import { Turn as Hamburger } from "hamburger-react";
 
 const Navbar = () => {
-    const [Open, setOpen] = useState(false);
+    const { auth } = usePage().props;
+    const btnRef = useRef();
     const cancelRef = useRef();
+    const [isHamburgerOpen, setHamburgerOpen] = useState(false);
 
     const {
         isOpen: isModalOpen,
@@ -30,36 +32,50 @@ const Navbar = () => {
         onClose: onAlertDialogClose,
     } = useDisclosure();
 
-    const toggle = () => {
-        setOpen(!Open);
+    const {
+        isOpen: isDrawerOpen,
+        onOpen: onDrawerOpen,
+        onClose: onDrawerClose,
+    } = useDisclosure();
+
+    const onToggle = () => {
+        setHamburgerOpen(!isHamburgerOpen);
+        onDrawerOpen() ? onDrawerClose() : onDrawerOpen();
     };
 
     const onLogOut = () => {
         router.visit("/logout");
     };
-
-    const { auth } = usePage().props;
     return (
         <>
             <nav className="w-full mb-10 py-5 px-5 md:px-12 flex justify-between">
-                <div className="hidden md:block w-1/3">
+                <div className="hidden md:block">
                     <a href="https://smkn7semarang.sch.id/">
                         <img className="w-14 md:w-20" src={LogoSMK} />
                     </a>
                 </div>
                 <div className="md:hidden relative flex w-full justify-between items-center">
-                    <Hamburger color="#adb5bd" onToggle={toggle} />
+                    <Hamburger
+                        color="#adb5bd"
+                        toggled={isHamburgerOpen}
+                        toggle={onToggle}
+                    />
                     <Stack>
                         <Avatar
                             w="45px"
                             h="45px"
-                            name={auth.user.username}
                             src={LogoProfile}
                             onClick={onModalOpen}
                             cursor="pointer"
                         />
                     </Stack>
-                    <NavbarHamburger isOpen={Open} />
+                    <NavbarHamburger
+                        isOpen={isDrawerOpen}
+                        onClose={onDrawerClose}
+                        onOpen={onDrawerOpen}
+                        btnRef={btnRef}
+                        onToggle={onToggle}
+                    />
                 </div>
                 <div className="items-center gap-5 hidden md:flex">
                     <NavbarGeneral />

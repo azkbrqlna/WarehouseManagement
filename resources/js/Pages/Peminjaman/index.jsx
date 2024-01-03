@@ -1,28 +1,14 @@
 import { Head } from "@inertiajs/react";
 import Navbar from "@/Layouts/Navbar";
-import {
-    InputLeftAddon,
-    Input,
-    InputGroup,
-    FormControl,
-    Box,
-    Text,
-} from "@chakra-ui/react";
+import { InputLeftAddon, Input, InputGroup } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import CardProduct from "@/Components/Fragments/CardProduct";
-import { useState } from "react";
 
 const Peminjaman = () => {
-    const [value, setValue] = useState("");
-    const [isActive, setIsActive] = useState(false);
-    function handleChange(e) {
-        const text = e.target.value;
-        setValue(text);
-    }
     return (
         <>
             <Head title="Peminjaman" />
-            <div className="bg-zinc-800 w-full h-screen">
+            <div className="bg-zinc-800 w-full h-screen overflow-hidden">
                 <section id="navbar">
                     <Navbar />
                 </section>
@@ -39,11 +25,10 @@ const Peminjaman = () => {
                         </InputGroup>
                     </div>
                 </section>
-                <section className="flex justify-center gap-5 mt-10">
-                    <CardProduct>
-                        <CardProduct.Image image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFp-aBNfpgaNhFQlSHpGHEUAfm6VrV3uyNtA&usqp=CAU" />
-                        <CardProduct.Content barang="Bola" status="Tersedia" />
-                    </CardProduct>
+                <section className="mt-10 w-full grid grid-cols-5 px-10">
+                    <div className="flex justify-center col-span-5 gap-20">
+                        <CardProduct />
+                    </div>
                 </section>
             </div>
         </>

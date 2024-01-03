@@ -27,6 +27,7 @@ class UserController extends Controller
             'username' => 'required|string',
             'password' => 'required|string',
             'kelas' => 'required|string',
+            'role' => 'required|string|in:admin,user',
             'nis' => 'required|unique:users|numeric|digits_between:9,10',
         ]);
         if ($validated == true) {

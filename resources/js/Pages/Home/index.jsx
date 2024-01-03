@@ -18,7 +18,7 @@ const HomePage = () => {
         <>
             <Head title="Home" />
             <div className="w-full h-screen">
-                <section className="h-screen relative bg-zinc-800">
+                <section className="relative bg-zinc-800 pb-60">
                     <div className="hidden md:block absolute bottom-0 right-0 left-0 pointer-events-none">
                         <img src={WaveHomeTitle} />
                     </div>
@@ -49,23 +49,23 @@ const HomePage = () => {
                         </div>
                     </div>
                 </section>
-                <section className="bg-zinc-400" id="rules">
+                <section className="bg-zinc-400 py-40" id="rules">
                     <div className="flex flex-wrap h-screen justify-center relative">
-                        <div className="flex w-full md:w-1/3 justify-center items-center">
+                        <div className="flex w-full md:w-5/12 justify-center items-center">
                             <img className="w-96 h-96" src={RulesImage} />
                         </div>
-                        <div className="flex flex-col justify-center p-5 gap-4 md:w-2/3">
-                            <h1 className="text-5xl text-zinc-800 font-bold">
+                        <div className="flex flex-col justify-center p-5 gap-8 md:w-7/12">
+                            <h1 className="text-7xl text-zinc-800 font-bold">
                                 Rules
                             </h1>
                             <ListStyle items={Rules} />
                         </div>
-                        <div className="hidden md:block absolute bottom-0 pointer-events-none h-0">
+                        <div className="hidden bg-sky-400 md:block absolute -bottom-40 pointer-events-none h-0">
                             <img className="rotate-180" src={WaveHomeVisi} />
                         </div>
                     </div>
                 </section>
-                <section className="bg-zinc-800 pt-[310px]">
+                <section className="bg-zinc-800 md:pt-[310px]">
                     <div className="w-full h-screen md:flex flex-col justify-center items-center">
                         <div className="h-full flex justify-center w-full">
                             <div className="flex flex-col justify-center items-center gap-5 w-1/2 text-zinc-400">

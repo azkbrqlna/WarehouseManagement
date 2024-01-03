@@ -1,6 +1,6 @@
 const OverviewCard = ({ icon: Icon, value, title }) => {
     return (
-        <div className="flex items-center justify-center gap-5 px-16 py-10 bg-white shadow-sm rounded-xl">
+        <div className="flex items-center justify-center gap-5 px-14 2xl:px-16 py-10 bg-white shadow-sm rounded-xl">
             <div className="p-5 rounded-full bg-zinc-400">
                 <Icon size={48} />
             </div>

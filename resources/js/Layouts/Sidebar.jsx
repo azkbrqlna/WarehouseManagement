@@ -1,5 +1,5 @@
 import SidebarButton from "@/Components/Fragments/SidebarButton";
-import { Link, router } from "@inertiajs/react";
+import { router } from "@inertiajs/react";
 import { Archive, Gauge, SignOut, Users } from "@phosphor-icons/react";
 
 const Sidebar = () => {
@@ -8,7 +8,7 @@ const Sidebar = () => {
     };
     return (
         <>
-            <aside className="h-screen p-10 bg-white w-72 flex flex-col justify-between">
+            <aside className="h-screen p-10 bg-white w-64 2xl:w-72 flex flex-col justify-between">
                 <div className="space-y-5">
                     <SidebarButton value="Dashboard" icon={Gauge} href="/dashboard" />
                     <SidebarButton value="Request" icon={Archive} href="/request" />

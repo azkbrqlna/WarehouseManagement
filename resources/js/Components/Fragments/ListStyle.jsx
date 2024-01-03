@@ -1,7 +1,6 @@
 import { List } from "../ListStyle/List";
 
-export const ListStyle = (props) => {
-    const { items } = props;
+export const ListStyle = ({ items }) => {
     return (
         <ul className="text-xl text-zinc-800">
             {items.map((items, index) => (

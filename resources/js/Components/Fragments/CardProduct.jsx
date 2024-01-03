@@ -1,94 +1,83 @@
-import {
-    Badge,
-    Stack,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalCloseButton,
-    ModalBody,
-    Flex,
-    Text,
-    useDisclosure,
-    FormControl,
-    FormLabel,
-    Button,
-    Textarea,
-} from "@chakra-ui/react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Badge, Button, CloseButton, Text, Textarea } from "@chakra-ui/react";
 
-const CardProduct = (props) => {
-    const { children } = props;
-    return (
-        <div className="bg-white rounded-lg gap-5 flex flex-col p-3 shadow-lg shadow-zinc-500">
-            {children}
-        </div>
-    );
-};
+const CardProduct = () => {
+    const [isInfoOpen, setInfoOpen] = useState(false);
 
-const Image = (props) => {
-    const { image } = props;
-    return (
-        <div className="flex justify-center border-2 rounded-lg overflow-hidden w-44 h-4w-44">
-            <img src={image} />
-        </div>
-    );
-};
-
-const Content = (props) => {
-    const { barang, status, handleSubmitAlasan } = props;
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    const handleButtonClick = () => {
+        setInfoOpen(!isInfoOpen);
+    };
 
     return (
-        <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-                <h1 className="font-medium text-3xl text-zinc-800">{barang}</h1>
-                <Stack w="70px">
-                    <Badge colorScheme="green" textAlign="center">
-                        {status}
-                    </Badge>
-                </Stack>
-                <Modal isOpen={isOpen} onClose={onClose}>
-                    <ModalOverlay />
-                    <ModalContent>
-                        <ModalHeader>Alasan</ModalHeader>
-                        <ModalCloseButton />
-                        <ModalBody>
-                            <Stack align="center" paddingBottom="20px">
-                                <Flex flexDirection="column" gap="20px">
-                                    <Text>
-                                        Barang yang anda pinjam harus
-                                        menyertakan alasan yang jelas, agar dari
-                                        pihak admin tidak ragu untuk meminjamkan
-                                        alatnya kepada pihak peminjam.
-                                    </Text>
-                                    <form onSubmit={handleSubmitAlasan}>
-                                        <FormControl>
-                                            <FormLabel>
-                                                Isi Alasan Anda:{" "}
-                                            </FormLabel>
-                                            <Textarea placeholder='Masukan alasan request' />
-                                        </FormControl>
-                                        <Button type="submit" mt="10px">Create Request</Button>
-                                    </form>
-                                </Flex>
-                            </Stack>
-                        </ModalBody>
-                    </ModalContent>
-                </Modal>
-            </div>
-
+        <>
             <button
-                className="py-2 font-semibold rounded-lg border border-slate-200 text-zinc-800 hover:bg-zinc-800 hover:text-white hover:border-0"
-                type="button"
-                onClick={onOpen}
+                className="bg-white overflow-hidden rounded-lg gap-5 flex flex-col w-80 relative group"
+                onClick={handleButtonClick}
             >
-                Add to request
+                <div className="w-full h-60 overflow-hidden flex justify-center">
+                    <motion.img
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFp-aBNfpgaNhFQlSHpGHEUAfm6VrV3uyNtA&usqp=CAU"
+                        alt=""
+                        className="group-hover:scale-125 transition-all duration-200 ease-out"
+                        initial={{ opacity: 1 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                    />
+                    <AnimatePresence>
+                        <motion.div
+                            className="absolute -bottom-10 left-0 w-full group-hover:bottom-0 transition-all duration-200 ease-in-out"
+                            initial={{ opacity: 1, y: 50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 50 }}
+                        >
+                            <div className="bg-gradient-to-t from-neutral-700">
+                                <h1 className="font-bold text-2xl text-left text-white px-3 py-2">
+                                    Bola
+                                </h1>
+                            </div>
+                        </motion.div>
+                    </AnimatePresence>
+                </div>
             </button>
-        </div>
+            <AnimatePresence>
+                {isInfoOpen && (
+                    <motion.div
+                        className="fixed bottom-0 left-0 w-full h-[85%] bg-white z-50 overflow-y-auto rounded-t-2xl"
+                        key="info"
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 50 }}
+                    >
+                        <div className="flex justify-between px-3 py-2">
+                            <h1 className="font-bold text-2xl text-black">
+                                Informasi Barang
+                            </h1>
+                            <CloseButton
+                                size="lg"
+                                onClick={handleButtonClick}
+                            />
+                        </div>
+                        <div className="px-5">
+                            <div className="w-full h-40 overflow-hidden flex justify-center">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFp-aBNfpgaNhFQlSHpGHEUAfm6VrV3uyNtA&usqp=CAU" />
+                            </div>
+                            <Text fontWeight="bold" fontSize="x-large">
+                                Bola{" "}
+                                <Badge colorScheme="green">Available</Badge>
+                            </Text>
+                            <Badge fontSize="medium">16.00 - 18.00</Badge>
+                            <Text>Masukan Alasan Peminjaman:</Text>
+                            <Textarea />
+                            <Button mt="10px" colorScheme="blue">
+                                Submit
+                            </Button>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </>
     );
 };
-
-CardProduct.Image = Image;
-CardProduct.Content = Content;
 
 export default CardProduct;
