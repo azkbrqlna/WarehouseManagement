@@ -32,6 +32,12 @@ class ItemController extends Controller
         };
 
         $item = Item::create($request->all());
-        return redirect('')->with('success','Success add items!');
+        return redirect('')->with('success','Berhasil menambah barang!');
+    }
+
+    public function destroy($slug){
+        $item = Item::whereSlug($slug)->first();
+        $item->delete();
+        return redirect()->back()->with('success','Berhasil menghapus barang!');
     }
 }

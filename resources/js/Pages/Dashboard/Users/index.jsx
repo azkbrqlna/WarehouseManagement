@@ -48,7 +48,7 @@ const UsersPage = ({ users }) => {
                         </InputLeftAddon>
                         <Input textColor="white" placeholder="Cari user" />
                     </InputGroup>
-                    <Button as={Link} href="/users-create">
+                    <Button as={Link} href="/users/create">
                         <Plus size={24} />
                         Tambah User
                     </Button>

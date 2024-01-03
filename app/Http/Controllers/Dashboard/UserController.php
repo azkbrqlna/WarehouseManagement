@@ -31,16 +31,16 @@ class UserController extends Controller
         ]);
         if ($validated == true) {
             $user = User::create($request->all());
-            return redirect('/users')->with('success', 'User created succesfully!');
+            return redirect('/users')->with('success', 'Berhasil membuat user!');
         }
-        return redirect()->back()->with('error', 'Check again credential!');
+        return redirect()->back()->with('error', 'Mohon cek lagi!');
     }
 
     public function destroy($slug)
     {
         $user = User::where('slug', $slug)->first();
         $user->delete();
-        return redirect('/users')->with('success','User Deleted!');
+        return redirect()->back()->with('success','Berhasil menghapus user!');
     }
 
 }
