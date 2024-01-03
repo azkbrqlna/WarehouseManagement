@@ -16,7 +16,6 @@ export default function CreateUserDashboard() {
         username: "",
         kelas: "",
         nis: "",
-        role: "",
         password: "",
     });
 
@@ -71,17 +70,6 @@ export default function CreateUserDashboard() {
                                 value={data.kelas}
                                 onChange={handleChange}
                             />
-                        </FormControl>
-                        <FormControl>
-                            <FormLabel>Role</FormLabel>
-                            <Select
-                                name="role"
-                                value={data.role}
-                                onChange={handleChange}
-                            >
-                                <option value="admin">Admin</option>
-                                <option value="user">User</option>
-                            </Select>
                         </FormControl>
                         <FormControl>
                             <FormLabel>Password</FormLabel>
