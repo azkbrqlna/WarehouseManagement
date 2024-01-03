@@ -49,10 +49,10 @@ const FirstPage = () => {
                     <div className="h-2/3">
                         <div className="w-full">
                             <h1 className="font-bold text-4xl 2xl:text-6xl mb-2">
-                                Here you can Login
+                                Hai! Login Dulu Ya
                             </h1>
                             <p className="font-light text-lg mb-5 2xl:mb-10">
-                                Enter your Name, NIS and Password to Login.
+                               Masukkan Nama, Nis, dan Password!
                             </p>
                             <form onSubmit={formik.handleSubmit}>
                                 <VStack spacing={3}>
@@ -67,7 +67,7 @@ const FirstPage = () => {
                                             onChange={handleFormInput}
                                             value={formik.values.username}
                                             name="username"
-                                            placeholder="Masukan Username"
+                                            placeholder="Masukkan Username"
                                         />
                                         <FormErrorMessage>
                                             {formik.errors.username}
@@ -85,7 +85,7 @@ const FirstPage = () => {
                                             onChange={handleFormInput}
                                             value={formik.values.nis}
                                             name="nis"
-                                            placeholder="Masukan NIS"
+                                            placeholder="Masukkan NIS"
                                         />
                                         <FormErrorMessage>
                                             {formik.errors.nis}
@@ -125,7 +125,7 @@ const FirstPage = () => {
                                     )}
                                 </VStack>
                                 <p className="text-center text-base mt-5">
-                                    Don't have an account?{" "}
+                                    Belum punya akun?{" "}
                                     <Link
                                         href="/register"
                                         className="font-bold underline hover:text-zinc-400 relative z-10"

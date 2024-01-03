@@ -55,10 +55,10 @@ const Register = () => {
                     <div className="h-2/3">
                         <div className="w-full">
                             <h1 className="font-bold text-4xl 2xl:text-6xl mb-2">
-                                Register account
+                                Registrasi Akun
                             </h1>
                             <p className="font-light text-lg mb-5 2xl:mb-10">
-                                Welcome, Register with your credential identity.
+                                Selamat datang, Ayo masukkan identitasmu!.
                             </p>
                             <form onSubmit={formik.handleSubmit}>
                                 <VStack spacing={5}>
@@ -112,7 +112,7 @@ const Register = () => {
                                     <Button type="submit" colorScheme="gray" w="full">Register</Button>
                                 </VStack>
                                 <p className="text-center text-base mt-5">
-                                    Already have an account?{" "}
+                                    Sudah punya akun?{" "}
                                     <Link
                                         href="/"
                                         className="font-bold underline hover:text-zinc-400 relative z-10"
