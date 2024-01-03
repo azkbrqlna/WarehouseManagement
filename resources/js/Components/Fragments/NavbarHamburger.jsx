@@ -1,22 +1,42 @@
+import {
+    Drawer,
+    DrawerBody,
+    DrawerCloseButton,
+    DrawerContent,
+    DrawerOverlay,
+    Flex,
+} from "@chakra-ui/react";
 import ListHamburger from "../ListNavbar/ListHamburger";
 
-const NavbarHamburger = ( props ) => {
-  const { isOpen } = props
-  return (
-    <>
-      <nav
-        className={`absolute z-50 py-5 bg-zinc-400 shadow-xl px-2 rounded-lg w-52 left-0 top-20 font-bold ${
-          isOpen ? "scale-100" : "scale-0"
-        } transition-all duration-300 ease-in-out`}
-      >
-        <ul className="flex flex-col gap-3">
-          <ListHamburger href="#">Home</ListHamburger>
-          <ListHamburger href="#">Peminjaman</ListHamburger>
-          <ListHamburger href="#">Pengembalian</ListHamburger>
-        </ul>
-      </nav>
-    </>
-  );
+const NavbarHamburger = ({ isOpen, onClose, btnRef, onToggle }) => {
+    return (
+        <>
+            <Drawer
+                isOpen={isOpen}
+                placement="left"
+                onClose={onClose}
+                finalFocusRef={btnRef}
+            >
+                <DrawerOverlay />
+                <DrawerContent>
+                    <DrawerCloseButton onClick={onToggle} />
+                    <DrawerBody pt="100px">
+                        <Flex h="100%" justifyContent="center">
+                            <ul className="flex flex-col gap-20 w-full">
+                                <ListHamburger href="/home">Home</ListHamburger>
+                                <ListHamburger href="/peminjaman">
+                                    Peminjaman
+                                </ListHamburger>
+                                <ListHamburger href="/pengembalian">
+                                    Pengembalian
+                                </ListHamburger>
+                            </ul>
+                        </Flex>
+                    </DrawerBody>
+                </DrawerContent>
+            </Drawer>
+        </>
+    );
 };
 
 export default NavbarHamburger;

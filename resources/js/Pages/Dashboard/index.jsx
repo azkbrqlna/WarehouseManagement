@@ -7,7 +7,7 @@ const Dashboard = ({ auth, user_count, item_count }) => {
     return (
         <>
             <Dashboardlayout title="Dashboard">
-                <section className="relative flex items-center justify-between py-20 mt-10 space-y-2 shadow-sm px-36 bg-white rounded-xl">
+                <section className="relative flex items-center justify-between py-20 mt-10 space-y-2 shadow-sm px-20 2xl:px-36 bg-white rounded-xl">
                     <div>
                         <h3 className="text-2xl ">
                             <span className="font-semibold">
@@ -23,7 +23,7 @@ const Dashboard = ({ auth, user_count, item_count }) => {
                             lupa untuk selalu jaga kesehatan!
                         </p>
                     </div>
-                    <div className="absolute bottom-10 right-40 w-40">
+                    <div className="absolute bottom-10 right-20 2xl:right-40 w-40">
                         <img
                             src={LogoDashboard}
                             className="object-cover"
