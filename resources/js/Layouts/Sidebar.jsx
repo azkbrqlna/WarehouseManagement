@@ -1,6 +1,6 @@
 import SidebarButton from "@/Components/Fragments/SidebarButton";
 import { router } from "@inertiajs/react";
-import { Archive, Gauge, SignOut, Users } from "@phosphor-icons/react";
+import { Archive, Gauge, ListDashes, SignOut, Users } from "@phosphor-icons/react";
 
 const Sidebar = () => {
     const onLogOut = () => {
@@ -13,6 +13,7 @@ const Sidebar = () => {
                     <SidebarButton value="Dashboard" icon={Gauge} href="/dashboard" />
                     <SidebarButton value="Request" icon={Archive} href="/request" />
                     <SidebarButton value="Users" icon={Users} href="/users" />
+                    <SidebarButton value="Barang" icon={ListDashes} href="/items" />
                 </div>
                 <div>
                     <button

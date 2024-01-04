@@ -10,18 +10,20 @@ use Inertia\Inertia;
 class ItemController extends Controller
 {
     public function index(){
-        return Inertia::render("",[
+        return Inertia::render("Dashboard/Barang/index",[
             'items'=>Item::all()
         ]);
     }
 
     public function create(){
-        return Inertia::render('');
+        return Inertia::render('Dashboard/Barang/create');
     }
 
     public function store(Request $request){
-        $validated = $request->validate([
-            'name'=> 'required',
+        $request->validate([
+            'name'=> 'required|string',
+            'jumlah' => 'required|integer',
+            'file' => 'required|image|mimes:jpeg, png, jpg, gif|max:2048'
         ]);
         // Ini untuh tambah gambar
         if($request->file("cover")){
@@ -31,7 +33,7 @@ class ItemController extends Controller
             $request['cover'] = $newName;
         };
 
-        $item = Item::create($request->all());
+        Item::create($request->all());
         return redirect('')->with('success','Berhasil menambah barang!');
     }
 
