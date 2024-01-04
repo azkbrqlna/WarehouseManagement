@@ -22,14 +22,14 @@ class ItemController extends Controller
     public function store(Request $request){
         $request->validate([
             'name'=> 'required|string',
-            'jumlah' => 'required|integer',
+            'amount' => 'required',
             'file' => 'required|image|mimes:jpeg, png, jpg, gif|max:2048'
         ]);
         // Ini untuh tambah gambar
-        if($request->file("cover")){
-            $extension = $request->file("cover")->getClientOriginalExtension();
+        if($request->file("file")){
+            $extension = $request->file("file")->getClientOriginalExtension();
             $newName = $request->title.'-'.now()->timestamp.'.'.$extension;
-            $request->file('cover')->storeAs('cover', $newName);
+            $request->file('file')->storeAs('cover', $newName);
             $request['cover'] = $newName;
         };
 

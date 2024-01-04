@@ -19,8 +19,8 @@ import { Head, useForm } from "@inertiajs/react";
 export default function CreateBarangDashboard() {
     const toast = useToast();
     const { data, setData, post } = useForm({
-        barang: "",
-        jumlah: "",
+        name: "",
+        amount: 0,
         file: null,
     });
 
@@ -60,8 +60,8 @@ export default function CreateBarangDashboard() {
                             <FormLabel>Nama Barang</FormLabel>
                             <Input
                                 type="text"
-                                name="barang"
-                                value={data.barang || ""}
+                                name="name"
+                                value={data.name || ""}
                                 onChange={handleChange}
                             />
                         </FormControl>
@@ -70,8 +70,8 @@ export default function CreateBarangDashboard() {
                             <NumberInput>
                                 <NumberInputField
                                     onChange={handleChange}
-                                    name="jumlah"
-                                    value={data.jumlah || ""}
+                                    name="amount"
+                                    value={data.amount || ""}
                                 />
                                 <NumberInputStepper>
                                     <NumberIncrementStepper />
