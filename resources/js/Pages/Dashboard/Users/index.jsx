@@ -1,4 +1,4 @@
-import { Link, useForm, router } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import { Trash } from "@phosphor-icons/react";
 import { Plus } from "@phosphor-icons/react";
 import {
@@ -12,10 +12,10 @@ import {
     Th,
     Thead,
     Tr,
+    useToast
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import Dashboardlayout from "@/Layouts/DashboardLayout";
-import { useToast } from "@chakra-ui/react"
 
 const UsersPage = ({ users }) => {
     const toast = useToast();
