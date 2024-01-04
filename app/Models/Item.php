@@ -10,6 +10,8 @@ class Item extends Model
 {
     use HasFactory, Sluggable;
 
+    protected $fillable = ['name', 'amount', 'cover'];
+
     public function sluggable(): array
     {
         return [

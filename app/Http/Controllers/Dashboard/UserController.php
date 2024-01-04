@@ -28,6 +28,7 @@ class UserController extends Controller
             'password' => 'required|string',
             'kelas' => 'required|string',
             'nis' => 'required|unique:users|numeric|digits_between:9,10',
+            'role' => 'required|string|in:admin,user',
         ]);
         if ($validated == true) {
             $user = User::create($request->all());
