@@ -49,55 +49,23 @@ export default function BarangPage({ items }) {
                     <Table>
                         <Thead>
                             <Tr>
-                                <Th>Nomor</Th>
-                                <Th>Barang</Th>
-                                <Th>Status</Th>
-                                <Th>Jumlah</Th>
-                                <Th>Action</Th>
+                                <Th width="23%">Nomor</Th>
+                                <Th width="23%">Barang</Th>
+                                <Th width="23%">Status</Th>
+                                <Th width="23%">Jumlah</Th>
+                                <Th width="8%">Action</Th>
                             </Tr>
                         </Thead>
                         <Tbody>
-                            <Tr>
-                                <Td>1.</Td>
-                                <Td>Bola</Td>
-                                <Td>
-                                    <Switch size="lg" />
-                                </Td>
-                                <Td
-                                    display="flex"
-                                    gap="10px"
-                                    alignItems="center"
-                                >
-                                    <button
-                                        className="border p-2 rounded-md"
-                                        onClick={handlePlus}
-                                    >
-                                        <Plus size={15} />
-                                    </button>
-                                    {count}
-                                    <button
-                                        className="border p-2 rounded-md"
-                                        onClick={handleMinus}
-                                    >
-                                        <Minus size={15} />
-                                    </button>
-                                </Td>
-                                <Td>
-                                    <Button
-                                        bgColor="red.500"
-                                        textColor="white"
-                                        _hover={{
-                                            background: "red.400",
-                                        }}
-                                    >
-                                        Delete
-                                    </Button>
-                                </Td>
-                            </Tr>
-                            {/* {items.map((item, index) => (
+                            {items.map((item, index) => (
                                 <Tr key={index}>
                                     <Td>{index + 1}</Td>
-                                    <Td textAlign="center">
+                                    <Td>{item.name}</Td>
+                                    <Td>
+                                        <Switch size="lg" />
+                                    </Td>
+                                    <Td>{item.amount}</Td>
+                                    <Td>
                                         <Button
                                             onClick={() =>
                                                 handleClick(item.slug)
@@ -113,7 +81,7 @@ export default function BarangPage({ items }) {
                                         </Button>
                                     </Td>
                                 </Tr>
-                            ))} */}
+                            ))}
                         </Tbody>
                     </Table>
                 </div>

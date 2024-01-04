@@ -9,22 +9,20 @@ import {
     InputRightElement,
 } from "@chakra-ui/react";
 import DashboardLayout from "@/Layouts/DashboardLayout";
-import { Head, useForm } from "@inertiajs/react";
+import { Head, useForm, usePage } from "@inertiajs/react";
+import Alert from "@/Components/Fragments/Alert";
 
 export default function CreateUserDashboard() {
+    const { flash } = usePage().props;
     const { data, setData, post } = useForm({
         username: "",
         kelas: "",
         nis: "",
+        role: "",
         password: "",
     });
 
     const [showPassword, setShowPassword] = useState(false);
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setData(name, value);
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -50,7 +48,9 @@ export default function CreateUserDashboard() {
                                 type="text"
                                 name="username"
                                 value={data.username}
-                                onChange={handleChange}
+                                onChange={(e) =>
+                                    setData("username", e.target.value)
+                                }
                             />
                         </FormControl>
                         <FormControl>
@@ -59,7 +59,7 @@ export default function CreateUserDashboard() {
                                 type="number"
                                 name="nis"
                                 value={data.nis}
-                                onChange={handleChange}
+                                onChange={(e) => setData("nis", e.target.value)}
                             />
                         </FormControl>
                         <FormControl>
@@ -68,8 +68,23 @@ export default function CreateUserDashboard() {
                                 type="text"
                                 name="kelas"
                                 value={data.kelas}
-                                onChange={handleChange}
+                                onChange={(e) =>
+                                    setData("kelas", e.target.value)
+                                }
                             />
+                        </FormControl>
+                        <FormControl>
+                            <FormLabel>Role</FormLabel>
+                            <Select
+                                name="role"
+                                value={data.role}
+                                onChange={(e) =>
+                                    setData("role", e.target.value)
+                                }
+                            >
+                                <option value="admin">Admin</option>
+                                <option value="user">User</option>
+                            </Select>
                         </FormControl>
                         <FormControl>
                             <FormLabel>Password</FormLabel>
@@ -78,7 +93,9 @@ export default function CreateUserDashboard() {
                                     type={showPassword ? "text" : "password"}
                                     name="password"
                                     value={data.password}
-                                    onChange={handleChange}
+                                    onChange={(e) =>
+                                        setData("password", e.target.value)
+                                    }
                                 />
                                 <InputRightElement width="4rem">
                                     <Button
@@ -100,6 +117,9 @@ export default function CreateUserDashboard() {
                         <Button type="submit" colorScheme="teal">
                             Create User
                         </Button>
+                        {flash.error && (
+                            <Alert variant="error" message={flash.error} />
+                        )}
                     </form>
                 </section>
             </DashboardLayout>

@@ -18,22 +18,17 @@ import { Head, useForm } from "@inertiajs/react";
 
 export default function CreateBarangDashboard() {
     const toast = useToast();
-    const { data, setData, post } = useForm({
+    const { data, setData, post, reset } = useForm({
         name: "",
         amount: 0,
         file: null,
     });
 
-    const handleChange = (e) => {
-        const { name, value, type, files } = e.target;
-        const newValue = type === "file" ? files[0] : value;
-        setData((prevData) => ({ ...prevData, [name]: newValue }));
-    };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         post("/items/create", {
             onSuccess: () => {
+                reset();
                 toast({
                     title: "Berhasil menambahkan barang",
                     status: "success"
@@ -62,16 +57,16 @@ export default function CreateBarangDashboard() {
                                 type="text"
                                 name="name"
                                 value={data.name || ""}
-                                onChange={handleChange}
+                                onChange={(e) => setData('name', e.target.value)}
                             />
                         </FormControl>
                         <FormControl>
                             <FormLabel>Jumlah Barang</FormLabel>
                             <NumberInput>
                                 <NumberInputField
-                                    onChange={handleChange}
                                     name="amount"
                                     value={data.amount || ""}
+                                    onChange={(e) => setData('amount', e.target.value)}
                                 />
                                 <NumberInputStepper>
                                     <NumberIncrementStepper />
@@ -85,7 +80,7 @@ export default function CreateBarangDashboard() {
                                 type="file"
                                 name="file"
                                 value=""
-                                onChange={handleChange}
+                                onChange={(e) => setData('file', e.target.files[0])}
                             />
                         </FormControl>
                         {data.file && (
