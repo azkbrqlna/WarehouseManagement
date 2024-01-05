@@ -18,4 +18,10 @@ class Item extends Model
             ]
         ];
     }
+
+    protected $fillable = [
+        'name',
+        'cover',
+        'amount'
+    ];
 }
