@@ -27,7 +27,7 @@ export default function CreateBarangDashboard() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post("/items/create", {
+        post("/item/create", {
             onSuccess: () => {
                 reset();
                 toast({
