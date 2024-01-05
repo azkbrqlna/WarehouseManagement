@@ -24,7 +24,7 @@ export default function BarangPage({ items }) {
 
     const handleClick = (slug) => {
         confirm("Ingin menghapus barang ini?"),
-            destroy(`/items/${slug}`, {
+            destroy(`/item/${slug}`, {
                 onSuccess: () => {
                     toast({
                         title: "Berhasil menghapus barang",
@@ -62,7 +62,7 @@ export default function BarangPage({ items }) {
                         </InputLeftAddon>
                         <Input textColor="white" placeholder="Cari Barang" />
                     </InputGroup>
-                    <Button as={Link} href="/items/create">
+                    <Button as={Link} href="/item/create">
                         <Plus size={24} />
                         Tambah Barang
                     </Button>

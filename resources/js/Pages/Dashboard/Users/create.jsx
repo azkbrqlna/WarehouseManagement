@@ -26,7 +26,7 @@ export default function CreateUserDashboard() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post("/users/create");
+        post("/user/create");
     };
 
     const handleShowPassword = () => {
