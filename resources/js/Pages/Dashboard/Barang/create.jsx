@@ -11,7 +11,8 @@ import {
     NumberIncrementStepper,
     NumberDecrementStepper,
     Box,
-    useToast
+    useToast,
+    Text
 } from "@chakra-ui/react";
 import DashboardLayout from "@/Layouts/DashboardLayout";
 import { Head, useForm } from "@inertiajs/react";
@@ -20,7 +21,7 @@ export default function CreateBarangDashboard() {
     const toast = useToast();
     const { data, setData, post, reset } = useForm({
         name: "",
-        amount: 0,
+        amount: "",
         file: null,
     });
 
@@ -42,6 +43,10 @@ export default function CreateBarangDashboard() {
             }
         });
     };
+
+    const handleChange = (e) => {
+        setData(e.target.name, e.target.value)
+    }
     return (
         <>
             <Head title="Create Barang" />
@@ -56,22 +61,18 @@ export default function CreateBarangDashboard() {
                             <Input
                                 type="text"
                                 name="name"
-                                value={data.name || ""}
-                                onChange={(e) => setData('name', e.target.value)}
+                                value={data.name}
+                                onChange={handleChange}
                             />
                         </FormControl>
                         <FormControl>
                             <FormLabel>Jumlah Barang</FormLabel>
-                            <NumberInput>
+                            <NumberInput value={data.amount} onChange={handleChange}>
                                 <NumberInputField
                                     name="amount"
-                                    value={data.amount || ""}
-                                    onChange={(e) => setData('amount', e.target.value)}
+                                    value={data.amount}
+                                    onChange={handleChange}
                                 />
-                                <NumberInputStepper>
-                                    <NumberIncrementStepper />
-                                    <NumberDecrementStepper />
-                                </NumberInputStepper>
                             </NumberInput>
                         </FormControl>
                         <FormControl>

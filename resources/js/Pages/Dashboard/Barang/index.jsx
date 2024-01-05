@@ -12,23 +12,45 @@ import {
     Th,
     Thead,
     Tr,
+    useToast,
 } from "@chakra-ui/react";
-import { Link } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import { Minus, Plus, Trash } from "@phosphor-icons/react";
 import React from "react";
 import { useState } from "react";
 
 export default function BarangPage({ items }) {
-    const [count, setCount] = useState(0);
+    const toast = useToast();
 
-    const handlePlus = () => {
-        setCount(count + 1);
+    const handleClick = (slug) => {
+        confirm("Ingin menghapus barang ini?"),
+            destroy(`/items/${slug}`, {
+                onSuccess: () => {
+                    toast({
+                        title: "Berhasil menghapus barang",
+                        status: "success",
+                    });
+                },
+                onError: () => {
+                    toast({
+                        title: "Gagal menghapus barang",
+                        status: "error",
+                    });
+                },
+            });
     };
+    const {
+        delete: destroy,
+        data,
+        setData,
+        post,
+    } = useForm({
+        status: false,
+    });
 
-    const handleMinus = () => {
-        if (count !== 0) {
-            setCount(count - 1);
-        }
+    const handleSwitch = () => {
+        setData({ status: !data.status });
+        post("items");
     };
     return (
         <>
@@ -62,10 +84,14 @@ export default function BarangPage({ items }) {
                                     <Td>{index + 1}</Td>
                                     <Td>{item.name}</Td>
                                     <Td>
-                                        <Switch size="lg" />
+                                        <Switch
+                                            size="lg"
+                                            isChecked={!data.status}
+                                            onChange={handleSwitch}
+                                        />
                                     </Td>
                                     <Td>{item.amount}</Td>
-                                    <Td>
+                                    <Td textAlign="center">
                                         <Button
                                             onClick={() =>
                                                 handleClick(item.slug)

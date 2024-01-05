@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class ItemController extends Controller
@@ -31,7 +32,7 @@ class ItemController extends Controller
         // Ini untuh tambah gambar
         if ($request->file("file")) {
             $extension = $request->file("file")->getClientOriginalExtension();
-            $newName = $request->title . '-' . now()->timestamp . '.' . $extension;
+            $newName = $request->name . '-' . now()->timestamp . '.' . $extension;
             $request->file('file')->storeAs('cover', $newName);
             $request['cover'] = $newName;
         };
@@ -43,6 +44,7 @@ class ItemController extends Controller
     public function destroy($slug)
     {
         $item = Item::whereSlug($slug)->first();
+        Storage::delete($item->cover);
         $item->delete();
         return redirect()->back()->with('success', 'Berhasil menghapus barang!');
     }
