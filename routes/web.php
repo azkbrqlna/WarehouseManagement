@@ -39,18 +39,18 @@ Route::controller(AuthController::class)->middleware('guest')->group(function ()
 Route::controller(UserController::class)->middleware('auth')->group(function () {
     Route::middleware('only_admin')->group(function () {
         Route::get('/users', 'index');
-        Route::get('/users/create', 'create');
-        Route::post('/users/create', 'store');
-        Route::delete('/users/{slug}', 'destroy');
+        Route::get('/user/create', 'create');
+        Route::post('/user/create', 'store');
+        Route::delete('/user/{slug}', 'destroy');
     });
 });
 
 Route::controller(ItemController::class)->middleware('auth')->group(function () {
     Route::middleware('only_admin')->group(function () {
         Route::get('/items', 'index');
-        Route::get('/items/create', 'create');
-        Route::post('/items/create', 'store');
-        Route::delete('/items/{slug}', 'destroy');
+        Route::get('/item/create', 'create');
+        Route::post('/item/create', 'store');
+        Route::delete('/item/{slug}', 'destroy');
     });
 });
 
