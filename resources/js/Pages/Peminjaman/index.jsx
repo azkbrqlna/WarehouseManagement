@@ -4,7 +4,7 @@ import { InputLeftAddon, Input, InputGroup } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import CardProduct from "@/Components/Fragments/CardProduct";
 
-const Peminjaman = () => {
+const Peminjaman = ({ items }) => {
     return (
         <>
             <Head title="Peminjaman" />
@@ -27,7 +27,8 @@ const Peminjaman = () => {
                 </section>
                 <section className="mt-10 w-full grid grid-cols-5 px-10">
                     <div className="flex justify-center col-span-5 gap-20">
-                        <CardProduct />
+                        {items.length > 0 &&
+                            items.map((item) => <CardProduct src={item.cover} name={item.name} />)}
                     </div>
                 </section>
             </div>
