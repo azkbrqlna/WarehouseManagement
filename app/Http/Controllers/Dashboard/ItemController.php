@@ -7,6 +7,7 @@ use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use File;
 
 class ItemController extends Controller
 {
@@ -35,7 +36,8 @@ class ItemController extends Controller
             $newName = $request->name . '-' . now()->timestamp . '.' . $extension;
             $request->file('file')->storeAs('cover', $newName);
             $request['cover'] = $newName;
-        };
+        }
+        ;
 
         Item::create($request->all());
         return redirect('items/create')->with('success', 'Berhasil menambah barang!');
@@ -44,7 +46,7 @@ class ItemController extends Controller
     public function destroy($slug)
     {
         $item = Item::whereSlug($slug)->first();
-        Storage::delete($item->cover);
+        Storage::delete('cover/'.$item->cover);
         $item->delete();
         return redirect()->back()->with('success', 'Berhasil menghapus barang!');
     }
