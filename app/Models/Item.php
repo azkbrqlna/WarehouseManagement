@@ -24,4 +24,8 @@ class Item extends Model
         'cover',
         'amount'
     ];
+
+    protected $casts = [
+        'status' => 'boolean',
+    ];
 }

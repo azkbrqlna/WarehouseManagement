@@ -17,7 +17,6 @@ import {
 import { Link, useForm } from "@inertiajs/react";
 import { Minus, Plus, Trash } from "@phosphor-icons/react";
 import React from "react";
-import { useState } from "react";
 
 export default function BarangPage({ items }) {
     const toast = useToast();
@@ -50,7 +49,21 @@ export default function BarangPage({ items }) {
 
     const handleSwitch = () => {
         setData({ status: !data.status });
-        post("items");
+        console.log(data.status);
+        post("item/create", {
+            onSuccess: () => {
+                toast({
+                    title: "Barang Tersedia",
+                    status: "success",
+                });
+            },
+            onError: () => {
+                toast({
+                    title: "Barang Tidak Tersedia",
+                    status: "error",
+                });
+            },
+        });
     };
     return (
         <>

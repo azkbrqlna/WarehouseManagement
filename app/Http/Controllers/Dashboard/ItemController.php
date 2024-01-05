@@ -28,7 +28,8 @@ class ItemController extends Controller
         $request->validate([
             'name' => 'required|string',
             'amount' => 'required|numeric',
-            'file' => 'required|image|mimes:jpeg, png, jpg, gif|max:2048'
+            'file' => 'required|image|mimes:jpeg, png, jpg, gif|max:2048',
+            'status' => 'required|boolean'
         ]);
         // Ini untuh tambah gambar
         if ($request->file("file")) {
