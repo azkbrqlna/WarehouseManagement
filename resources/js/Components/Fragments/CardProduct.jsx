@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge, Button, CloseButton, Text, Textarea } from "@chakra-ui/react";
 
-const CardProduct = () => {
+const CardProduct = ({ name, src }) => {
     const [isInfoOpen, setInfoOpen] = useState(false);
 
     const handleButtonClick = () => {
@@ -11,13 +11,13 @@ const CardProduct = () => {
 
     return (
         <>
-            <button
+            <Button
                 className="bg-white overflow-hidden rounded-lg gap-5 flex flex-col w-80 relative group"
                 onClick={handleButtonClick}
             >
                 <div className="w-full h-60 overflow-hidden flex justify-center">
                     <motion.img
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFp-aBNfpgaNhFQlSHpGHEUAfm6VrV3uyNtA&usqp=CAU"
+                        src={src}
                         alt=""
                         className="group-hover:scale-125 transition-all duration-200 ease-out"
                         initial={{ opacity: 1 }}
@@ -33,13 +33,13 @@ const CardProduct = () => {
                         >
                             <div className="bg-gradient-to-t from-neutral-700">
                                 <h1 className="font-bold text-2xl text-left text-white px-3 py-2">
-                                    Bola
+                                    {name}
                                 </h1>
                             </div>
                         </motion.div>
                     </AnimatePresence>
                 </div>
-            </button>
+            </Button>
             <AnimatePresence>
                 {isInfoOpen && (
                     <motion.div
@@ -60,10 +60,10 @@ const CardProduct = () => {
                         </div>
                         <div className="px-5">
                             <div className="w-full h-40 overflow-hidden flex justify-center">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFp-aBNfpgaNhFQlSHpGHEUAfm6VrV3uyNtA&usqp=CAU" />
+                                <img src={src} />
                             </div>
                             <Text fontWeight="bold" fontSize="x-large">
-                                Bola{" "}
+                                {name}{" "}
                                 <Badge colorScheme="green">Available</Badge>
                             </Text>
                             <Badge fontSize="medium">16.00 - 18.00</Badge>

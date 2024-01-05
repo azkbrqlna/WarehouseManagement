@@ -39,13 +39,13 @@ export default function BarangPage({ items }) {
             destroy(`/items/${slug}`, {
                 onSuccess: () => {
                     toast({
-                        title: "Berhasil menghapus user",
+                        title: "Berhasil menghapus barang",
                         status: "success",
                     });
                 },
                 onError: () => {
                     toast({
-                        title: "Gagal menghapus user",
+                        title: "Gagal menghapus barang",
                         status: "error",
                     });
                 },
