@@ -12,14 +12,18 @@ import {
     Th,
     Thead,
     Tr,
+    useToast
 } from "@chakra-ui/react";
-import { Link } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import { Minus, Plus, Trash } from "@phosphor-icons/react";
 import React from "react";
 import { useState } from "react";
 
 export default function BarangPage({ items }) {
     const [count, setCount] = useState(0);
+    const { delete: destroy } = useForm()
+
+    const toast = useToast()
 
     const handlePlus = () => {
         setCount(count + 1);
@@ -29,6 +33,23 @@ export default function BarangPage({ items }) {
         if (count !== 0) {
             setCount(count - 1);
         }
+    };
+    const handleClick = (slug) => {
+        confirm("Ingin menghapus barang ini?"),
+            destroy(`/items/${slug}`, {
+                onSuccess: () => {
+                    toast({
+                        title: "Berhasil menghapus user",
+                        status: "success",
+                    });
+                },
+                onError: () => {
+                    toast({
+                        title: "Gagal menghapus user",
+                        status: "error",
+                    });
+                },
+            });
     };
     return (
         <>
@@ -65,11 +86,9 @@ export default function BarangPage({ items }) {
                                         <Switch size="lg" />
                                     </Td>
                                     <Td>{item.amount}</Td>
-                                    <Td>
+                                    <Td textAlign="center">
                                         <Button
-                                            onClick={() =>
-                                                handleClick(item.slug)
-                                            }
+                                            onClick={() => handleClick(item.slug)}
                                             bgColor="red.500"
                                             textColor="white"
                                             _hover={{
