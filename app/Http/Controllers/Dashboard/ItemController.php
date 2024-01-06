@@ -29,7 +29,6 @@ class ItemController extends Controller
             'name' => 'required|string',
             'amount' => 'required|numeric',
             'file' => 'required|image|mimes:jpeg, png, jpg, gif|max:2048',
-            'status' => 'required|boolean'
         ]);
         // Ini untuh tambah gambar
         if ($request->file("file")) {
@@ -47,8 +46,13 @@ class ItemController extends Controller
     public function destroy($slug)
     {
         $item = Item::whereSlug($slug)->first();
-        Storage::delete('cover/'.$item->cover);
+        Storage::delete('cover/' . $item->cover);
         $item->delete();
         return redirect()->back()->with('success', 'Berhasil menghapus barang!');
+    }
+
+    public function update(Request $request)
+    {
+        dd($request->all());
     }
 }

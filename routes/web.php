@@ -51,6 +51,7 @@ Route::controller(ItemController::class)->middleware('auth')->group(function () 
         Route::get('/item/create', 'create');
         Route::post('/item/create', 'store');
         Route::delete('/item/{slug}', 'destroy');
+        Route::patch('/items/{id}', 'update');
     });
 });
 

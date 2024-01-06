@@ -42,15 +42,15 @@ export default function BarangPage({ items }) {
         delete: destroy,
         data,
         setData,
-        post,
+        patch,
     } = useForm({
         status: false,
     });
 
-    const handleSwitch = () => {
+    const handleSwitch = (id) => {
         setData({ status: !data.status });
         console.log(data.status);
-        post("item/create", {
+        patch(`items/${id}`, {
             onSuccess: () => {
                 toast({
                     title: "Barang Tersedia",
@@ -100,7 +100,7 @@ export default function BarangPage({ items }) {
                                         <Switch
                                             size="lg"
                                             isChecked={!data.status}
-                                            onChange={handleSwitch}
+                                            onChange={()=>handleSwitch(item.id)}
                                         />
                                     </Td>
                                     <Td>{item.amount}</Td>
