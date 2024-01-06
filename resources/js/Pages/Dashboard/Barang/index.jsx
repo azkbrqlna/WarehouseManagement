@@ -44,26 +44,15 @@ export default function BarangPage({ items }) {
         setData,
         patch,
     } = useForm({
-        status: false,
+        status: items.map((i) => i.status),
     });
+
+    console.log("data db", data.status);
 
     const handleSwitch = (id) => {
         setData({ status: !data.status });
-        console.log(data.status);
-        patch(`items/${id}`, {
-            onSuccess: () => {
-                toast({
-                    title: "Barang Tersedia",
-                    status: "success",
-                });
-            },
-            onError: () => {
-                toast({
-                    title: "Barang Tidak Tersedia",
-                    status: "error",
-                });
-            },
-        });
+        console.log("data swicth", data.status);
+        patch(`items/${id}`);
     };
     return (
         <>
@@ -99,8 +88,10 @@ export default function BarangPage({ items }) {
                                     <Td>
                                         <Switch
                                             size="lg"
-                                            isChecked={!data.status}
-                                            onChange={()=>handleSwitch(item.id)}
+                                            isChecked={data.status[item.id]}
+                                            onChange={() =>
+                                                handleSwitch(item.id)
+                                            }
                                         />
                                     </Td>
                                     <Td>{item.amount}</Td>

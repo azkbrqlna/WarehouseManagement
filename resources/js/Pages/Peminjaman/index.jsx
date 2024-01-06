@@ -28,7 +28,18 @@ const Peminjaman = ({ items }) => {
                 <section className="mt-10 w-full grid grid-cols-5 px-10">
                     <div className="flex justify-center col-span-5 gap-20">
                         {items.length > 0 &&
-                            items.map((item) => <CardProduct src={item.cover} name={item.name} />)}
+                            items.map((item) => (
+                                <CardProduct
+                                    src={item.cover}
+                                    name={item.name}
+                                    colorScheme={item.status ? "green" : "red"}
+                                    status={
+                                        item.status
+                                            ? "Available"
+                                            : "Not Available"
+                                    }
+                                />
+                            ))}
                     </div>
                 </section>
             </div>
