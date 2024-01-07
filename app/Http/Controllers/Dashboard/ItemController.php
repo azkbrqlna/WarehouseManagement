@@ -30,14 +30,13 @@ class ItemController extends Controller
             'amount' => 'required|numeric',
             'file' => 'required|image|mimes:jpeg, png, jpg, gif|max:2048',
         ]);
-        // Ini untuh tambah gambar
+        // Ini untuk tambah gambar
         if ($request->file("file")) {
             $extension = $request->file("file")->getClientOriginalExtension();
             $newName = $request->name . '-' . now()->timestamp . '.' . $extension;
             $request->file('file')->storeAs('cover', $newName);
             $request['cover'] = $newName;
-        }
-        ;
+        };
 
         Item::create($request->all());
         return redirect('item/create')->with('success', 'Berhasil menambah barang!');
@@ -53,6 +52,11 @@ class ItemController extends Controller
 
     public function update(Request $request)
     {
-        dd($request->all());
+        $request->validate([
+            'status' => 'required|boolean',
+        ]);
+        $item = Item::findOrFail($request->id);
+        $item->status = $request->status;
+        $item->save();
     }
 }

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge, Button, CloseButton, Text, Textarea } from "@chakra-ui/react";
 
-const CardProduct = ({ name, src }) => {
+const CardProduct = ({ name, src, colorScheme, status }) => {
     const [isInfoOpen, setInfoOpen] = useState(false);
 
     const handleButtonClick = () => {
@@ -64,7 +64,7 @@ const CardProduct = ({ name, src }) => {
                             </div>
                             <Text fontWeight="bold" fontSize="x-large">
                                 {name}{" "}
-                                <Badge colorScheme="green">Available</Badge>
+                                <Badge colorScheme={colorScheme}>{status}</Badge>
                             </Text>
                             <Badge fontSize="medium">16.00 - 18.00</Badge>
                             <Text>Masukan Alasan Peminjaman:</Text>
