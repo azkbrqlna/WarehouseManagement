@@ -26,6 +26,7 @@ export default function CreateUserDashboard() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log("Data yang dikirim", data);
         post("/user/create");
     };
 
@@ -82,6 +83,7 @@ export default function CreateUserDashboard() {
                                     setData("role", e.target.value)
                                 }
                             >
+                                <option value="">Role</option>
                                 <option value="admin">Admin</option>
                                 <option value="user">User</option>
                             </Select>
