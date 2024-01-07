@@ -18,11 +18,11 @@ class RoleSeeder extends Seeder
         Role::truncate();
         Schema::enableForeignKeyConstraints();
 
-        $data = [
+        $role = [
             'admin', 'user'
         ];
 
-        foreach ($data as $value) {
+        foreach ($role as $value) {
             Role::insert([
                 'name' => $value
             ]);

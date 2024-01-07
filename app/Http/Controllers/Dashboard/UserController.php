@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -18,7 +19,9 @@ class UserController extends Controller
 
     public function create()
     {
-        return Inertia::render('Dashboard/Users/create');
+        return Inertia::render('Dashboard/Users/create',[
+            'role' => Role::all()
+        ]);
     }
 
     public function store(Request $request)
