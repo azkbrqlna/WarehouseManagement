@@ -6,10 +6,9 @@ use App\Http\Controllers\Dashboard\ItemController;
 use App\Http\Controllers\Dashboard\RequestController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PengembalianController;
 use App\Http\Controllers\RentalController;
+use App\Http\Controllers\ReturnController;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +23,6 @@ use Inertia\Inertia;
 Route::middleware(['auth'])->group(function () {
     Route::get("/dashboard", [DashboardController::class, "index"])->middleware('only_admin');
     Route::get("/home", [HomeController::class, "index"]);
-    Route::get('/pengembalian', [PengembalianController::class, 'index']);
 });
 
 Route::controller(AuthController::class)->middleware('guest')->group(function () {
@@ -56,6 +54,10 @@ Route::controller(ItemController::class)->middleware('auth')->group(function () 
 
 Route::controller(RentalController::class)->middleware('auth')->group(function () {
     Route::get('/peminjaman', 'index');
+});
+
+Route::controller(ReturnController::class)->middleware('auth')->group(function () {
+    Route::get('/pengembalian', 'index');
 });
 
 Route::controller(RequestController::class)->middleware('auth')->group(function () {
