@@ -26,7 +26,6 @@ export default function CreateUserDashboard() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Data yang dikirim", data);
         post("/user/create");
     };
 
