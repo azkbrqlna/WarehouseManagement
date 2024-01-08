@@ -14,12 +14,12 @@ import {
     Tr,
     useToast,
 } from "@chakra-ui/react";
-import { Link, useForm } from "@inertiajs/react";
-import { Minus, Plus, Trash } from "@phosphor-icons/react";
-import React from "react";
+import { Link, useForm, router } from "@inertiajs/react";
+import { Plus, Trash } from "@phosphor-icons/react";
 
 export default function BarangPage({ items }) {
     const toast = useToast();
+    const { delete: destroy } = useForm();
 
     const handleClick = (slug) => {
         confirm("Ingin menghapus barang ini?"),
@@ -38,21 +38,9 @@ export default function BarangPage({ items }) {
                 },
             });
     };
-    const {
-        delete: destroy,
-        data,
-        setData,
-        patch,
-    } = useForm({
-        status: items.map((i) => i.status),
-    });
 
-    console.log("data db", data.status);
-
-    const handleSwitch = (id) => {
-        setData({ status: !data.status });
-        console.log("data swicth", data.status);
-        patch(`items/${id}`);
+    const handleSwitch = (id, status) => {
+        router.patch(`items/${id}`, { status });
     };
     return (
         <>
@@ -88,9 +76,12 @@ export default function BarangPage({ items }) {
                                     <Td>
                                         <Switch
                                             size="lg"
-                                            isChecked={data.status[item.id]}
+                                            isChecked={item.status}
                                             onChange={() =>
-                                                handleSwitch(item.id)
+                                                handleSwitch(
+                                                    item.id,
+                                                    !item.status
+                                                )
                                             }
                                         />
                                     </Td>

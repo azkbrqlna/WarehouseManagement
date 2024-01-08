@@ -61,6 +61,7 @@ const UsersPage = ({ users }) => {
                                 <Th>Username</Th>
                                 <Th>NIS</Th>
                                 <Th>Kelas</Th>
+                                <Th>Role</Th>
                                 <Th w="20px" textAlign="center">
                                     Action
                                 </Th>
@@ -73,6 +74,7 @@ const UsersPage = ({ users }) => {
                                     <Td>{user.username}</Td>
                                     <Td>{user.nis}</Td>
                                     <Td>{user.kelas}</Td>
+                                    <Td>{user.role}</Td>
                                     <Td textAlign="center">
                                         <Button
                                             onClick={() => handleClick(user.slug)}

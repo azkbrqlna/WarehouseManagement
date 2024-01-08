@@ -28,9 +28,9 @@ class UserController extends Controller
             'password' => 'required|string',
             'kelas' => 'required|string',
             'nis' => 'required|unique:users|numeric|digits_between:9,10',
-            'role' => 'required|string|in:admin,user',
+            'role' => 'required|in:1,2',
         ]);
-        if ($validated == true) {
+        if ($validated) {
             $user = User::create($request->all());
             return redirect('/users')->with('success', 'Berhasil membuat user!');
         }
