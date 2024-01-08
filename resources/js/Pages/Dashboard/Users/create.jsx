@@ -18,7 +18,7 @@ export default function CreateUserDashboard() {
         username: "",
         kelas: "",
         nis: "",
-        role: "",
+        role_id: "",
         password: "",
     });
 
@@ -77,10 +77,10 @@ export default function CreateUserDashboard() {
                         <FormControl>
                             <FormLabel>Role</FormLabel>
                             <Select
-                                name="role"
-                                value={data.role}
+                                name="role_id"
+                                value={data.role_id}
                                 onChange={(e) =>
-                                    setData("role", parseInt(e.target.value))
+                                    setData("role_id", e.target.value)
                                 }
                             >
                                 <option value="">Role</option>
