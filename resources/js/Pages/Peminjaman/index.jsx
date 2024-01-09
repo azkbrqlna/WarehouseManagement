@@ -5,6 +5,7 @@ import { SearchIcon } from "@chakra-ui/icons";
 import CardProduct from "@/Components/Fragments/CardProduct";
 
 const Peminjaman = ({ items }) => {
+    console.log(items);
     return (
         <>
             <Head title="Peminjaman" />
@@ -30,6 +31,7 @@ const Peminjaman = ({ items }) => {
                         {items.length > 0 &&
                             items.map((item) => (
                                 <CardProduct
+                                    key={item.id}
                                     src={item.cover}
                                     name={item.name}
                                     colorScheme={item.status ? "green" : "red"}

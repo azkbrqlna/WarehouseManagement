@@ -62,6 +62,8 @@ Route::controller(ReturnController::class)->middleware('auth')->group(function (
 
 Route::controller(RequestController::class)->middleware('auth')->group(function () {
     Route::get('/request', 'index');
+    Route::get('/request/rental', 'rental');
+    Route::get('/request/return', 'return');
 });
 
 // Route::middleware('auth')->group(function () {
