@@ -53,21 +53,11 @@ Route::controller(ItemController::class)->middleware('auth')->group(function () 
 });
 
 Route::controller(RentalController::class)->middleware('auth')->group(function () {
-    Route::get('/peminjaman', 'index');
+    Route::get('/peminjaman', 'indexUser');
+    Route::post('/peminjaman', 'storeUser');
+    Route::get('/request', 'indexAdmin')->middleware('only_admin');
 });
 
 Route::controller(ReturnController::class)->middleware('auth')->group(function () {
     Route::get('/pengembalian', 'index');
 });
-
-Route::controller(RequestController::class)->middleware('auth')->group(function () {
-    Route::get('/request', 'index');
-});
-
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
-
-// require __DIR__.'/auth.php';
