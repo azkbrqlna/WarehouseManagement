@@ -31,6 +31,7 @@ class UserController extends Controller
             'nis' => 'required|unique:users|numeric|digits_between:9,10',
             'role_id' => 'required|numeric',
         ]);
+
         if ($validated == true) {
             $user = new User();
             $user->username = $request->username;
@@ -48,7 +49,6 @@ class UserController extends Controller
     {
         $user = User::where('slug', $slug)->first();
         $user->delete();
-        return redirect()->back()->with('success','Berhasil menghapus user!');
+        return redirect()->back()->with('success', 'Berhasil menghapus user!');
     }
-
 }

@@ -9,12 +9,22 @@ use Inertia\Inertia;
 
 class RentalController extends Controller
 {
-
+    //for admin
     public function indexAdmin(){
-        return Inertia::render("Dashboard/Request/index",[
-            'rentals' => Rental::all(),
+        return Inertia::render("Dashboard/Request/index");
+    }
+
+    public function rentalAdmin(){
+        return Inertia::render("Dashboard/Request/Rental/index",[
+            'rentals' => Rental::with('item')->get(),
         ]);
     }
+    
+    public function returnAdmin(){
+        return Inertia::render("Dashboard/Request/Return/index");
+    }
+
+    //for user
     public function indexUser()
     {
         return Inertia::render("Peminjaman/index", [
@@ -28,5 +38,6 @@ class RentalController extends Controller
         ]);
 
         Rental::create($request->all());
+        return redirect()->back()->with('success','Berhasil meminjam barang!');
     }
 }

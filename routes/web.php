@@ -3,7 +3,6 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\ItemController;
-use App\Http\Controllers\Dashboard\RequestController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RentalController;
@@ -56,8 +55,11 @@ Route::controller(RentalController::class)->middleware('auth')->group(function (
     Route::get('/peminjaman', 'indexUser');
     Route::post('/peminjaman', 'storeUser');
     Route::get('/request', 'indexAdmin')->middleware('only_admin');
+    Route::get('/request/rental', 'rentalAdmin');
+    Route::get('/request/return', 'returnAdmin');
 });
 
 Route::controller(ReturnController::class)->middleware('auth')->group(function () {
     Route::get('/pengembalian', 'index');
 });
+
