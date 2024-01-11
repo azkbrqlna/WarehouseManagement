@@ -34,7 +34,8 @@ class ItemController extends Controller
         if ($request->file("file")) {
             $extension = $request->file("file")->getClientOriginalExtension();
             $newName = $request->name . '-' . now()->timestamp . '.' . $extension;
-            $request->file('file')->storeAs('cover', $newName);
+
+            Storage::disk('public')->putFileAs('cover', $request->file("file"), $newName);
             $request['cover'] = $newName;
         };
 
