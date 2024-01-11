@@ -11,35 +11,27 @@ const CardProduct = ({ name, src, colorScheme, status }) => {
 
     return (
         <>
-            <button
-                className="bg-white overflow-hidden rounded-lg gap-5 flex flex-col w-80 relative group"
-                onClick={handleButtonClick}
-            >
-                <div className="w-full h-60 overflow-hidden flex justify-center">
-                    <motion.img
+            <div className="flex flex-col gap-3 rounded-lg w-full h-auto md:w-[15rem] shadow-md shadow-zinc-950 bg-white p-3">
+                <button className="w-full flex justify-center group overflow-hidden cursor-zoom-in">
+                    <img
                         src={src}
-                        alt=""
-                        className="group-hover:scale-125 transition-all duration-200 ease-out"
-                        initial={{ opacity: 1 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
+                        className="w-40 object-cover group-hover:scale-125 transition-all duration-300 ease-in-out"
                     />
-                    <AnimatePresence>
-                        <motion.div
-                            className="absolute -bottom-10 left-0 w-full group-hover:bottom-0 transition-all duration-200 ease-in-out"
-                            initial={{ opacity: 1, y: 50 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: 50 }}
-                        >
-                            <div className="bg-gradient-to-t from-neutral-700">
-                                <h1 className="font-bold text-2xl text-left text-white px-3 py-2">
-                                    {name}
-                                </h1>
-                            </div>
-                        </motion.div>
-                    </AnimatePresence>
+                </button>
+                <div className="flex justify-between text-2xl font-bold pt-6">
+                    <div>
+                        <Text>{name}</Text>
+                        <div>
+                            <Badge borderRadius="5px" colorScheme={colorScheme}>
+                                {status}
+                            </Badge>
+                        </div>
+                    </div>
+                    <Button onClick={handleButtonClick} alignSelf="center">
+                        Detail
+                    </Button>
                 </div>
-            </button>
+            </div>
             <AnimatePresence>
                 {isInfoOpen && (
                     <motion.div
@@ -58,20 +50,23 @@ const CardProduct = ({ name, src, colorScheme, status }) => {
                                 onClick={handleButtonClick}
                             />
                         </div>
-                        <div className="px-5">
-                            <div className="w-full h-40 overflow-hidden flex justify-center">
+                        <div className="px-5 md:flex block">
+                            <div className="w-full md:w-1/3 h-60 overflow-hidden flex justify-center">
                                 <img src={src} />
                             </div>
-                            <Text fontWeight="bold" fontSize="x-large">
-                                {name}{" "}
-                                <Badge colorScheme={colorScheme}>{status}</Badge>
-                            </Text>
-                            <Badge fontSize="medium">16.00 - 18.00</Badge>
-                            <Text>Masukan Alasan Peminjaman:</Text>
-                            <Textarea />
-                            <Button mt="10px" colorScheme="blue">
-                                Submit
-                            </Button>
+                            <div className="w-full md:w-2/3">
+                                <Text fontWeight="bold" fontSize="x-large">
+                                    {name}{" "}
+                                    <Badge colorScheme={colorScheme}>
+                                        {status}
+                                    </Badge>
+                                </Text>
+                                <Text>Masukan Alasan Peminjaman:</Text>
+                                <Textarea />
+                                <Button mt="10px" colorScheme="blue">
+                                    Submit
+                                </Button>
+                            </div>
                         </div>
                     </motion.div>
                 )}

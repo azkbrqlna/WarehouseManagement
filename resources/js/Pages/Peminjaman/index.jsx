@@ -3,6 +3,7 @@ import Navbar from "@/Layouts/Navbar";
 import { InputLeftAddon, Input, InputGroup } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import CardProduct from "@/Components/Fragments/CardProduct";
+import Bola from "../../../asset/bola.jpg";
 
 const Peminjaman = ({ items }) => {
     console.log(items);
@@ -32,7 +33,7 @@ const Peminjaman = ({ items }) => {
                             items.map((item) => (
                                 <CardProduct
                                     key={item.id}
-                                    src={`/storage/cover/${item.cover}`}
+                                    src={Bola}
                                     name={item.name}
                                     colorScheme={item.status ? "green" : "red"}
                                     status={
