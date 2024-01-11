@@ -32,7 +32,7 @@ const Peminjaman = ({ items }) => {
                             items.map((item) => (
                                 <CardProduct
                                     key={item.id}
-                                    src={item.cover}
+                                    src={`/storage/cover/${item.cover}`}
                                     name={item.name}
                                     colorScheme={item.status ? "green" : "red"}
                                     status={

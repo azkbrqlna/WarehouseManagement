@@ -11,7 +11,7 @@ const CardProduct = ({ name, src, colorScheme, status }) => {
 
     return (
         <>
-            <Button
+            <button
                 className="bg-white overflow-hidden rounded-lg gap-5 flex flex-col w-80 relative group"
                 onClick={handleButtonClick}
             >
@@ -39,7 +39,7 @@ const CardProduct = ({ name, src, colorScheme, status }) => {
                         </motion.div>
                     </AnimatePresence>
                 </div>
-            </Button>
+            </button>
             <AnimatePresence>
                 {isInfoOpen && (
                     <motion.div
