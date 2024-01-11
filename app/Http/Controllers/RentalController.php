@@ -38,6 +38,6 @@ class RentalController extends Controller
         ]);
 
         Rental::create($request->all());
-        return redirect()->back()->with('success','Berhasil meminjam barang!');
+        return redirect()->back()->with('success','Tunggu Admin menyetujui!');
     }
 }
