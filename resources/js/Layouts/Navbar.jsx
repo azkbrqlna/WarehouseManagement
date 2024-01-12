@@ -46,9 +46,10 @@ const Navbar = () => {
     const onLogOut = () => {
         router.visit("/logout");
     };
+
     return (
         <>
-            <nav className="w-full mb-10 py-5 px-5 md:px-12 flex justify-between">
+            <nav className="w-full py-5 px-5 md:px-12 flex justify-between transition-all duration-300">
                 <div className="hidden md:block">
                     <a href="https://smkn7semarang.sch.id/">
                         <img className="w-14 md:w-20" src={LogoSMK} />
