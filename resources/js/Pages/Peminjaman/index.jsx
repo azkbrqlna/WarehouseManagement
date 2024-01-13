@@ -18,16 +18,11 @@ const Peminjaman = ({ items }) => {
         reason: "",
     });
 
-    const handleSubmit = (itemData) => {
+    const handleSubmit = (itemID) => {
         post("/peminjaman", {
+            user_id: auth.user.id,
+            item_id: itemID,
             reason: data.reason,
-            user: auth.user.username,
-            item: itemData,
-        });
-        console.log({
-            reason: data.reason,
-            user: auth.user.username,
-            item: itemData,
         });
     };
 
@@ -64,6 +59,7 @@ const Peminjaman = ({ items }) => {
                             items.map((item) => (
                                 <CardProduct
                                     key={item.id}
+                                    itemID={item.id}
                                     src={`/storage/cover/${item.cover}`}
                                     itemName={item.name}
                                     colorScheme={item.status ? "green" : "red"}

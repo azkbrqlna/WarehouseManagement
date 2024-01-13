@@ -4,6 +4,7 @@ import { Badge, Button, CloseButton, Text, Textarea } from "@chakra-ui/react";
 
 const CardProduct = ({
     itemName,
+    itemID,
     src,
     colorScheme,
     status,
@@ -20,7 +21,7 @@ const CardProduct = ({
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        clickSubmitPeminjaman(itemName);
+        clickSubmitPeminjaman(itemID);
     };
 
     return (
