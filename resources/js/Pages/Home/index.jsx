@@ -5,6 +5,8 @@ import WaveHomeTitle from "../../../asset/wave-home-title.svg";
 import WaveHomeVisi from "../../../asset/wave-home-rules.svg";
 import { Rules, ListStyle, Misi } from "@/Components/Fragments/ListStyle";
 import Navbar from "@/Layouts/Navbar";
+import Headroom from "react-headroom";
+import { useState } from "react";
 
 const HomePage = () => {
     const handleClickScrollRules = () => {
@@ -14,6 +16,12 @@ const HomePage = () => {
         }
     };
 
+    const [isBorder, setBorder] = useState(false);
+    const borderChange = () => {
+        setBorder(window.scrollY > 110 ? true : false);
+    };
+    window.addEventListener("scroll", borderChange);
+
     return (
         <>
             <Head title="Home" />
@@ -22,7 +30,11 @@ const HomePage = () => {
                     <div className="hidden md:block absolute bottom-0 right-0 left-0 pointer-events-none">
                         <img src={WaveHomeTitle} />
                     </div>
-                    <Navbar />
+                    <Headroom>
+                        <div className={`bg-zinc-800 z-10 ${isBorder ? "shadow-lg border-b border-zinc-900" : ""}`}>
+                            <Navbar />
+                        </div>
+                    </Headroom>
                     <div className="flex flex-col px-5 md:px-40 md:flex-row gap-10">
                         <div className="flex flex-col gap-10 md:w-3/4">
                             <h2 className="uppercase text-3xl text-center md:text-start font-bold text-zinc-400">
@@ -81,7 +93,10 @@ const HomePage = () => {
                                 </p>
                             </div>
                         </div>
-                        <div className="h-full flex justify-center bg-zinc-400 w-full" id="visimisi">
+                        <div
+                            className="h-full flex justify-center bg-zinc-400 w-full"
+                            id="visimisi"
+                        >
                             <div className="flex flex-col justify-center items-center gap-5 w-1/2 text-zinc-800">
                                 <h1 className="text-3xl font-bold">Misi</h1>
                                 <ListStyle items={Misi} />

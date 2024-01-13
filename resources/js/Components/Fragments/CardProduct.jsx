@@ -2,11 +2,25 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge, Button, CloseButton, Text, Textarea } from "@chakra-ui/react";
 
-const CardProduct = ({ name, src, colorScheme, status }) => {
+const CardProduct = ({
+    itemName,
+    src,
+    colorScheme,
+    status,
+    clickSubmitPeminjaman,
+    onChange,
+    name,
+    value,
+}) => {
     const [isInfoOpen, setInfoOpen] = useState(false);
 
     const handleButtonClick = () => {
         setInfoOpen(!isInfoOpen);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        clickSubmitPeminjaman(itemName);
     };
 
     return (
@@ -20,7 +34,7 @@ const CardProduct = ({ name, src, colorScheme, status }) => {
                 </button>
                 <div className="flex justify-between text-2xl font-bold pt-6">
                     <div>
-                        <Text>{name}</Text>
+                        <Text>{itemName}</Text>
                         <div>
                             <Badge borderRadius="5px" colorScheme={colorScheme}>
                                 {status}
@@ -54,19 +68,30 @@ const CardProduct = ({ name, src, colorScheme, status }) => {
                             <div className="w-full md:w-1/3 h-60 overflow-hidden flex justify-center">
                                 <img src={src} />
                             </div>
-                            <div className="w-full md:w-2/3">
+                            <form
+                                onSubmit={handleSubmit}
+                                className="w-full md:w-2/3"
+                            >
                                 <Text fontWeight="bold" fontSize="x-large">
-                                    {name}{" "}
+                                    {itemName}{" "}
                                     <Badge colorScheme={colorScheme}>
                                         {status}
                                     </Badge>
                                 </Text>
                                 <Text>Masukan Alasan Peminjaman:</Text>
-                                <Textarea />
-                                <Button mt="10px" colorScheme="blue">
+                                <Textarea
+                                    onChange={onChange}
+                                    name={name}
+                                    value={value}
+                                />
+                                <Button
+                                    mt="10px"
+                                    colorScheme="blue"
+                                    type="submit"
+                                >
                                     Submit
                                 </Button>
-                            </div>
+                            </form>
                         </div>
                     </motion.div>
                 )}

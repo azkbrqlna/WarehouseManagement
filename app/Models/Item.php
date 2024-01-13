@@ -19,6 +19,11 @@ class Item extends Model
         ];
     }
 
+    public function rentals()
+    {
+        return $this->hasMany(Rental::class);
+    }
+
     protected $fillable = [
         'name',
         'cover',

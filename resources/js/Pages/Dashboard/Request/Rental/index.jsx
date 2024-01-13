@@ -12,19 +12,22 @@ import {
     useDisclosure,
 } from "@chakra-ui/react";
 import { ArrowDownIcon } from "@chakra-ui/icons";
-import { request } from "@/Components/Fragments/ListStyle";
 import Dashboardlayout from "@/Layouts/DashboardLayout";
 import { Link } from "@inertiajs/react";
 
-const RequestPage = () => {
-    const requestDisclosure = request.map((item, index) => {
+const RequestPage = ({ rentals, rental_data }) => {
+    const tekan = () => {
+        console.log("isi rental_data", rental_data);
+        console.log("isi rentals", rentals);
+    };
+    const requestDisclosure = rentals.map((rental, index) => {
         const { isOpen, onToggle } = useDisclosure();
         return (
             <Tr key={index}>
-                <Td>{item.id}</Td>
-                <Td>{item.username}</Td>
-                <Td>{item.nis}</Td>
-                <Td>{item.kelas}</Td>
+                <Td>{rental.id}</Td>
+                <Td>{rental.user.username}</Td>
+                <Td>{rental.user.nis}</Td>
+                <Td>{rental.user.kelas}</Td>
                 <Td>
                     <Button onClick={onToggle}>
                         <ArrowDownIcon />
@@ -43,15 +46,11 @@ const RequestPage = () => {
                             gap="10px"
                         >
                             <div className="flex justify-between">
-                                <h1 className="text-xl font-bold">Bola</h1>
-                                <span className="px-2 py-1 rounded-md bg-gray-400">
-                                    15.00 - 18.00
-                                </span>
+                                <h1 className="text-xl font-bold">
+                                    {rental.item.name}
+                                </h1>
                             </div>
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Nostrum, fugit?
-                            </p>
+                            <p>{rental.reason}</p>
                         </Box>
                     </Collapse>
                 </Td>
@@ -94,6 +93,9 @@ const RequestPage = () => {
                         <Tbody>{requestDisclosure}</Tbody>
                     </Table>
                 </div>
+                <button onClick={tekan} className="py-3 px-2 bg-sky-50">
+                    tekan
+                </button>
             </Dashboardlayout>
         </>
     );
