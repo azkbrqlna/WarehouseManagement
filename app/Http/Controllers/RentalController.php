@@ -37,7 +37,11 @@ class RentalController extends Controller
             'reason' => 'required'
         ]);
 
-        Rental::create($request->all());
+        Rental::create([
+            'user_id' => auth()->id(),
+            'item_id' => $request->item_id,
+            'reason' => $request->reason
+        ]);
         return redirect()->back()->with('success','Tunggu Admin menyetujui!');
     }
 }
