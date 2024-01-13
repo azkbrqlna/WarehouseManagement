@@ -24,6 +24,13 @@ const Peminjaman = ({ items }) => {
             item_id: itemID,
             reason: data.reason,
         });
+
+        console.log("/peminjaman",{
+            user_id: auth.user.id,
+            item_id: itemID,
+            reason: data.reason,
+        });
+        
     };
 
     return (

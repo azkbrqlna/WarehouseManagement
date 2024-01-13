@@ -37,11 +37,9 @@ class RentalController extends Controller
 
     public function storeUser(Request $request)
     {
-
         $this->validate($request, [
-            'reason' => 'required',
+            'reason' => 'required|string',
         ]);
-
         Rental::create([
             'user_id' => auth()->id(),  
             'item_id' => $request->item_id,
