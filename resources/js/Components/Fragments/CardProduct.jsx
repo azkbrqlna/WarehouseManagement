@@ -22,6 +22,7 @@ const CardProduct = ({
     const handleSubmit = (e) => {
         e.preventDefault();
         clickSubmitPeminjaman(itemID);
+        setInfoOpen(!isInfoOpen);
     };
 
     return (

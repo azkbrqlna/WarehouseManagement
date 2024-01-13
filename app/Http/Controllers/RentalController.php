@@ -38,15 +38,19 @@ class RentalController extends Controller
     public function storeUser(Request $request)
     {
         $request->validate([
-            'user_id' => 'required',
-            'item_id' => 'required',
             'reason' => 'required',
+            'item_id' => 'required',
+            'user_id' => 'required',
         ]);
-        Rental::create([
+
+        $requestData = [
             'user_id' => auth()->id(),
             'item_id' => $request->item_id,
             'reason' => $request->reason,
-        ]);
+        ];
+
+        Rental::create($requestData);
+        dd($requestData);
         return redirect()->back()->with('success', 'Tunggu Admin menyetujui!');
     }
 }

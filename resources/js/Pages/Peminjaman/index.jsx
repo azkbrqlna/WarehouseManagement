@@ -20,42 +20,25 @@ const Peminjaman = ({ items }) => {
         reason: "",
     });
 
-    const handleSubmit = (itemID) => {
-        post(
-            "/peminjaman",
-            {
+    const handleSubmit = async (itemID) => {
+        try {
+            await post("/peminjaman", {
                 user_id: auth.user.id,
                 item_id: itemID,
                 reason: data.reason,
-            },
-            {
-                onSuccess: () => {
-                    reset();
-                    toast({
-                        title: "Tunggu admin menyetujui request",
-                        status: "success",
-                    });
-                },
-                onError: () => {
-                    toast({
-                        title: "Gagal meminjam barang",
-                        status: "error",
-                    });
-                },
-            }
-        );
-        console.log("Submit Data:", {
-            user_id: auth.user.id,
-            item_id: itemID,
-            reason: data.reason,
-        });
+            });
+            toast({
+                title: "Peminjaman berhasil",
+                status: "success",
+            });
+        } catch (error) {
+            console.error(error);
 
-        console.log("/peminjaman",{
-            user_id: auth.user.id,
-            item_id: itemID,
-            reason: data.reason,
-        });
-        
+            toast({
+                title: "Gagal meminjam barang",
+                status: "error",
+            });
+        }
     };
 
     return (
