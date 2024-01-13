@@ -15,9 +15,8 @@ import { ArrowDownIcon } from "@chakra-ui/icons";
 import Dashboardlayout from "@/Layouts/DashboardLayout";
 import { Link } from "@inertiajs/react";
 
-const RequestPage = ({ rentals, rental_data }) => {
+const RequestPage = ({ rentals }) => {
     const tekan = () => {
-        console.log("isi rental_data", rental_data);
         console.log("isi rentals", rentals);
     };
     const requestDisclosure = rentals.map((rental, index) => {

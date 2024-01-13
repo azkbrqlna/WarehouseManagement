@@ -5,10 +5,12 @@ import { SearchIcon } from "@chakra-ui/icons";
 import CardProduct from "@/Components/Fragments/CardProduct";
 import { useState } from "react";
 import Headroom from "react-headroom";
+import { useToast } from "@chakra-ui/react";
 
 const Peminjaman = ({ items }) => {
     const { auth } = usePage().props;
     const [isBorder, setBorder] = useState(false);
+    const toast = useToast();
     const borderChange = () => {
         setBorder(window.scrollY > 110 ? true : false);
     };
@@ -19,7 +21,30 @@ const Peminjaman = ({ items }) => {
     });
 
     const handleSubmit = (itemID) => {
-        post("/peminjaman", {
+        post(
+            "/peminjaman",
+            {
+                user_id: auth.user.id,
+                item_id: itemID,
+                reason: data.reason,
+            },
+            {
+                onSuccess: () => {
+                    reset();
+                    toast({
+                        title: "Tunggu admin menyetujui request",
+                        status: "success",
+                    });
+                },
+                onError: () => {
+                    toast({
+                        title: "Gagal meminjam barang",
+                        status: "error",
+                    });
+                },
+            }
+        );
+        console.log("Submit Data:", {
             user_id: auth.user.id,
             item_id: itemID,
             reason: data.reason,
