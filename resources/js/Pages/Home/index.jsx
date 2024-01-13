@@ -31,7 +31,7 @@ const HomePage = () => {
                         <img src={WaveHomeTitle} />
                     </div>
                     <Headroom>
-                        <div className={`bg-zinc-800 z-10 ${isBorder ? "border-b-2 border-zinc-500" : ""}`}>
+                        <div className={`bg-zinc-800 z-10 ${isBorder ? "shadow-lg border-b border-zinc-900" : ""}`}>
                             <Navbar />
                         </div>
                     </Headroom>

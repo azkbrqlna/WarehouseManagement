@@ -1,4 +1,4 @@
-import { Head, useForm } from "@inertiajs/react";
+import { Head, useForm, usePage } from "@inertiajs/react";
 import Navbar from "@/Layouts/Navbar";
 import { InputLeftAddon, Input, InputGroup } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
@@ -7,19 +7,30 @@ import { useState } from "react";
 import Headroom from "react-headroom";
 
 const Peminjaman = ({ items }) => {
+    const { auth } = usePage().props;
     const [isBorder, setBorder] = useState(false);
     const borderChange = () => {
         setBorder(window.scrollY > 110 ? true : false);
     };
     window.addEventListener("scroll", borderChange);
 
-    const { post } = useForm({
+    const { post, data, setData } = useForm({
         reason: "",
     });
 
-    const handleSubmit = () => {
-        post("/peminjaman");
+    const handleSubmit = (itemData) => {
+        post("/peminjaman", {
+            reason: data.reason,
+            user: auth.user.username,
+            item: itemData,
+        });
+        // console.log({
+        //     reason: data.reason,
+        //     user: auth.user.username,
+        //     item: itemData,
+        // });
     };
+
     return (
         <>
             <Head title="Peminjaman" />
@@ -54,7 +65,7 @@ const Peminjaman = ({ items }) => {
                                 <CardProduct
                                     key={item.id}
                                     src={`/storage/cover/${item.cover}`}
-                                    name={item.name}
+                                    itemName={item.name}
                                     colorScheme={item.status ? "green" : "red"}
                                     status={
                                         item.status
@@ -62,6 +73,10 @@ const Peminjaman = ({ items }) => {
                                             : "Not Available"
                                     }
                                     clickSubmitPeminjaman={handleSubmit}
+                                    onChange={(e) =>
+                                        setData("reason", e.target.value)
+                                    }
+                                    value={data.reason}
                                 />
                             ))}
                     </div>

@@ -10,17 +10,21 @@ use Inertia\Inertia;
 class RentalController extends Controller
 {
     //for admin
-    public function indexAdmin(){
+    public function indexAdmin()
+    {
         return Inertia::render("Dashboard/Request/index");
     }
 
-    public function rentalAdmin(){
-        return Inertia::render("Dashboard/Request/Rental/index",[
-            'rentals' => Rental::with('item')->get(),
+    public function rentalAdmin()
+    {
+        return Inertia::render("Dashboard/Request/Rental/index", [
+            'rentals' => Rental::with(['item', 'user'])->get(),
+            'rental_data' => request()->all()
         ]);
     }
-    
-    public function returnAdmin(){
+
+    public function returnAdmin()
+    {
         return Inertia::render("Dashboard/Request/Return/index");
     }
 
@@ -32,12 +36,13 @@ class RentalController extends Controller
         ]);
     }
 
-    public function storeUser(Request $request){
+    public function storeUser(Request $request)
+    {
         $this->validate($request, [
             'reason' => 'required'
         ]);
 
         Rental::create($request->all());
-        return redirect()->back()->with('success','Berhasil meminjam barang!');
+        return redirect()->back()->with('success', 'Berhasil meminjam barang!');
     }
 }
