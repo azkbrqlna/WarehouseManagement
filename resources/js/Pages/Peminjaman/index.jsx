@@ -18,18 +18,28 @@ const Peminjaman = ({ items }) => {
 
     const { post, data, setData } = useForm({
         reason: "",
+        item_id: null,
+        user_id: null,
     });
 
     const handleSubmit = async (itemID) => {
         try {
+            setData("item_id", itemID);
+            setData("user_id", auth.user.id);
+
             await post("/peminjaman", {
-                user_id: auth.user.id,
-                item_id: itemID,
-                reason: data.reason,
-            });
-            toast({
-                title: "Peminjaman berhasil",
-                status: "success",
+                onSuccess: () => {
+                    toast({
+                        title: "Peminjaman berhasil",
+                        status: "success",
+                    });
+                },
+                onError: () => {
+                    toast({
+                        title: "Gagal meminjam barang",
+                        status: "error",
+                    });
+                },
             });
         } catch (error) {
             console.error(error);

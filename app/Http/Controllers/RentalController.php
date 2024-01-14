@@ -50,7 +50,6 @@ class RentalController extends Controller
         ];
 
         Rental::create($requestData);
-        dd($requestData);
         return redirect()->back()->with('success', 'Tunggu Admin menyetujui!');
     }
 }

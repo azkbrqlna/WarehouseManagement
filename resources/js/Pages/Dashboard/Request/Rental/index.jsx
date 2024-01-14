@@ -16,9 +16,6 @@ import Dashboardlayout from "@/Layouts/DashboardLayout";
 import { Link } from "@inertiajs/react";
 
 const RequestPage = ({ rentals }) => {
-    const tekan = () => {
-        console.log("isi rentals", rentals);
-    };
     const requestDisclosure = rentals.map((rental, index) => {
         const { isOpen, onToggle } = useDisclosure();
         return (
@@ -92,9 +89,6 @@ const RequestPage = ({ rentals }) => {
                         <Tbody>{requestDisclosure}</Tbody>
                     </Table>
                 </div>
-                <button onClick={tekan} className="py-3 px-2 bg-sky-50">
-                    tekan
-                </button>
             </Dashboardlayout>
         </>
     );

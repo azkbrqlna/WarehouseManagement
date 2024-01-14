@@ -14,15 +14,14 @@ const CardProduct = ({
     value,
 }) => {
     const [isInfoOpen, setInfoOpen] = useState(false);
-
     const handleButtonClick = () => {
         setInfoOpen(!isInfoOpen);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log("ItemID:", itemID);
         clickSubmitPeminjaman(itemID);
-        setInfoOpen(!isInfoOpen);
     };
 
     return (
