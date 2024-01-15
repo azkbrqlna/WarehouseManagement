@@ -23,6 +23,14 @@ class RentalController extends Controller
         ]);
     }
 
+    public function acceptRental(Request $request){
+        $rental = Rental::find($request->id);
+        $rental->status = true;
+        $rental->save();
+
+        return redirect()->back()->with('success','Request accepted!');
+    }
+
     public function rejectRental(Request $request){
         $rental = Rental::find($request->id);
         $rental->delete();
