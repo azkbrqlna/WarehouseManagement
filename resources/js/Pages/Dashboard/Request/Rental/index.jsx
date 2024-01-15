@@ -20,7 +20,7 @@ const RequestPage = ({ rentals }) => {
         const { isOpen, onToggle } = useDisclosure();
         return (
             <Tr key={index}>
-                <Td>{rental.id}</Td>
+                <Td>{index + 1}</Td>
                 <Td>{rental.user.username}</Td>
                 <Td>{rental.user.nis}</Td>
                 <Td>{rental.user.kelas}</Td>
@@ -76,7 +76,7 @@ const RequestPage = ({ rentals }) => {
                     <Table>
                         <Thead>
                             <Tr>
-                                <Th>ID</Th>
+                                <Th>Nomer</Th>
                                 <Th>Username</Th>
                                 <Th>NIS</Th>
                                 <Th>Kelas</Th>

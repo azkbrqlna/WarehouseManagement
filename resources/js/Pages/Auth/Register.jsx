@@ -1,4 +1,4 @@
-import { Head, Link, router } from "@inertiajs/react";
+import { Head, Link, router, usePage } from "@inertiajs/react";
 import Wave from "react-wavify";
 import {
     FormControl,
@@ -6,42 +6,41 @@ import {
     Input,
     VStack,
     Button,
+    FormLabel,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import Alert from "@/Components/Fragments/Alert";
 
 const Register = () => {
+    const { flash } = usePage().props;
     const formik = useFormik({
         initialValues: {
             username: "",
             nis: "",
             kelas: "",
             password: "",
-            confirmpassword: ""
+            confirmpassword: "",
         },
         onSubmit: () => {
             const { username, nis, kelas, password } = formik.values;
-            
+
             router.post("/register", {
                 username,
                 nis,
                 kelas,
                 password,
             });
-
-            formik.setFieldValue("username", "");
-            formik.setFieldValue("nis", "");
-            formik.setFieldValue("kelas", "");
-            formik.setFieldValue("password", "");
-            formik.setFieldValue("confirmpassword", "");
         },
         validationSchema: yup.object().shape({
             username: yup.string().required("Username is required"),
             nis: yup.string().required("NIS is required").min(10).max(10),
             kelas: yup.string().required("Class is required"),
             password: yup.string().required("Password is required"),
-            confirmpassword: yup.string().oneOf([yup.ref("password"), null], "Passwords must match")
-        })
+            confirmpassword: yup
+                .string()
+                .oneOf([yup.ref("password"), null], "Passwords must match"),
+        }),
     });
 
     const handleFormInput = (event) => {
@@ -51,8 +50,8 @@ const Register = () => {
         <>
             <Head title="Register" />
             <div className="bg-zinc-800 font-fira text-slate-50">
-                <div className="w-full h-screen flex justify-center 2xl:items-center pt-10 2xl:pt-0 px-10">
-                    <div className="h-2/3">
+                <div className="w-full h-screen flex justify-center 2xl:items-center pt-10 sm:pt-20 2xl:pt-0 px-10">
+                    <div className="h-2/3 md:w-2/5">
                         <div className="w-full">
                             <h1 className="font-bold text-4xl 2xl:text-6xl mb-2">
                                 Registrasi Akun
@@ -62,54 +61,154 @@ const Register = () => {
                             </p>
                             <form onSubmit={formik.handleSubmit}>
                                 <VStack spacing={5}>
-                                    <FormControl isInvalid={formik.errors.username}>
-                                        <Input
-                                            onChange={handleFormInput}
-                                            value={formik.values.username}
-                                            name="username"
-                                            placeholder="Username"
+                                    <div className="flex flex-col gap-2 md:flex-row md:gap-4 2xl:block w-full">
+                                        <div className="flex flex-col gap-4 md:gap-2">
+                                            <FormControl
+                                                isInvalid={
+                                                    formik.errors.username &&
+                                                    formik.touched.username
+                                                }
+                                            >
+                                                <FormLabel
+                                                    display={{
+                                                        base: "none",
+                                                        md: "block",
+                                                    }}
+                                                >
+                                                    Username
+                                                </FormLabel>
+                                                <Input
+                                                    onChange={handleFormInput}
+                                                    value={
+                                                        formik.values.username
+                                                    }
+                                                    name="username"
+                                                    placeholder="Username"
+                                                />
+                                                <FormErrorMessage>
+                                                    {formik.errors.username}
+                                                </FormErrorMessage>
+                                            </FormControl>
+                                            <FormControl
+                                                isInvalid={
+                                                    formik.errors.nis &&
+                                                    formik.touched.nis
+                                                }
+                                            >
+                                                <FormLabel
+                                                    display={{
+                                                        base: "none",
+                                                        md: "block",
+                                                    }}
+                                                >
+                                                    NIS
+                                                </FormLabel>
+                                                <Input
+                                                    onChange={handleFormInput}
+                                                    value={formik.values.nis}
+                                                    name="nis"
+                                                    placeholder="NIS"
+                                                />
+                                                <FormErrorMessage>
+                                                    {formik.errors.nis}
+                                                </FormErrorMessage>
+                                            </FormControl>
+                                            <FormControl
+                                                isInvalid={
+                                                    formik.errors.kelas &&
+                                                    formik.touched.kelas
+                                                }
+                                            >
+                                                <FormLabel
+                                                    display={{
+                                                        base: "none",
+                                                        md: "block",
+                                                    }}
+                                                >
+                                                    Kelas
+                                                </FormLabel>
+                                                <Input
+                                                    onChange={handleFormInput}
+                                                    value={formik.values.kelas}
+                                                    name="kelas"
+                                                    placeholder="Kelas"
+                                                />
+                                                <FormErrorMessage>
+                                                    {formik.errors.kelas}
+                                                </FormErrorMessage>
+                                            </FormControl>
+                                        </div>
+                                        <div className="flex flex-col gap-4 md:gap-2">
+                                            <FormControl
+                                                isInvalid={
+                                                    formik.errors.password &&
+                                                    formik.touched.password
+                                                }
+                                            >
+                                                <FormLabel
+                                                    display={{
+                                                        base: "none",
+                                                        md: "block",
+                                                    }}
+                                                >
+                                                    Password
+                                                </FormLabel>
+                                                <Input
+                                                    onChange={handleFormInput}
+                                                    value={
+                                                        formik.values.password
+                                                    }
+                                                    name="password"
+                                                    type="password"
+                                                    placeholder="Password"
+                                                />
+                                                <FormErrorMessage>
+                                                    {formik.errors.password}
+                                                </FormErrorMessage>
+                                            </FormControl>
+                                            <FormControl
+                                                isInvalid={
+                                                    formik.errors
+                                                        .confirmpassword &&
+                                                    formik.touched
+                                                        .confirmpassword
+                                                }
+                                            >
+                                                <FormLabel
+                                                    display={{
+                                                        base: "none",
+                                                        md: "block",
+                                                    }}
+                                                >
+                                                    Confirm Password
+                                                </FormLabel>
+                                                <Input
+                                                    name="confirmpassword"
+                                                    type="password"
+                                                    placeholder="Confirm Password"
+                                                />
+                                                <FormErrorMessage>
+                                                    {
+                                                        formik.errors
+                                                            .confirmpassword
+                                                    }
+                                                </FormErrorMessage>
+                                            </FormControl>
+                                        </div>
+                                    </div>
+                                    <Button
+                                        type="submit"
+                                        colorScheme="gray"
+                                        w="full"
+                                    >
+                                        Register
+                                    </Button>
+                                    {flash.error && (
+                                        <Alert
+                                            variant="error"
+                                            message={flash.error}
                                         />
-                                        <FormErrorMessage>{formik.errors.username}</FormErrorMessage>
-                                    </FormControl>
-
-                                    <FormControl isInvalid={formik.errors.nis}>
-                                        <Input
-                                            onChange={handleFormInput}
-                                            value={formik.values.nis}
-                                            name="nis"
-                                            placeholder="NIS"
-                                        />
-                                        <FormErrorMessage>{formik.errors.nis}</FormErrorMessage>
-                                    </FormControl>
-                                    <FormControl isInvalid={formik.errors.kelas}>
-                                        <Input
-                                            onChange={handleFormInput}
-                                            value={formik.values.kelas}
-                                            name="kelas"
-                                            placeholder="Kelas"
-                                        />
-                                        <FormErrorMessage>{formik.errors.kelas}</FormErrorMessage>
-                                    </FormControl>
-
-                                    <FormControl isInvalid={formik.errors.password}>
-                                        <Input
-                                            onChange={handleFormInput}
-                                            value={formik.values.password}
-                                            name="password"
-                                            type="password"
-                                            placeholder="Password"
-                                        />
-                                        <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
-                                    </FormControl>
-                                    <FormControl isInvalid={formik.errors.confirmpassword}>
-                                        <Input
-                                            name="confirmpassword"
-                                            type="password"
-                                            placeholder="Confirm Password"
-                                        />
-                                        <FormErrorMessage>{formik.errors.confirmpassword}</FormErrorMessage>
-                                    </FormControl>
-                                    <Button type="submit" colorScheme="gray" w="full">Register</Button>
+                                    )}
                                 </VStack>
                                 <p className="text-center text-base mt-5">
                                     Sudah punya akun?{" "}
