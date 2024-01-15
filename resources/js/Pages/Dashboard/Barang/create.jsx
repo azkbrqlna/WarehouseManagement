@@ -12,10 +12,11 @@ import {
     NumberDecrementStepper,
     Box,
     useToast,
-    Text
+    Text,
 } from "@chakra-ui/react";
 import DashboardLayout from "@/Layouts/DashboardLayout";
 import { Head, useForm } from "@inertiajs/react";
+import { Upload } from "@phosphor-icons/react/dist/ssr";
 
 export default function CreateBarangDashboard() {
     const toast = useToast();
@@ -32,21 +33,21 @@ export default function CreateBarangDashboard() {
                 reset();
                 toast({
                     title: "Berhasil menambahkan barang",
-                    status: "success"
-                })
+                    status: "success",
+                });
             },
             onError: () => {
                 toast({
                     title: "Gagal menambahkan barang",
-                    status: "error"
-                })
-            }
+                    status: "error",
+                });
+            },
         });
     };
 
     const handleChange = (e) => {
-        setData(e.target.name, e.target.value)
-    }
+        setData(e.target.name, e.target.value);
+    };
     return (
         <>
             <Head title="Create Barang" />
@@ -67,7 +68,10 @@ export default function CreateBarangDashboard() {
                         </FormControl>
                         <FormControl>
                             <FormLabel>Jumlah Barang</FormLabel>
-                            <NumberInput value={data.amount} onChange={handleChange}>
+                            <NumberInput
+                                value={data.amount}
+                                onChange={handleChange}
+                            >
                                 <NumberInputField
                                     name="amount"
                                     value={data.amount}
@@ -77,12 +81,22 @@ export default function CreateBarangDashboard() {
                         </FormControl>
                         <FormControl>
                             <FormLabel>Masukan Gambar Barang</FormLabel>
-                            <Input
-                                type="file"
-                                name="file"
-                                value=""
-                                onChange={(e) => setData('file', e.target.files[0])}
-                            />
+                            <FormLabel htmlFor="file-upload" w='30px' h='15px'>
+                                <Input
+                                    id="file-upload"
+                                    type="file"
+                                    name="file"
+                                    opacity={0}
+                                    zIndex={1}
+                                    onChange={(e) =>
+                                        setData("file", e.target.files[0])
+                                    }
+                                />
+                                <div className="relative bottom-9 left-1 border border-black rounded-md p-1 w-14 flex justify-center items-center">
+                                    <Upload size={30} />
+                                </div>
+                            </FormLabel>
+                            <p className="mt-10 font-medium">Pilih gambar!</p>
                         </FormControl>
                         {data.file && (
                             <Box mt="4">
