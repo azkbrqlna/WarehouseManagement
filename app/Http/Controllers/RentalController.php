@@ -40,7 +40,6 @@ class RentalController extends Controller
         $request->validate([
             'reason' => 'required',
             'item_id' => 'required',
-            'user_id' => 'required',
         ]);
 
         $requestData = [

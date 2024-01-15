@@ -1,54 +1,52 @@
-import { Head, useForm, usePage } from "@inertiajs/react";
+import { Head, router, useForm } from "@inertiajs/react";
 import Navbar from "@/Layouts/Navbar";
-import { InputLeftAddon, Input, InputGroup } from "@chakra-ui/react";
+import { InputLeftAddon, Input, InputGroup, useToast } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import CardProduct from "@/Components/Fragments/CardProduct";
 import { useState } from "react";
 import Headroom from "react-headroom";
-import { useToast } from "@chakra-ui/react";
 
 const Peminjaman = ({ items }) => {
-    const { auth } = usePage().props;
     const [isBorder, setBorder] = useState(false);
+    const [isLoading, setLoading] = useState(false);
     const toast = useToast();
+
     const borderChange = () => {
         setBorder(window.scrollY > 110 ? true : false);
     };
     window.addEventListener("scroll", borderChange);
 
-    const { post, data, setData } = useForm({
+    const { data, setData } = useForm({
         reason: "",
-        item_id: null,
-        user_id: null,
     });
 
-    const handleSubmit = async (itemID) => {
-        try {
-            setData("item_id", itemID);
-            setData("user_id", auth.user.id);
-
-            await post("/peminjaman", {
+    const handleSubmit = async (e, itemID) => {
+        e.preventDefault();
+        setLoading(true);
+        router.post(
+            "/peminjaman",
+            {
+                reason: data.reason,
+                item_id: itemID,
+            },
+            {
                 onSuccess: () => {
                     toast({
-                        title: "Peminjaman berhasil",
+                        title: "Berhasil melakukan request barang",
                         status: "success",
                     });
                 },
                 onError: () => {
                     toast({
-                        title: "Gagal meminjam barang",
+                        title: "Gagal melakukan request barang",
                         status: "error",
                     });
                 },
-            });
-        } catch (error) {
-            console.error(error);
-
-            toast({
-                title: "Gagal meminjam barang",
-                status: "error",
-            });
-        }
+                onFinish: () => {
+                    setLoading(false);
+                },
+            }
+        );
     };
 
     return (
@@ -93,11 +91,14 @@ const Peminjaman = ({ items }) => {
                                             ? "Available"
                                             : "Not Available"
                                     }
-                                    clickSubmitPeminjaman={handleSubmit}
+                                    clickSubmitPeminjaman={(e) =>
+                                        handleSubmit(e, item.id)
+                                    }
                                     onChange={(e) =>
                                         setData("reason", e.target.value)
                                     }
                                     value={data.reason}
+                                    isLoading={isLoading}
                                 />
                             ))}
                     </div>
