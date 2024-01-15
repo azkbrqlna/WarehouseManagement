@@ -19,7 +19,14 @@ class RentalController extends Controller
     {
         return Inertia::render("Dashboard/Request/Rental/index", [
             'rentals' => Rental::with(['item', 'user'])->get(),
+            'rental_count' => Rental::count(),
         ]);
+    }
+
+    public function rejectRental(Request $request){
+        $rental = Rental::find($request->id);
+        $rental->delete();
+        return redirect()->back()->with('success','Request rejected!');
     }
 
     public function returnAdmin()
@@ -37,24 +44,14 @@ class RentalController extends Controller
 
     public function storeUser(Request $request)
     {
-        // $request->validate([
-        //     'reason' => 'required',
-        //     'item_id' => 'required',
-        //     'user_id' => 'required',
-        // ]);
-
-        // $requestData = [
-        //     'user_id' => auth()->id(),
-        //     'item_id' => $request->item_id,
-        //     'reason' => $request->reason,
-        // ];
-
-        // Rental::create($requestData);
-        // return redirect()->back()->with('success', 'Tunggu Admin menyetujui!');
-        dd([
+       $validated =$request->validate([
+            'reason' => 'required',
+        ]);
+        Rental::create([
             'user_id' => auth()->id(),
             'item_id' => $request->item_id,
             'reason' => $request->reason,
         ]);
+        return redirect('/peminjaman')->with('success', 'Tunggu Admin menyetujui!');
     }
 }

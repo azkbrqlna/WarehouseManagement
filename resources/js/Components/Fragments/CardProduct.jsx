@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Badge, Button, CloseButton, Text, Textarea } from "@chakra-ui/react";
+import { Badge, Button, CloseButton, Spinner, Text, Textarea } from "@chakra-ui/react";
 
 const CardProduct = ({
     itemName,
-    itemID,
     src,
     colorScheme,
     status,
@@ -12,16 +11,11 @@ const CardProduct = ({
     onChange,
     name,
     value,
+    isLoading
 }) => {
     const [isInfoOpen, setInfoOpen] = useState(false);
     const handleButtonClick = () => {
         setInfoOpen(!isInfoOpen);
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("ItemID:", itemID);
-        clickSubmitPeminjaman(itemID);
     };
 
     return (
@@ -70,7 +64,7 @@ const CardProduct = ({
                                 <img src={src} />
                             </div>
                             <form
-                                onSubmit={handleSubmit}
+                                onSubmit={clickSubmitPeminjaman}
                                 className="w-full md:w-2/3"
                             >
                                 <Text fontWeight="bold" fontSize="x-large">
@@ -90,7 +84,7 @@ const CardProduct = ({
                                     colorScheme="blue"
                                     type="submit"
                                 >
-                                    Submit
+                                    {isLoading ? <Spinner /> : "Submit"}
                                 </Button>
                             </form>
                         </div>

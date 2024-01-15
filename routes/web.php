@@ -54,9 +54,12 @@ Route::controller(ItemController::class)->middleware('auth')->group(function () 
 Route::controller(RentalController::class)->middleware('auth')->group(function () {
     Route::get('/peminjaman', 'indexUser');
     Route::post('/peminjaman', 'storeUser');
-    Route::get('/request', 'indexAdmin')->middleware('only_admin');
-    Route::get('/request/rental', 'rentalAdmin');
-    Route::get('/request/return', 'returnAdmin');
+    Route::middleware('only_admin')->group(function () {
+        Route::get('/request', 'indexAdmin');
+        Route::get('/request/rental', 'rentalAdmin');
+        Route::delete('/request/rental/{id}', 'rejectRental');
+        Route::get('/request/return', 'returnAdmin');
+    });
 });
 
 Route::controller(ReturnController::class)->middleware('auth')->group(function () {
