@@ -31,7 +31,4 @@ class Item extends Model
         'status',
     ];
 
-    protected $casts = [
-        'status' => 'boolean',
-    ];
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Models\Rental;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -12,29 +13,33 @@ class RentalController extends Controller
     //for admin
     public function indexAdmin()
     {
-        return Inertia::render("Dashboard/Request/index");
+        return Inertia::render("Dashboard/Request/index", [
+            'request' => Rental::where('status', true)->get()
+        ]);
     }
 
     public function rentalAdmin()
     {
         return Inertia::render("Dashboard/Request/Rental/index", [
-            'rentals' => Rental::with(['item', 'user'])->get(),
+            'rentals' => Rental::where('status', false)->with(['item', 'user'])->get(),
             'rental_count' => Rental::count(),
         ]);
     }
 
-    public function acceptRental(Request $request){
+    public function acceptRental(Request $request)
+    {
         $rental = Rental::find($request->id);
         $rental->status = true;
         $rental->save();
 
-        return redirect()->back()->with('success','Request accepted!');
+        return redirect()->back()->with('success', 'Request accepted!');
     }
 
-    public function rejectRental(Request $request){
+    public function rejectRental(Request $request)
+    {
         $rental = Rental::find($request->id);
         $rental->delete();
-        return redirect()->back()->with('success','Request rejected!');
+        return redirect()->back()->with('success', 'Request rejected!');
     }
 
     public function returnAdmin()
@@ -53,13 +58,18 @@ class RentalController extends Controller
 
     public function storeUser(Request $request)
     {
-       $request->validate([
+        $request['rent_date'] = Carbon::now()->toDateString();
+        $request['return_date'] = Carbon::now()->addDays(7)->toDateString();
+
+        $request->validate([
             'reason' => 'required',
         ]);
         Rental::create([
             'user_id' => auth()->id(),
             'item_id' => $request->item_id,
             'reason' => $request->reason,
+            'rent_date' => $request->rent_date,
+            'return_date' => $request->return_date,
         ]);
         return redirect('/peminjaman')->with('success', 'Tunggu Admin menyetujui!');
     }
