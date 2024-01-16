@@ -17,7 +17,7 @@ import {
 import { Link, useForm, router } from "@inertiajs/react";
 import { Plus, Trash } from "@phosphor-icons/react";
 
-export default function BarangPage({ items }) {
+export default function BarangPage({ items, flash }) {
     const toast = useToast();
     const { delete: destroy } = useForm();
 
@@ -26,7 +26,7 @@ export default function BarangPage({ items }) {
             destroy(`/item/${slug}`, {
                 onSuccess: () => {
                     toast({
-                        title: "Berhasil menghapus barang",
+                        title: flash.success,
                         status: "success",
                     });
                 },

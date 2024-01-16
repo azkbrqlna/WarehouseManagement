@@ -46,13 +46,14 @@ class RentalController extends Controller
     public function indexUser()
     {
         return Inertia::render("Peminjaman/index", [
-            'items' => Item::all()
+            'items' => Item::all(),
+            'rentals' => Rental::with(['item', 'user'])->get(),
         ]);
     }
 
     public function storeUser(Request $request)
     {
-       $validated =$request->validate([
+       $request->validate([
             'reason' => 'required',
         ]);
         Rental::create([

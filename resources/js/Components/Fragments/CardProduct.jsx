@@ -11,7 +11,8 @@ const CardProduct = ({
     onChange,
     name,
     value,
-    isLoading
+    isLoading,
+    notAvailable
 }) => {
     const [isInfoOpen, setInfoOpen] = useState(false);
     const handleButtonClick = () => {
@@ -20,14 +21,14 @@ const CardProduct = ({
 
     return (
         <>
-            <div className="flex flex-col gap-3 rounded-lg w-full h-auto md:w-[15rem] shadow-md shadow-zinc-950 bg-white p-3">
-                <button className="w-full flex justify-center group overflow-hidden cursor-zoom-in">
+            <div className="flex flex-col gap-3 rounded-lg w-full h-1/2 md:h-full md:w-[15rem] shadow-md shadow-zinc-950 bg-white p-3">
+                <div className="w-full flex justify-center group overflow-hidden cursor-zoom-in h-2/3">
                     <img
                         src={src}
                         className="w-40 object-cover group-hover:scale-125 transition-all duration-300 ease-in-out"
                     />
-                </button>
-                <div className="flex justify-between text-2xl font-bold pt-6">
+                </div>
+                <div className="flex justify-between text-2xl font-bold h-1/3">
                     <div>
                         <Text>{itemName}</Text>
                         <div>
@@ -83,6 +84,7 @@ const CardProduct = ({
                                     mt="10px"
                                     colorScheme="blue"
                                     type="submit"
+                                    isDisabled={!notAvailable}
                                 >
                                     {isLoading ? <Spinner /> : "Submit"}
                                 </Button>
