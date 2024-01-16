@@ -16,6 +16,7 @@ import {
     Tr,
     Td,
     Th,
+    filter,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import CardProduct from "@/Components/Fragments/CardProduct";
@@ -23,7 +24,7 @@ import { useState } from "react";
 import Headroom from "react-headroom";
 import { Bell } from "@phosphor-icons/react";
 
-const Peminjaman = ({ items, rentals }) => {
+const Peminjaman = ({ items, rentals, auth }) => {
     const [isBorder, setBorder] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const toast = useToast();
@@ -68,12 +69,14 @@ const Peminjaman = ({ items, rentals }) => {
 
     let acceptData = 1;
     const MenuAccept = rentals.map((rental, index) => {
-        return (
+        return auth.user.id === rental.user_id ? (
             <Tr key={rental.id}>
                 <Td>{index + 1}</Td>
                 <Td>{rental.item.name}</Td>
                 <Td>{rental.status ? "Peminjaman diterima" : "Pending..."}</Td>
             </Tr>
+        ) : (
+            ""
         );
     });
 
@@ -114,7 +117,7 @@ const Peminjaman = ({ items, rentals }) => {
                             <div className="relative right-3 z-10">
                                 <Bell size={32} color="#ffffff" />
                                 {rentals.map((rental) => {
-                                    return rental.status ? (
+                                    return (auth.user.id === rental.user_id) ? (
                                         <div
                                             className="rounded-full bg-white w-4 h-4 flex justify-center items-center absolute bottom-4 left-4"
                                             key={rental.id}
