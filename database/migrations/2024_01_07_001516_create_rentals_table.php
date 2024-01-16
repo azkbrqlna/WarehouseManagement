@@ -17,6 +17,9 @@ return new class extends Migration
             $table->foreignId('item_id')->constrained('items')->cascadeOnDelete();
             $table->string('reason');
             $table->boolean('status')->default(false);
+            $table->date('rent_date');
+            $table->date('return_date');
+            $table->date('actual_return_date')->nullable();
             $table->timestamps();
         });
     }
