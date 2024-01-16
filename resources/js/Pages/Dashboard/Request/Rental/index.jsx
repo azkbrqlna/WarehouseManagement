@@ -1,4 +1,4 @@
-import { ArrowLeft, Trash } from "@phosphor-icons/react";
+import { ArrowLeft, Check, Trash, X } from "@phosphor-icons/react";
 import {
     Box,
     Button,
@@ -13,19 +13,26 @@ import {
 } from "@chakra-ui/react";
 import { ArrowDownIcon } from "@chakra-ui/icons";
 import Dashboardlayout from "@/Layouts/DashboardLayout";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 
 const RequestPage = ({ rentals }) => {
+    const handleAccept = (id, status) => {
+        router.patch(`/request/rental/${id}`, { status });
+    }
+
+    const handleDeclined = (id, status) => {
+        router.patch(`/request/rental/${id}`, { status });
+    }
     const requestDisclosure = rentals.map((rental, index) => {
         const { isOpen, onToggle } = useDisclosure();
         return (
             <Tr key={index}>
-                <Td>{index + 1}</Td>
-                <Td>{rental.user.username}</Td>
-                <Td>{rental.user.nis}</Td>
-                <Td>{rental.user.kelas}</Td>
-                <Td>
-                    <Button onClick={onToggle}>
+                <Td textAlign="center">{index + 1}</Td>
+                <Td textAlign="center">{rental.user.username}</Td>
+                <Td textAlign="center">{rental.user.nis}</Td>
+                <Td textAlign="center">{rental.user.kelas}</Td>
+                <Td textAlign="center">
+                    <Button onClick={onToggle} w="100%">
                         <ArrowDownIcon />
                         Request
                     </Button>
@@ -40,15 +47,27 @@ const RequestPage = ({ rentals }) => {
                             display="flex"
                             flexDirection="column"
                             gap="10px"
+                            textAlign='left'
                         >
-                            <div className="flex justify-between">
-                                <h1 className="text-xl font-bold">
-                                    {rental.item.name}
-                                </h1>
-                            </div>
-                            <p>{rental.reason}</p>
+                            <h1 className="text-xl">
+                                Barang yang dipinjam: <span className="font-semibold">{rental.item.name}</span>
+                            </h1>
+                            <p className="text-lg">Alasan: <span className="font-medium">{rental.reason}</span></p>
                         </Box>
                     </Collapse>
+                </Td>
+                <Td textAlign="center">
+                    <Button
+                        bgColor="green.500"
+                        textColor="white"
+                        _hover={{
+                            background: "green.400",
+                        }}
+                        onClick={() => handleAccept(rental.id)}
+                    >
+                        <Check size={20} />
+                        Accept
+                    </Button>
                 </Td>
                 <Td textAlign="center">
                     <Button
@@ -57,9 +76,10 @@ const RequestPage = ({ rentals }) => {
                         _hover={{
                             background: "red.400",
                         }}
+                        onClick={() => handleDeclined(rental.id)}
                     >
-                        <Trash size={20} />
-                        Delete
+                        <X size={20} />
+                        Declined
                     </Button>
                 </Td>
             </Tr>
@@ -76,12 +96,22 @@ const RequestPage = ({ rentals }) => {
                     <Table>
                         <Thead>
                             <Tr>
-                                <Th>Nomer</Th>
-                                <Th>Username</Th>
-                                <Th>NIS</Th>
-                                <Th>Kelas</Th>
-                                <Th w="500px">Request</Th>
-                                <Th w="20px" textAlign="center">
+                                <Th w="5%" textAlign="center">
+                                    Nomer
+                                </Th>
+                                <Th w="18%" textAlign="center">
+                                    Username
+                                </Th>
+                                <Th w="10%" textAlign="center">
+                                    NIS
+                                </Th>
+                                <Th w="10%" textAlign="center">
+                                    Kelas
+                                </Th>
+                                <Th w="37%" textAlign="center">
+                                    Request
+                                </Th>
+                                <Th colSpan={2} textAlign="center">
                                     Action
                                 </Th>
                             </Tr>

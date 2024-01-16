@@ -1,12 +1,29 @@
 import { Head, router, useForm } from "@inertiajs/react";
 import Navbar from "@/Layouts/Navbar";
-import { InputLeftAddon, Input, InputGroup, useToast } from "@chakra-ui/react";
+import {
+    InputLeftAddon,
+    Input,
+    InputGroup,
+    useToast,
+    Menu,
+    MenuList,
+    MenuItem,
+    MenuButton,
+    Button,
+    Table,
+    Thead,
+    Tbody,
+    Tr,
+    Td,
+    Th,
+} from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import CardProduct from "@/Components/Fragments/CardProduct";
 import { useState } from "react";
 import Headroom from "react-headroom";
+import { Bell } from "@phosphor-icons/react";
 
-const Peminjaman = ({ items }) => {
+const Peminjaman = ({ items, rentals }) => {
     const [isBorder, setBorder] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const toast = useToast();
@@ -32,7 +49,7 @@ const Peminjaman = ({ items }) => {
             {
                 onSuccess: () => {
                     toast({
-                        title: "Berhasil melakukan request barang",
+                        title: "Tunggu Admin menyetujui!",
                         status: "success",
                     });
                 },
@@ -49,6 +66,17 @@ const Peminjaman = ({ items }) => {
         );
     };
 
+    let acceptData = 1;
+    const MenuAccept = rentals.map((rental, index) => {
+        return (
+            <Tr key={rental.id}>
+                <Td>{index + 1}</Td>
+                <Td>{rental.item.name}</Td>
+                <Td>{rental.status ? "Peminjaman diterima" : "Pending..."}</Td>
+            </Tr>
+        );
+    });
+
     return (
         <>
             <Head title="Peminjaman" />
@@ -63,7 +91,7 @@ const Peminjaman = ({ items }) => {
                         <Navbar />
                     </section>
                 </Headroom>
-                <section className="flex justify-center">
+                <section className="flex justify-center gap-2">
                     <div className="w-2/3 md:w-2/5">
                         <InputGroup>
                             <InputLeftAddon>
@@ -75,6 +103,47 @@ const Peminjaman = ({ items }) => {
                             />
                         </InputGroup>
                     </div>
+                    <Menu>
+                        <MenuButton
+                            as={Button}
+                            width="10px"
+                            bg="transparent"
+                            _active={{ bg: "transparent" }}
+                            _hover={{ bg: "transparent" }}
+                        >
+                            <div className="relative right-3 z-10">
+                                <Bell size={32} color="#ffffff" />
+                                {rentals.map((rental) => {
+                                    return rental.status ? (
+                                        <div
+                                            className="rounded-full bg-white w-4 h-4 flex justify-center items-center absolute bottom-4 left-4"
+                                            key={rental.id}
+                                        >
+                                            <p className="text-black text-xs">
+                                                {acceptData++}
+                                            </p>
+                                        </div>
+                                    ) : (
+                                        ""
+                                    );
+                                })}
+                            </div>
+                        </MenuButton>
+                        <MenuList>
+                            <MenuItem>
+                                <Table>
+                                    <Thead>
+                                        <Tr>
+                                            <Th>No.</Th>
+                                            <Th>Item</Th>
+                                            <Th>Keterangan</Th>
+                                        </Tr>
+                                    </Thead>
+                                    <Tbody>{MenuAccept}</Tbody>
+                                </Table>
+                            </MenuItem>
+                        </MenuList>
+                    </Menu>
                 </section>
                 <section className="mt-10 w-full grid grid-flow-row px-10">
                     <div className="flex flex-wrap justify-center col-span-5 gap-8 mb-96">
@@ -91,6 +160,7 @@ const Peminjaman = ({ items }) => {
                                             ? "Available"
                                             : "Not Available"
                                     }
+                                    notAvailable={item.status}
                                     clickSubmitPeminjaman={(e) =>
                                         handleSubmit(e, item.id)
                                     }

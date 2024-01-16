@@ -1,4 +1,4 @@
-import { Trash } from "@phosphor-icons/react";
+import { Check, X } from "@phosphor-icons/react";
 import {
     Box,
     Button,
@@ -22,14 +22,14 @@ const RequestPage = () => {
         const { isOpen, onToggle } = useDisclosure();
         return (
             <Tr key={index}>
-                <Td>{item.id}</Td>
-                <Td>{item.username}</Td>
-                <Td>{item.nis}</Td>
-                <Td>{item.kelas}</Td>
-                <Td>
+                <Td textAlign="center">{item.id}</Td>
+                <Td textAlign="center">{item.username}</Td>
+                <Td textAlign="center">{item.nis}</Td>
+                <Td textAlign="center">{item.kelas}</Td>
+                <Td textAlign="center">
                     <Button onClick={onToggle}>
                         <ArrowDownIcon />
-                        Request
+                        Pengembalian
                     </Button>
                     <Collapse in={isOpen} animateOpacity>
                         <Box
@@ -58,14 +58,26 @@ const RequestPage = () => {
                 </Td>
                 <Td textAlign="center">
                     <Button
+                        bgColor="green.500"
+                        textColor="white"
+                        _hover={{
+                            background: "green.400",
+                        }}
+                    >
+                        <Check size={20} />
+                        Accept
+                    </Button>
+                </Td>
+                <Td textAlign="center">
+                    <Button
                         bgColor="red.500"
                         textColor="white"
                         _hover={{
                             background: "red.400",
                         }}
                     >
-                        <Trash size={20} />
-                        Delete
+                        <X size={20} />
+                        Declined
                     </Button>
                 </Td>
             </Tr>
@@ -82,12 +94,22 @@ const RequestPage = () => {
                     <Table>
                         <Thead>
                             <Tr>
-                                <Th>ID</Th>
-                                <Th>Username</Th>
-                                <Th>NIS</Th>
-                                <Th>Kelas</Th>
-                                <Th w="500px">Request</Th>
-                                <Th w="20px" textAlign="center">
+                                <Th w="5%" textAlign="center">
+                                    Nomer
+                                </Th>
+                                <Th w="18%" textAlign="center">
+                                    Username
+                                </Th>
+                                <Th w="10%" textAlign="center">
+                                    NIS
+                                </Th>
+                                <Th w="10%" textAlign="center">
+                                    Kelas
+                                </Th>
+                                <Th w="37%" textAlign="center">
+                                    Pengembalian
+                                </Th>
+                                <Th colSpan={2} textAlign="center">
                                     Action
                                 </Th>
                             </Tr>

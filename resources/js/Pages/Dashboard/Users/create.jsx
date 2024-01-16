@@ -11,10 +11,9 @@ import {
     FormErrorMessage,
 } from "@chakra-ui/react";
 import DashboardLayout from "@/Layouts/DashboardLayout";
-import { Head, useForm, usePage } from "@inertiajs/react";
-import Alert from "@/Components/Fragments/Alert";
+import { Head, useForm } from "@inertiajs/react";
 
-export default function CreateUserDashboard({ flash }) {
+export default function CreateUserDashboard() {
     const toast = useToast();
     const { data, setData, post, errors } = useForm({
         username: "",
@@ -31,13 +30,13 @@ export default function CreateUserDashboard({ flash }) {
         post("/user/create", {
             onSuccess: () => {
                 toast({
-                    title: "Berhasil menambahkan user",
+                    title: 'Berhasil membuat user!',
                     status: "success",
                 });
             },
             onError: () => {
                 toast({
-                    title: "Gagal menambahkan user",
+                    title: 'Mohon cek lagi!',
                     status: "error",
                 });
             },

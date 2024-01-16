@@ -1,4 +1,4 @@
-import { Link, useForm } from "@inertiajs/react";
+import { Link, useForm, usePage } from "@inertiajs/react";
 import { Trash } from "@phosphor-icons/react";
 import { Plus } from "@phosphor-icons/react";
 import {
@@ -25,7 +25,7 @@ const UsersPage = ({ users }) => {
             destroy(`/user/${slug}`, {
                 onSuccess: () => {
                     toast({
-                        title: "Berhasil menghapus user",
+                        title: 'Berhasil menghapus user!',
                         status: "success",
                     });
                 },

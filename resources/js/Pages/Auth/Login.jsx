@@ -46,7 +46,7 @@ const FirstPage = () => {
             <Head title="Login" />
             <div className="bg-zinc-800 font-fira text-slate-50">
                 <div className="w-full h-screen flex justify-center 2xl:items-center pt-10 2xl:pt-0 px-10">
-                    <div className="h-2/3 md:w-2/5">
+                    <div className="md:w-[35%] 2xl:w-[30%]">
                         <div className="w-full">
                             <h1 className="font-bold text-4xl 2xl:text-6xl mb-2">
                                 Hai! Login Dulu Ya
@@ -114,6 +114,7 @@ const FirstPage = () => {
                                         type="submit"
                                         colorScheme="gray"
                                         w="full"
+                                        zIndex={1}
                                     >
                                         Login
                                     </Button>

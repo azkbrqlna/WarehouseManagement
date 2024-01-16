@@ -15,10 +15,11 @@ import {
     Text,
 } from "@chakra-ui/react";
 import DashboardLayout from "@/Layouts/DashboardLayout";
-import { Head, useForm } from "@inertiajs/react";
+import { Head, useForm, usePage } from "@inertiajs/react";
 import { Upload } from "@phosphor-icons/react/dist/ssr";
 
 export default function CreateBarangDashboard() {
+    const { flash } = usePage().props;
     const toast = useToast();
     const { data, setData, post, reset } = useForm({
         name: "",
@@ -32,7 +33,7 @@ export default function CreateBarangDashboard() {
             onSuccess: () => {
                 reset();
                 toast({
-                    title: "Berhasil menambahkan barang",
+                    title: flash.success,
                     status: "success",
                 });
             },
@@ -81,7 +82,7 @@ export default function CreateBarangDashboard() {
                         </FormControl>
                         <FormControl>
                             <FormLabel>Masukan Gambar Barang</FormLabel>
-                            <FormLabel htmlFor="file-upload" w='30px' h='15px'>
+                            <FormLabel htmlFor="file-upload" w="30px" h="15px">
                                 <Input
                                     id="file-upload"
                                     type="file"
