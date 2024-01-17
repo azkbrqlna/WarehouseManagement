@@ -11,6 +11,7 @@ import {
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Alert from "@/Components/Fragments/Alert";
+import BackgroundImage from "../../../asset/background-gudang.jpeg";
 
 const FirstPage = () => {
     const { flash } = usePage().props;
@@ -44,15 +45,24 @@ const FirstPage = () => {
     return (
         <>
             <Head title="Login" />
-            <div className="bg-zinc-800 font-fira text-slate-50">
-                <div className="w-full h-screen flex justify-center 2xl:items-center pt-10 2xl:pt-0 px-10">
+            <div
+                className="font-fira text-white"
+                style={{
+                    backgroundImage: `url(${BackgroundImage})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    height: "100vh",
+                }}
+            >
+                <div className="w-full h-screen flex justify-center items-center pt-10  px-10">
                     <div className="md:w-[35%] 2xl:w-[30%]">
-                        <div className="w-full">
+                        <div className="w-full p-5 rounded-lg backdrop-blur-lg border border-zinc-400 shadow-lg shadow-zinc-300">
                             <h1 className="font-bold text-4xl 2xl:text-6xl mb-2">
                                 Hai! Login Dulu Ya
                             </h1>
                             <p className="font-light text-lg mb-5 2xl:mb-10">
-                               Masukkan Nama, Nis, dan Password!
+                                Masukkan Nama, Nis, dan Password!
                             </p>
                             <form onSubmit={formik.handleSubmit}>
                                 <VStack spacing={3}>
@@ -68,6 +78,7 @@ const FirstPage = () => {
                                             value={formik.values.username}
                                             name="username"
                                             placeholder="Masukkan Username"
+                                            _placeholder={{ color: 'whiteAlpha.900' }}
                                         />
                                         <FormErrorMessage>
                                             {formik.errors.username}
@@ -86,6 +97,7 @@ const FirstPage = () => {
                                             value={formik.values.nis}
                                             name="nis"
                                             placeholder="Masukkan NIS"
+                                            _placeholder={{ color: 'whiteAlpha.900' }}
                                         />
                                         <FormErrorMessage>
                                             {formik.errors.nis}
@@ -105,6 +117,7 @@ const FirstPage = () => {
                                             name="password"
                                             type="password"
                                             placeholder="*****"
+                                            _placeholder={{ color: 'whiteAlpha.900' }}
                                         />
                                         <FormErrorMessage>
                                             {formik.errors.password}
@@ -113,8 +126,8 @@ const FirstPage = () => {
                                     <Button
                                         type="submit"
                                         colorScheme="gray"
+                                        _hover={{ bg: 'whiteAlpha.700',textColor: 'whiteAlpha.900' }}
                                         w="full"
-                                        zIndex={1}
                                     >
                                         Login
                                     </Button>
@@ -129,14 +142,14 @@ const FirstPage = () => {
                                     Belum punya akun?{" "}
                                     <Link
                                         href="/register"
-                                        className="font-bold underline hover:text-zinc-400 relative z-10"
+                                        className="font-bold hover:underline"
                                     >
                                         Sign Up
                                     </Link>
                                 </p>
                             </form>
                         </div>
-                        <div>
+                        {/* <div>
                             <div className="left-0 right-0 bottom-0 h-auto flex absolute">
                                 <Wave
                                     fill="#adb5bd"
@@ -176,7 +189,7 @@ const FirstPage = () => {
                                     }}
                                 />
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

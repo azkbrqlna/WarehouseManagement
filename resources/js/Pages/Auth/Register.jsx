@@ -11,6 +11,7 @@ import {
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Alert from "@/Components/Fragments/Alert";
+import BackgroundImage from "../../../asset/background-gudang.jpeg";
 
 const Register = () => {
     const { flash } = usePage().props;
@@ -49,10 +50,19 @@ const Register = () => {
     return (
         <>
             <Head title="Register" />
-            <div className="bg-zinc-800 font-fira text-slate-50">
-                <div className="w-full h-screen flex justify-center 2xl:items-center pt-10 sm:pt-20 2xl:pt-0 px-10">
-                    <div className="h-2/3 md:w-2/5">
-                        <div className="w-full">
+            <div
+                className="font-fira text-slate-50"
+                style={{
+                    backgroundImage: `url(${BackgroundImage})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    height: "100vh",
+                }}
+            >
+                <div className="w-full h-screen flex justify-center items-center px-10">
+                    <div className="h-2/3 md:w-1/2 2xl:w-[30%]">
+                        <div className="w-full p-5 rounded-lg backdrop-blur-lg border border-zinc-400 shadow-lg shadow-zinc-300">
                             <h1 className="font-bold text-4xl 2xl:text-6xl mb-2">
                                 Registrasi Akun
                             </h1>
@@ -61,8 +71,8 @@ const Register = () => {
                             </p>
                             <form onSubmit={formik.handleSubmit}>
                                 <VStack spacing={5}>
-                                    <div className="flex flex-col gap-2 md:flex-row md:gap-4 2xl:block w-full">
-                                        <div className="flex flex-col gap-4 md:gap-2">
+                                    <div className="flex flex-col gap-3 md:flex-row 2xl:flex-col w-full">
+                                        <div className="flex flex-col gap-4 md:gap-2 md:w-1/2 2xl:w-full">
                                             <FormControl
                                                 isInvalid={
                                                     formik.errors.username &&
@@ -84,6 +94,9 @@ const Register = () => {
                                                     }
                                                     name="username"
                                                     placeholder="Username"
+                                                    _placeholder={{
+                                                        color: "whiteAlpha.900",
+                                                    }}
                                                 />
                                                 <FormErrorMessage>
                                                     {formik.errors.username}
@@ -108,6 +121,9 @@ const Register = () => {
                                                     value={formik.values.nis}
                                                     name="nis"
                                                     placeholder="NIS"
+                                                    _placeholder={{
+                                                        color: "whiteAlpha.900",
+                                                    }}
                                                 />
                                                 <FormErrorMessage>
                                                     {formik.errors.nis}
@@ -132,13 +148,16 @@ const Register = () => {
                                                     value={formik.values.kelas}
                                                     name="kelas"
                                                     placeholder="Kelas"
+                                                    _placeholder={{
+                                                        color: "whiteAlpha.900",
+                                                    }}
                                                 />
                                                 <FormErrorMessage>
                                                     {formik.errors.kelas}
                                                 </FormErrorMessage>
                                             </FormControl>
                                         </div>
-                                        <div className="flex flex-col gap-4 md:gap-2">
+                                        <div className="flex flex-col gap-4 md:gap-2 md:w-1/2 2xl:w-full">
                                             <FormControl
                                                 isInvalid={
                                                     formik.errors.password &&
@@ -161,6 +180,9 @@ const Register = () => {
                                                     name="password"
                                                     type="password"
                                                     placeholder="Password"
+                                                    _placeholder={{
+                                                        color: "whiteAlpha.900",
+                                                    }}
                                                 />
                                                 <FormErrorMessage>
                                                     {formik.errors.password}
@@ -186,6 +208,9 @@ const Register = () => {
                                                     name="confirmpassword"
                                                     type="password"
                                                     placeholder="Confirm Password"
+                                                    _placeholder={{
+                                                        color: "whiteAlpha.900",
+                                                    }}
                                                 />
                                                 <FormErrorMessage>
                                                     {
@@ -200,6 +225,7 @@ const Register = () => {
                                         type="submit"
                                         colorScheme="gray"
                                         w="full"
+                                        _hover={{ bg: 'whiteAlpha.700',textColor: 'whiteAlpha.900' }}
                                     >
                                         Register
                                     </Button>
@@ -214,14 +240,14 @@ const Register = () => {
                                     Sudah punya akun?{" "}
                                     <Link
                                         href="/"
-                                        className="font-bold underline hover:text-zinc-400 relative z-10"
+                                        className="font-bold hover:underline"
                                     >
                                         Sign In
                                     </Link>
                                 </p>
                             </form>
                         </div>
-                        <div>
+                        {/* <div>
                             <div className="left-0 right-0 bottom-0 h-auto flex absolute">
                                 <Wave
                                     fill="#adb5bd"
@@ -261,7 +287,7 @@ const Register = () => {
                                     }}
                                 />
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
