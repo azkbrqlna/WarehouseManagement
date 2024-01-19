@@ -48,7 +48,7 @@ class ItemController extends Controller
         $item = Item::whereSlug($slug)->first();
         Storage::delete('cover/' . $item->cover);
         $item->delete();
-        return redirect()->back()->with('success', 'Berhasil menghapus barang!');
+        return redirect('/items');
     }
 
     public function update(Request $request)

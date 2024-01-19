@@ -40,15 +40,15 @@ class UserController extends Controller
             $user->nis = $request->nis;
             $user->role_id = $request->role_id;
             $user->save();
-            return redirect('/users')->with('success', 'Berhasil membuat user!');
+            return redirect('/users');
         }
-        return redirect()->back()->with('error', 'Mohon cek lagi!');
+        return redirect()->back();
     }
 
     public function destroy($slug)
     {
         $user = User::where('slug', $slug)->first();
         $user->delete();
-        return redirect()->back()->with('success', 'Berhasil menghapus user!');
+        return redirect()->back();
     }
 }

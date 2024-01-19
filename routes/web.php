@@ -35,20 +35,20 @@ Route::controller(AuthController::class)->middleware('guest')->group(function ()
 
 Route::controller(UserController::class)->middleware('auth')->group(function () {
     Route::middleware('only_admin')->group(function () {
-    Route::get('/users', 'index');
-    Route::get('/user/create', 'create');
-    Route::post('/user/create', 'store');
-    Route::delete('/user/{slug}', 'destroy');
+        Route::get('/users', 'index');
+        Route::get('/user/create', 'create');
+        Route::post('/user/create', 'store');
+        Route::delete('/user/{slug}', 'destroy');
     });
 });
 
 Route::controller(ItemController::class)->middleware('auth')->group(function () {
     Route::middleware('only_admin')->group(function () {
-    Route::get('/items', 'index');
-    Route::get('/item/create', 'create');
-    Route::post('/item/create', 'store');
-    Route::delete('/item/{slug}', 'destroy');
-    Route::patch('/items/{id}', 'update');
+        Route::get('/items', 'index');
+        Route::get('/item/create', 'create');
+        Route::post('/item/create', 'store');
+        Route::delete('/item/{slug}', 'destroy');
+        Route::patch('/items/{id}', 'update');
     });
 });
 
@@ -56,14 +56,16 @@ Route::controller(RentalController::class)->middleware('auth')->group(function (
     Route::get('/peminjaman', 'indexUser');
     Route::post('/peminjaman', 'storeUser');
     Route::middleware('only_admin')->group(function () {
-    Route::get('/request', 'indexAdmin');
-    Route::get('/request/rental', 'rentalAdmin');
-    Route::patch('/request/rental/{id}', 'acceptRental');
-    Route::delete('/request/rental/{id}', 'rejectRental');
-    Route::get('/request/return', 'returnAdmin');
+        Route::get('/request', 'indexAdmin');
+        Route::get('/request/rental', 'rentalAdmin');
+        Route::patch('/request/rental/{id}', 'acceptRental');
+        Route::delete('/request/rental/{id}', 'rejectRental');
+
     });
 });
 
 Route::controller(ReturnController::class)->middleware('auth')->group(function () {
-    Route::get('/pengembalian', 'index');
+    Route::get('/request/return', 'returnAdmin');
+    Route::get('/pengembalian', 'indexUser');
+    Route::post('/pengembalian', 'storeUser');
 });
