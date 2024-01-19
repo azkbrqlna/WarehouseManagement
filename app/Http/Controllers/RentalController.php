@@ -32,7 +32,7 @@ class RentalController extends Controller
         $rental->status = true;
         $rental->save();
 
-        return redirect()->back()->with('success', 'Request accepted!');
+        return redirect('/request/rental');
     }
 
     public function rejectRental(Request $request)
@@ -40,11 +40,6 @@ class RentalController extends Controller
         $rental = Rental::find($request->id);
         $rental->delete();
         return redirect('/request/rental');
-    }
-
-    public function returnAdmin()
-    {
-        return Inertia::render("Dashboard/Request/Return/index");
     }
 
     //for user
@@ -64,13 +59,15 @@ class RentalController extends Controller
         $request->validate([
             'reason' => 'required',
         ]);
+        $request['rent_date'] = Carbon::now()->toDateString();
+        $request['return_date'] = Carbon::now()->addDays(7)->toDateString();
         Rental::create([
             'user_id' => auth()->id(),
             'item_id' => $request->item_id,
             'reason' => $request->reason,
             'rent_date' => $request->rent_date,
-            'return_date' => $request->return_date,
+            'return_date' => $request->return_date,    
         ]);
-        return redirect('/peminjaman')->with('success', 'Tunggu Admin menyetujui!');
+        return redirect('/peminjaman');
     }
 }
