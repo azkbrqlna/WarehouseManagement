@@ -39,7 +39,7 @@ class RentalController extends Controller
     {
         $rental = Rental::find($request->id);
         $rental->delete();
-        return redirect()->back()->with('success', 'Request rejected!');
+        return redirect('/request/rental');
     }
 
     public function returnAdmin()

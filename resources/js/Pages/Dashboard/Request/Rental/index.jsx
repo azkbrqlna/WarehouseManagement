@@ -1,4 +1,4 @@
-import { ArrowLeft, Check, Trash, X } from "@phosphor-icons/react";
+import { ArrowLeft, Check, X } from "@phosphor-icons/react";
 import {
     Box,
     Button,
@@ -17,12 +17,41 @@ import { Link, router } from "@inertiajs/react";
 
 const RequestPage = ({ rentals }) => {
     const handleAccept = (id, status) => {
-        router.patch(`/request/rental/${id}`, { status });
-    }
+        router.patch(`/request/rental/${id}`, {
+            status,
+            rent_date: new Date().toISOString(),
+        }, {
+            onSuccess: () => {
+                toast({
+                    title: "Berhasil menyetujui peminjaman",
+                    status: "success",
+                });
+            },
+            onError: () => {
+                toast({
+                    title: "Gagal menyetujui peminjaman",
+                    status: "error",
+                });
+            },
+        });
+    };
 
     const handleDeclined = (id, status) => {
-        router.patch(`/request/rental/${id}`, { status });
-    }
+        router.patch(`/request/rental/${id}`, { status }, {
+            onSuccess: () => {
+                toast({
+                    title: "Berhasil menolak peminjaman",
+                    status: "success",
+                });
+            },
+            onError: () => {
+                toast({
+                    title: "Gagal menolak peminjaman",
+                    status: "error",
+                });
+            },
+        });
+    };
     const requestDisclosure = rentals.map((rental, index) => {
         const { isOpen, onToggle } = useDisclosure();
         return (
@@ -47,12 +76,20 @@ const RequestPage = ({ rentals }) => {
                             display="flex"
                             flexDirection="column"
                             gap="10px"
-                            textAlign='left'
+                            textAlign="left"
                         >
                             <h1 className="text-xl">
-                                Barang yang dipinjam: <span className="font-semibold">{rental.item.name}</span>
+                                Barang yang dipinjam:{" "}
+                                <span className="font-semibold">
+                                    {rental.item.name}
+                                </span>
                             </h1>
-                            <p className="text-lg">Alasan: <span className="font-medium">{rental.reason}</span></p>
+                            <p className="text-lg">
+                                Alasan:{" "}
+                                <span className="font-medium">
+                                    {rental.reason}
+                                </span>
+                            </p>
                         </Box>
                     </Collapse>
                 </Td>
@@ -63,7 +100,9 @@ const RequestPage = ({ rentals }) => {
                         _hover={{
                             background: "green.400",
                         }}
-                        onClick={() => handleAccept(rental.id)}
+                        onClick={() =>
+                            handleAccept(rental.id)
+                        }
                     >
                         <Check size={20} />
                         Accept

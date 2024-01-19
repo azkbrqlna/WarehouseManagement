@@ -1,19 +1,39 @@
 import SidebarButton from "@/Components/Fragments/SidebarButton";
-import { router } from "@inertiajs/react";
-import { Archive, Gauge, ListDashes, SignOut, Users } from "@phosphor-icons/react";
+import { router, usePage } from "@inertiajs/react";
+import {
+    Archive,
+    Gauge,
+    ListDashes,
+    SignOut,
+    Users,
+} from "@phosphor-icons/react";
 
 const Sidebar = () => {
+    const { url } = usePage();
+
+    const tabs = [
+        { label: "Dashboard", icon: Gauge, href: "/dashboard" },
+        { label: "Request", icon: Archive, href: "/request" },
+        { label: "Users", icon: Users, href: "/users" },
+        { label: "Barang", icon: ListDashes, href: "/items" },
+    ];
     const onLogOut = () => {
         router.visit("/logout");
     };
+
     return (
         <>
             <aside className="h-screen p-10 bg-white w-64 2xl:w-72 flex flex-col justify-between">
                 <div className="space-y-5">
-                    <SidebarButton value="Dashboard" icon={Gauge} href="/dashboard" />
-                    <SidebarButton value="Request" icon={Archive} href="/request" />
-                    <SidebarButton value="Users" icon={Users} href="/users" />
-                    <SidebarButton value="Barang" icon={ListDashes} href="/items" />
+                    {tabs.map((tab) => (
+                        <SidebarButton
+                            key={tab.href}
+                            value={tab.label}
+                            icon={tab.icon}
+                            href={tab.href}
+                            isActive={url === tab.href}
+                        />
+                    ))}
                 </div>
                 <div>
                     <button

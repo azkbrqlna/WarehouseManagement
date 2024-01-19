@@ -16,7 +16,7 @@ import {
     Tr,
     Td,
     Th,
-    filter,
+    Progress,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import CardProduct from "@/Components/Fragments/CardProduct";
@@ -27,6 +27,8 @@ import { Bell } from "@phosphor-icons/react";
 const Peminjaman = ({ items, rentals, auth }) => {
     const [isBorder, setBorder] = useState(false);
     const [isLoading, setLoading] = useState(false);
+    const [isInfoOpen, setInfoOpen] = useState(false);
+
     const toast = useToast();
 
     const borderChange = () => {
@@ -62,9 +64,14 @@ const Peminjaman = ({ items, rentals, auth }) => {
                 },
                 onFinish: () => {
                     setLoading(false);
+                    setInfoOpen(false);
                 },
             }
         );
+    };
+
+    const handleButtonInfo = () => {
+        setInfoOpen(!isInfoOpen);
     };
 
     let acceptData = 1;
@@ -73,7 +80,13 @@ const Peminjaman = ({ items, rentals, auth }) => {
             <Tr key={rental.id}>
                 <Td>{index + 1}</Td>
                 <Td>{rental.item.name}</Td>
-                <Td>{rental.status ? "Peminjaman diterima" : "Pending..."}</Td>
+                <Td>
+                    {rental.status ? (
+                        rental.return_date
+                    ) : (
+                        <Progress isIndeterminate size="xs" />
+                    )}
+                </Td>
             </Tr>
         ) : (
             ""
@@ -94,7 +107,7 @@ const Peminjaman = ({ items, rentals, auth }) => {
                         <Navbar />
                     </section>
                 </Headroom>
-                <section className="flex justify-center gap-2">
+                <section className="flex justify-center gap-2 relative">
                     <div className="w-2/3 md:w-2/5">
                         <InputGroup>
                             <InputLeftAddon>
@@ -114,10 +127,10 @@ const Peminjaman = ({ items, rentals, auth }) => {
                             _active={{ bg: "transparent" }}
                             _hover={{ bg: "transparent" }}
                         >
-                            <div className="relative right-3 z-10">
+                            <div className="absolute bottom-1 left-4 z-10">
                                 <Bell size={32} color="#ffffff" />
                                 {rentals.map((rental) => {
-                                    return (auth.user.id === rental.user_id) ? (
+                                    return auth.user.id === rental.user_id ? (
                                         <div
                                             className="rounded-full bg-white w-4 h-4 flex justify-center items-center absolute bottom-4 left-4"
                                             key={rental.id}
@@ -172,6 +185,8 @@ const Peminjaman = ({ items, rentals, auth }) => {
                                     }
                                     value={data.reason}
                                     isLoading={isLoading}
+                                    infoOpen={handleButtonInfo}
+                                    openInfo={isInfoOpen}
                                 />
                             ))}
                     </div>

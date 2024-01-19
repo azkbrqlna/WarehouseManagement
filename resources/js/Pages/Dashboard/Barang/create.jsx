@@ -1,25 +1,18 @@
-import { useState } from "react";
 import {
-    Select,
     Input,
     Button,
     FormControl,
     FormLabel,
     NumberInput,
     NumberInputField,
-    NumberInputStepper,
-    NumberIncrementStepper,
-    NumberDecrementStepper,
     Box,
     useToast,
-    Text,
 } from "@chakra-ui/react";
 import DashboardLayout from "@/Layouts/DashboardLayout";
-import { Head, useForm, usePage } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import { Upload } from "@phosphor-icons/react/dist/ssr";
 
 export default function CreateBarangDashboard() {
-    const { flash } = usePage().props;
     const toast = useToast();
     const { data, setData, post, reset } = useForm({
         name: "",
@@ -33,7 +26,7 @@ export default function CreateBarangDashboard() {
             onSuccess: () => {
                 reset();
                 toast({
-                    title: flash.success,
+                    title: "Berhasil membuat user!",
                     status: "success",
                 });
             },
