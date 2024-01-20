@@ -1,23 +1,64 @@
 import Navbar from "@/Layouts/Navbar";
-import { Button } from "@chakra-ui/react";
+import {
+    Box,
+    Button,
+    FormControl,
+    FormLabel,
+    Input,
+    Spinner,
+    Table,
+    Tbody,
+    Td,
+    Th,
+    Thead,
+    Tr,
+    useToast,
+} from "@chakra-ui/react";
 import { Head, router, useForm } from "@inertiajs/react";
-import { UploadSimple } from "@phosphor-icons/react";
+import { PaperPlaneRight, UploadSimple } from "@phosphor-icons/react";
 import { useState } from "react";
 import Headroom from "react-headroom";
 
-const Pengembalian = () => {
+const Pengembalian = ({ returns, auth }) => {
+    console.log(returns)
+    const toast = useToast();
     const [isBorder, setBorder] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
     const borderChange = () => {
         setBorder(window.scrollY > 110 ? true : false);
     };
     window.addEventListener("scroll", borderChange);
 
     const { data, setData } = useForm({
-        file_upload: "",
+        file: null,
     });
-    const handleRefund = (e) => {
+    const handleRefund = (e, itemID) => {
         e.preventDefault();
-        router.post("/")
+        setIsLoading(true);
+        router.post(
+            "/pengembalian",
+            {
+                photo: data.file,
+                item_id: itemID,
+            },
+            {
+                onSuccess: () => {
+                    toast({
+                        title: "Tunggu Admin menyetujui!",
+                        status: "success",
+                    });
+                },
+                onError: () => {
+                    toast({
+                        title: "Gagal melakukan request barang",
+                        status: "error",
+                    });
+                },
+                onFinish: () => {
+                    setIsLoading(false);
+                },
+            }
+        );
     };
     return (
         <>
@@ -32,6 +73,125 @@ const Pengembalian = () => {
                         <Navbar />
                     </div>
                 </Headroom>
+                <div className="flex justify-center">
+                    <Table bg="whiteAlpha.500" w="100px">
+                        <Thead>
+                            <Tr>
+                                <Th textColor="white">No.</Th>
+                                <Th textColor="white">Item</Th>
+                                <Th textColor="white" colSpan={2}>
+                                    Tanggal Pengembalian
+                                </Th>
+                                <Th textColor="white" textAlign="center">
+                                    Upload
+                                </Th>
+                                <Th textColor="white" textAlign="center">
+                                    Preview
+                                </Th>
+                                <Th textColor="white" textAlign="center">
+                                    Submit
+                                </Th>
+                            </Tr>
+                        </Thead>
+                        <Tbody>
+                            {returns.map((refund, index) => {
+                                return auth.user.id === refund.user_id &&
+                                    refund.status ? (
+                                    <Tr key={refund.id}>
+                                        <Td>{index + 1}</Td>
+                                        <Td>{refund.item.name}</Td>
+                                        <Td colSpan={2}>
+                                            {refund.return_date}
+                                        </Td>
+                                        <Td>
+                                            <FormLabel
+                                                htmlFor="file_upload"
+                                                display="flex"
+                                                bg="whiteAlpha.400"
+                                                _hover={{
+                                                    background:
+                                                        "whiteAlpha.800",
+                                                }}
+                                                transition="background 0.3s ease-in-out"
+                                                borderRadius="10px"
+                                                w="140px"
+                                                p="8px"
+                                                cursor="pointer"
+                                                justifyContent="center"
+                                                alignItems="center"
+                                                fontSize="700"
+                                            >
+                                                <UploadSimple size={30} />
+                                                <Input
+                                                    id="file_upload"
+                                                    name="file"
+                                                    type="file"
+                                                    display="none"
+                                                    onChange={(e) =>
+                                                        setData(
+                                                            "file",
+                                                            e.target.files[0]
+                                                        )
+                                                    }
+                                                />
+                                            </FormLabel>
+                                        </Td>
+                                        <Td>
+                                            {data.file && (
+                                                <Box
+                                                    w="70px"
+                                                    h="70px"
+                                                    border="1px"
+                                                    overflow="hidden"
+                                                >
+                                                    <img
+                                                        src={URL.createObjectURL(
+                                                            data.file
+                                                        )}
+                                                        style={{
+                                                            width: "100%",
+                                                            height: "100%",
+                                                            objectFit: "cover",
+                                                        }}
+                                                    />
+                                                </Box>
+                                            )}
+                                        </Td>
+                                        <Td>
+                                            <Button
+                                                bgColor="blue.500"
+                                                textColor="white"
+                                                _hover={{
+                                                    background: "blue.400",
+                                                }}
+                                                type="submit"
+                                                onClick={(e) =>
+                                                    handleRefund(
+                                                        e,
+                                                        refund.item.id
+                                                    )
+                                                }
+                                            >
+                                                {isLoading ? (
+                                                    <Spinner />
+                                                ) : (
+                                                    <>
+                                                        <PaperPlaneRight
+                                                            size={20}
+                                                        />
+                                                        Kirim
+                                                    </>
+                                                )}
+                                            </Button>
+                                        </Td>
+                                    </Tr>
+                                ) : (
+                                    ""
+                                );
+                            })}
+                        </Tbody>
+                    </Table>
+                </div>
                 <section className="px-10 py-5">
                     <div className="flex justify-center">
                         <h1 className="font-bold text-md text-zinc-400">
@@ -39,33 +199,6 @@ const Pengembalian = () => {
                         </h1>
                     </div>
                 </section>
-                <div className="w-full h-96 px-10">
-                    <form onSubmit={handleRefund}>
-                        <label
-                            htmlFor="refund"
-                            className="flex flex-col w-full bg-zinc-400 h-80 border-2 border-dashed border-zinc-800 justify-center items-center cursor-pointer"
-                        >
-                            <input
-                                type="file"
-                                id="refund"
-                                className="hidden"
-                                onChange={(e) =>
-                                    setData("file", e.target.files[0])
-                                }
-                            />
-                            <UploadSimple size={35} />
-                            <p className="font-medium">Upload Foto!</p>
-                        </label>
-                        <Button
-                            mt="10px"
-                            w="full"
-                            bg="whiteAlpha.600"
-                            type="submit"
-                        >
-                            Kirim
-                        </Button>
-                    </form>
-                </div>
             </div>
         </>
     );

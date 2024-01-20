@@ -26,7 +26,7 @@ export default function CreateBarangDashboard() {
             onSuccess: () => {
                 reset();
                 toast({
-                    title: "Berhasil membuat user!",
+                    title: "Berhasil membuat barang!",
                     status: "success",
                 });
             },

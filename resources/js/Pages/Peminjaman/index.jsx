@@ -40,7 +40,7 @@ const Peminjaman = ({ items, rentals, auth }) => {
         reason: "",
     });
 
-    const handleSubmit = async (e, itemID) => {
+    const handleSubmit = (e, itemID) => {
         e.preventDefault();
         setLoading(true);
         router.post(

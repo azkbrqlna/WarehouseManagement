@@ -12,47 +12,35 @@ import {
     useDisclosure,
 } from "@chakra-ui/react";
 import { ArrowDownIcon } from "@chakra-ui/icons";
-import { request } from "@/Components/Fragments/ListStyle";
 import Dashboardlayout from "@/Layouts/DashboardLayout";
 import { Link } from "@inertiajs/react";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 
-const RequestPage = () => {
-    const requestDisclosure = request.map((item, index) => {
+const RequestPage = ({ returns }) => {
+    console.log(returns);
+    const requestDisclosure = returns.map((refund, index) => {
         const { isOpen, onToggle } = useDisclosure();
         return (
-            <Tr key={index}>
-                <Td textAlign="center">{item.id}</Td>
-                <Td textAlign="center">{item.username}</Td>
-                <Td textAlign="center">{item.nis}</Td>
-                <Td textAlign="center">{item.kelas}</Td>
+            <Tr key={refund.id}>
+                <Td textAlign="center">{index + 1}</Td>
+                <Td textAlign="center">{refund.user.username}</Td>
+                <Td textAlign="center">{refund.user.nis}</Td>
+                <Td textAlign="center">{refund.user.kelas}</Td>
                 <Td textAlign="center">
                     <Button onClick={onToggle}>
                         <ArrowDownIcon />
                         Pengembalian
                     </Button>
                     <Collapse in={isOpen} animateOpacity>
-                        <Box
-                            p="10px"
-                            color="black"
-                            mt="4"
-                            bg="gray.200"
-                            rounded="md"
-                            shadow="md"
-                            display="flex"
-                            flexDirection="column"
-                            gap="10px"
-                        >
-                            <div className="flex justify-between">
-                                <h1 className="text-xl font-bold">Bola</h1>
-                                <span className="px-2 py-1 rounded-md bg-gray-400">
-                                    15.00 - 18.00
-                                </span>
-                            </div>
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Nostrum, fugit?
-                            </p>
+                        <Box w="70px" h="70px" border="1px" overflow="hidden">
+                            <img
+                                src={`/storage/photos/${refund.photo}`}
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    objectFit: "cover",
+                                }}
+                            />
                         </Box>
                     </Collapse>
                 </Td>

@@ -11,6 +11,14 @@ class Returning extends Model
 
     protected $table = "returns";
 
+    protected $fillable = [
+        'user_id',
+        'item_id',
+        'actual_return_date',
+        'photo',
+        'rent_date',
+    ];
+
     public function item()
     {
         return $this->belongsTo(Item::class, 'item_id', 'id');

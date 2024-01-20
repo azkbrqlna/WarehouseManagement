@@ -9,27 +9,32 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use PhpParser\Node\Stmt\Return_;
 
 class ReturnController extends Controller
 {
     //for Admin
     public function returnAdmin()
     {
-        return Inertia::render("Dashboard/Request/Return/index");
+        $user = auth()->user();
+        return Inertia::render("Dashboard/Request/Return/index", [
+            'user' => $user,
+            'returns' => Returning::all(),
+        ]);
     }
 
     //For User
     public function indexUser()
     {
         $user = auth()->user();
-        // dd(Rental::with('user','item')->where('user_id', $user->id)->get());
-        return Inertia::render("Pengembalian/index",[
+        return Inertia::render("Pengembalian/index", [
             'user' => $user,
-            'returns' => Rental::with('user','item')->where('user_id', $user->id)->get(),
+            'returns' => Returning::all(),
         ]);
     }
 
-    public function storeUser(Request $request){
+    public function storeUser(Request $request)
+    {
         $request->validate([
             'photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048'
         ]);
@@ -46,10 +51,10 @@ class ReturnController extends Controller
         Returning::create([
             'user_id' => auth()->id(),
             'item_id' => $request->item_id,
+            'photo' => $newName,
             'actual_return_date' => $request->actual_return_date
         ]);
 
         return redirect('/pengembalian');
     }
-
 }
