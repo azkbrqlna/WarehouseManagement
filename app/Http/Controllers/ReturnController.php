@@ -22,7 +22,8 @@ class ReturnController extends Controller
         ]);
     }
 
-    public function acceptReturn(Request $request){
+    public function acceptReturn(Request $request)
+    {
         $return = Returning::find($request->id);
         $return->actual_return_date = Carbon::now()->toDateString();
         $return->status = true;
@@ -31,7 +32,8 @@ class ReturnController extends Controller
         return redirect('/request/return');
     }
 
-    public function rejectReturn(Request $request){
+    public function rejectReturn(Request $request)
+    {
         $return = Returning::find($request->id);
         Storage::delete('photos/' . $return->photo);
         $return->delete();
@@ -44,7 +46,7 @@ class ReturnController extends Controller
         $user = auth()->id();
         return Inertia::render("Pengembalian/index", [
             'rentals' => Rental::with(['item', 'user'])->where('user_id', $user)->get(),
-            'items' => Item::all(),
+            'returns' => Returning::all(),
         ]);
     }
 
@@ -56,7 +58,7 @@ class ReturnController extends Controller
 
         if ($request->file("photo")) {
             $extension = $request->file("photo")->getClientOriginalExtension();
-            $newName = strtolower($request->item_id) . '-' . now()->timestamp . '.' . $extension;
+            $newName = strtolower($request->name) . '-' . now()->timestamp . '.' . $extension;
             Storage::disk('public')->putFileAs('photos', $request->file("photo"), $newName);
             $request['photos'] = $newName;
         };
@@ -64,7 +66,7 @@ class ReturnController extends Controller
         Returning::create([
             'user_id' => auth()->id(),
             'item_id' => $request->item_id,
-            'photo' => $request->photo,
+            'photo' => $newName,
         ]);
 
         return redirect('/pengembalian');

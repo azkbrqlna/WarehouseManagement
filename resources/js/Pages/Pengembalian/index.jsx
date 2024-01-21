@@ -2,9 +2,9 @@ import Navbar from "@/Layouts/Navbar";
 import {
     Box,
     Button,
-    FormControl,
     FormLabel,
     Input,
+    Progress,
     Spinner,
     Table,
     Tbody,
@@ -19,8 +19,7 @@ import { PaperPlaneRight, UploadSimple } from "@phosphor-icons/react";
 import { useState } from "react";
 import Headroom from "react-headroom";
 
-const Pengembalian = ({ rentals, auth }) => {
-    console.log(rentals);
+const Pengembalian = ({ rentals, auth, returns }) => {
     const toast = useToast();
     const [isBorder, setBorder] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -95,9 +94,12 @@ const Pengembalian = ({ rentals, auth }) => {
                         </Thead>
                         <Tbody>
                             {rentals.map((refund, index) => {
+                                const returning = returns.find(
+                                    (retur) => retur.item_id === refund.item_id
+                                );
                                 return auth.user.id === refund.user_id &&
-                                    refund.status ? (
-                                    <Tr key={refund.id}>
+                                    refund.status && !returning.status ? (
+                                    <Tr key={refund.id} textColor="white">
                                         <Td>{index + 1}</Td>
                                         <Td>{refund.item.name}</Td>
                                         <Td colSpan={2}>
@@ -171,15 +173,28 @@ const Pengembalian = ({ rentals, auth }) => {
                                                         refund.item.id
                                                     )
                                                 }
+                                                isDisabled={
+                                                    returning ? true : false
+                                                }
                                             >
                                                 {isLoading ? (
                                                     <Spinner />
                                                 ) : (
                                                     <>
-                                                        <PaperPlaneRight
-                                                            size={20}
-                                                        />
-                                                        Kirim
+                                                        {returning ? (
+                                                            returning.status ? (
+                                                                "Pengembalian diterima!"
+                                                            ) : (
+                                                                "Tunggu admin!"
+                                                            )
+                                                        ) : (
+                                                            <>
+                                                                <PaperPlaneRight
+                                                                    size={20}
+                                                                />
+                                                                Kirim
+                                                            </>
+                                                        )}
                                                     </>
                                                 )}
                                             </Button>

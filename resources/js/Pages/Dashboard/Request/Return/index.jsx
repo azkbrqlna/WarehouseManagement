@@ -3,6 +3,7 @@ import {
     Box,
     Button,
     Collapse,
+    Flex,
     Table,
     Tbody,
     Td,
@@ -13,11 +14,55 @@ import {
 } from "@chakra-ui/react";
 import { ArrowDownIcon } from "@chakra-ui/icons";
 import Dashboardlayout from "@/Layouts/DashboardLayout";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 
 const RequestPage = ({ returns }) => {
-    console.log(returns);
+    const handleAccept = (id, status) => {
+        router.patch(
+            `/request/return/${id}`,
+            {
+                status,
+                rent_date: new Date().toISOString(),
+            },
+            {
+                onSuccess: () => {
+                    toast({
+                        title: "Berhasil menyetujui pengembalian",
+                        status: "success",
+                    });
+                },
+                onError: () => {
+                    toast({
+                        title: "Gagal menyetujui pengembalian",
+                        status: "error",
+                    });
+                },
+            }
+        );
+    };
+
+    const handleDeclined = (id, status) => {
+        router.patch(
+            `/request/return/${id}`,
+            { status },
+            {
+                onSuccess: () => {
+                    toast({
+                        title: "Berhasil menolak peminjaman",
+                        status: "success",
+                    });
+                },
+                onError: () => {
+                    toast({
+                        title: "Gagal menolak peminjaman",
+                        status: "error",
+                    });
+                },
+            }
+        );
+    };
+
     const requestDisclosure = returns.map((refund, index) => {
         const { isOpen, onToggle } = useDisclosure();
         return (
@@ -32,16 +77,27 @@ const RequestPage = ({ returns }) => {
                         Pengembalian
                     </Button>
                     <Collapse in={isOpen} animateOpacity>
-                        <Box w="70px" h="70px" border="1px" overflow="hidden">
-                            <img
-                                src={`/storage/photo/${refund.photo}`}
-                                style={{
-                                    width: "100%",
-                                    height: "100%",
-                                    objectFit: "cover",
-                                }}
-                            />
-                        </Box>
+                        <Flex
+                            justifyContent="center"
+                            alignItems="center"
+                            mt="10px"
+                        >
+                            <Box
+                                w="70px"
+                                h="70px"
+                                border="1px"
+                                overflow="hidden"
+                            >
+                                <img
+                                    src={`/storage/photos/${refund.photo}`}
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        objectFit: "cover",
+                                    }}
+                                />
+                            </Box>
+                        </Flex>
                     </Collapse>
                 </Td>
                 <Td textAlign="center">
@@ -51,6 +107,9 @@ const RequestPage = ({ returns }) => {
                         _hover={{
                             background: "green.400",
                         }}
+                        onClick={() =>
+                            handleAccept(refund.id)
+                        }
                     >
                         <Check size={20} />
                         Accept
@@ -63,6 +122,9 @@ const RequestPage = ({ returns }) => {
                         _hover={{
                             background: "red.400",
                         }}
+                        onClick={() =>
+                            handleDeclined(refund.id)
+                        }
                     >
                         <X size={20} />
                         Declined

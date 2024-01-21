@@ -3,7 +3,7 @@ import Dashboardlayout from "@/Layouts/DashboardLayout";
 import { Link } from "@inertiajs/react";
 import { ArrowCounterClockwise, Note } from "@phosphor-icons/react";
 
-const RequestPage = () => {
+const RequestPage = ({ rental_count, return_count }) => {
     return (
         <>
             <Dashboardlayout title="Request">
@@ -12,7 +12,7 @@ const RequestPage = () => {
                         <OverviewCard
                             className={"text-2xl"}
                             title="Request Peminjaman"
-                            value="1"
+                            value={rental_count}
                             icon={Note}
                         />
                     </Link>
@@ -20,7 +20,7 @@ const RequestPage = () => {
                         <OverviewCard
                             className={"text-2xl"}
                             title="Request Pengembalian"
-                            value="11"
+                            value={return_count}
                             icon={ArrowCounterClockwise}
                         />
                     </Link>
