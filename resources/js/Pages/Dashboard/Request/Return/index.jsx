@@ -20,6 +20,7 @@ import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 
 const RequestPage = ({ returns }) => {
     const toast = useToast();
+    const { isOpen, onToggle } = useDisclosure();
     const handleAccept = (id, status) => {
         router.patch(
             `/request/return/${id}`,
@@ -65,72 +66,6 @@ const RequestPage = ({ returns }) => {
         );
     };
 
-    const requestDisclosure = returns.map((refund, index) => {
-        const { isOpen, onToggle } = useDisclosure();
-        return (
-            <Tr key={refund.id}>
-                <Td textAlign="center">{index + 1}</Td>
-                <Td textAlign="center">{refund.user.username}</Td>
-                <Td textAlign="center">{refund.user.nis}</Td>
-                <Td textAlign="center">{refund.user.kelas}</Td>
-                <Td textAlign="center">
-                    <Button onClick={onToggle}>
-                        <ArrowDownIcon />
-                        Pengembalian
-                    </Button>
-                    <Collapse in={isOpen} animateOpacity>
-                        <Flex
-                            justifyContent="center"
-                            alignItems="center"
-                            mt="10px"
-                        >
-                            <Box
-                                w="70px"
-                                h="70px"
-                                border="1px"
-                                overflow="hidden"
-                            >
-                                <img
-                                    src={`/storage/photos/${refund.photo}`}
-                                    style={{
-                                        width: "100%",
-                                        height: "100%",
-                                        objectFit: "cover",
-                                    }}
-                                />
-                            </Box>
-                        </Flex>
-                    </Collapse>
-                </Td>
-                <Td textAlign="center">
-                    <Button
-                        bgColor="green.500"
-                        textColor="white"
-                        _hover={{
-                            background: "green.400",
-                        }}
-                        onClick={() => handleAccept(refund.id)}
-                    >
-                        <Check size={20} />
-                        Accept
-                    </Button>
-                </Td>
-                <Td textAlign="center">
-                    <Button
-                        bgColor="red.500"
-                        textColor="white"
-                        _hover={{
-                            background: "red.400",
-                        }}
-                        onClick={() => handleDeclined(refund.id)}
-                    >
-                        <X size={20} />
-                        Declined
-                    </Button>
-                </Td>
-            </Tr>
-        );
-    });
     return (
         <>
             <Dashboardlayout title="Request Pengembalian">
@@ -162,7 +97,87 @@ const RequestPage = ({ returns }) => {
                                 </Th>
                             </Tr>
                         </Thead>
-                        <Tbody>{requestDisclosure}</Tbody>
+                        <Tbody>
+                            {returns.map((refund, index) => {
+                                return (
+                                    <Tr key={refund.id}>
+                                        <Td textAlign="center">{index + 1}</Td>
+                                        <Td textAlign="center">
+                                            {refund.user.username}
+                                        </Td>
+                                        <Td textAlign="center">
+                                            {refund.user.nis}
+                                        </Td>
+                                        <Td textAlign="center">
+                                            {refund.user.kelas}
+                                        </Td>
+                                        <Td textAlign="center">
+                                            <Button onClick={onToggle}>
+                                                <ArrowDownIcon />
+                                                Pengembalian
+                                            </Button>
+                                            <Collapse
+                                                in={isOpen}
+                                                animateOpacity
+                                            >
+                                                <Flex
+                                                    justifyContent="center"
+                                                    alignItems="center"
+                                                    mt="10px"
+                                                >
+                                                    <Box
+                                                        w="70px"
+                                                        h="70px"
+                                                        border="1px"
+                                                        overflow="hidden"
+                                                    >
+                                                        <img
+                                                            src={`/storage/photos/${refund.photo}`}
+                                                            style={{
+                                                                width: "100%",
+                                                                height: "100%",
+                                                                objectFit:
+                                                                    "cover",
+                                                            }}
+                                                        />
+                                                    </Box>
+                                                </Flex>
+                                            </Collapse>
+                                        </Td>
+                                        <Td textAlign="center">
+                                            <Button
+                                                bgColor="green.500"
+                                                textColor="white"
+                                                _hover={{
+                                                    background: "green.400",
+                                                }}
+                                                onClick={() =>
+                                                    handleAccept(refund.id)
+                                                }
+                                            >
+                                                <Check size={20} />
+                                                Accept
+                                            </Button>
+                                        </Td>
+                                        <Td textAlign="center">
+                                            <Button
+                                                bgColor="red.500"
+                                                textColor="white"
+                                                _hover={{
+                                                    background: "red.400",
+                                                }}
+                                                onClick={() =>
+                                                    handleDeclined(refund.id)
+                                                }
+                                            >
+                                                <X size={20} />
+                                                Declined
+                                            </Button>
+                                        </Td>
+                                    </Tr>
+                                );
+                            })}
+                        </Tbody>
                     </Table>
                 </div>
             </Dashboardlayout>

@@ -53,7 +53,7 @@ class ReturnController extends Controller
     public function storeUser(Request $request)
     {
         $request->validate([
-            'photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048'
+            'photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
 
         if ($request->file("photo")) {
