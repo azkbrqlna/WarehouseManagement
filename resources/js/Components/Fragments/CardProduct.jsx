@@ -8,7 +8,6 @@ import {
     Textarea,
 } from "@chakra-ui/react";
 import { CalendarBlank } from "@phosphor-icons/react";
-import { useState } from "react";
 
 const CardProduct = ({
     itemName,

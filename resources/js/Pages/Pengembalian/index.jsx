@@ -72,6 +72,13 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                         <Navbar />
                     </div>
                 </Headroom>
+                <section className="px-10 py-5">
+                    <div className="flex justify-center">
+                        <h1 className="font-bold text-md text-zinc-400">
+                            Upload foto barang yang hendak anda kembalikan!
+                        </h1>
+                    </div>
+                </section>
                 <div className="flex justify-center">
                     <Table bg="whiteAlpha.500" w="100px">
                         <Thead>
@@ -98,7 +105,8 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                                     (retur) => retur.item_id === refund.item_id
                                 );
                                 return auth.user.id === refund.user_id &&
-                                    refund.status && !returning.status ? (
+                                    refund.status &&
+                                    !returning.status ? (
                                     <Tr key={refund.id} textColor="white">
                                         <Td>{index + 1}</Td>
                                         <Td>{refund.item.name}</Td>
@@ -207,13 +215,6 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                         </Tbody>
                     </Table>
                 </div>
-                <section className="px-10 py-5">
-                    <div className="flex justify-center">
-                        <h1 className="font-bold text-md text-zinc-400">
-                            Upload foto barang yang hendak anda kembalikan!
-                        </h1>
-                    </div>
-                </section>
             </div>
         </>
     );

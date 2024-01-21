@@ -22,7 +22,7 @@ const NavbarHamburger = ({ isOpen, onClose, btnRef, onToggle }) => {
                     <DrawerCloseButton onClick={onToggle} />
                     <DrawerBody pt="100px">
                         <Flex h="100%" justifyContent="center">
-                            <ul className="flex flex-col gap-20 w-full">
+                            <ul className="flex flex-col gap-5 w-full">
                                 <ListHamburger href="/home">Home</ListHamburger>
                                 <ListHamburger href="/peminjaman">
                                     Peminjaman
