@@ -55,7 +55,7 @@ class ReturnController extends Controller
 
         if ($request->file("photo")) {
             $extension = $request->file("photo")->getClientOriginalExtension();
-            $newName = strtolower($request->name) . '-' . now()->timestamp . '.' . $extension;
+            $newName = strtolower($request->item_id) . '-' . now()->timestamp . '.' . $extension;
             Storage::disk('public')->putFileAs('photos', $request->file("photo"), $newName);
             $request['photos'] = $newName;
         };

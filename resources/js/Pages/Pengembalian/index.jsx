@@ -19,8 +19,8 @@ import { PaperPlaneRight, UploadSimple } from "@phosphor-icons/react";
 import { useState } from "react";
 import Headroom from "react-headroom";
 
-const Pengembalian = ({ returns, auth }) => {
-    console.log(returns)
+const Pengembalian = ({ rentals, auth }) => {
+    console.log(rentals);
     const toast = useToast();
     const [isBorder, setBorder] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -94,7 +94,7 @@ const Pengembalian = ({ returns, auth }) => {
                             </Tr>
                         </Thead>
                         <Tbody>
-                            {returns.map((refund, index) => {
+                            {rentals.map((refund, index) => {
                                 return auth.user.id === refund.user_id &&
                                     refund.status ? (
                                     <Tr key={refund.id}>

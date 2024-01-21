@@ -34,7 +34,7 @@ const RequestPage = ({ returns }) => {
                     <Collapse in={isOpen} animateOpacity>
                         <Box w="70px" h="70px" border="1px" overflow="hidden">
                             <img
-                                src={`/storage/photos/${refund.photo}`}
+                                src={`/storage/photo/${refund.photo}`}
                                 style={{
                                     width: "100%",
                                     height: "100%",
