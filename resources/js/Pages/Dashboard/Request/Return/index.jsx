@@ -11,6 +11,7 @@ import {
     Thead,
     Tr,
     useDisclosure,
+    useToast,
 } from "@chakra-ui/react";
 import { ArrowDownIcon } from "@chakra-ui/icons";
 import Dashboardlayout from "@/Layouts/DashboardLayout";
@@ -18,12 +19,13 @@ import { Link, router } from "@inertiajs/react";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
 
 const RequestPage = ({ returns }) => {
+    const toast = useToast();
     const handleAccept = (id, status) => {
         router.patch(
             `/request/return/${id}`,
             {
                 status,
-                rent_date: new Date().toISOString(),
+                actual_return_date: new Date().toISOString(),
             },
             {
                 onSuccess: () => {
@@ -107,9 +109,7 @@ const RequestPage = ({ returns }) => {
                         _hover={{
                             background: "green.400",
                         }}
-                        onClick={() =>
-                            handleAccept(refund.id)
-                        }
+                        onClick={() => handleAccept(refund.id)}
                     >
                         <Check size={20} />
                         Accept
@@ -122,9 +122,7 @@ const RequestPage = ({ returns }) => {
                         _hover={{
                             background: "red.400",
                         }}
-                        onClick={() =>
-                            handleDeclined(refund.id)
-                        }
+                        onClick={() => handleDeclined(refund.id)}
                     >
                         <X size={20} />
                         Declined
