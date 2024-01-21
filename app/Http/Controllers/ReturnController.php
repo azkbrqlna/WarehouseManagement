@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Item;
 use App\Models\Rental;
 use App\Models\Returning;
 use Carbon\Carbon;
@@ -38,12 +39,12 @@ class ReturnController extends Controller
     }
 
     //For User
-    public function indexUser()
+    public function indexUser(Request $request)
     {
-        $user = auth()->user();
+        $user = auth()->id();
         return Inertia::render("Pengembalian/index", [
-            'user' => $user,
-            'rentals' => Rental::with(['item', 'user'])->get(),
+            'rentals' => Rental::with(['item', 'user'])->where('user_id', $user)->get(),
+            'items' => Item::all(),
         ]);
     }
 
