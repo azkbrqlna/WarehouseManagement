@@ -47,6 +47,7 @@ class ReturnController extends Controller
         return Inertia::render("Pengembalian/index", [
             'rentals' => Rental::with(['item', 'user'])->where('user_id', $user)->get(),
             'returns' => Returning::all(),
+            'items' => Item::all()
         ]);
     }
 
