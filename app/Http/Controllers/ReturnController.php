@@ -39,12 +39,13 @@ class ReturnController extends Controller
     }
 
     //For User
-    public function indexUser(Request $request)
+    public function indexUser()
     {
         $user = auth()->id();
         return Inertia::render("Pengembalian/index", [
             'rentals' => Rental::with(['item', 'user'])->where('user_id', $user)->get(),
             'items' => Item::all(),
+            'returns'
         ]);
     }
 
@@ -64,7 +65,7 @@ class ReturnController extends Controller
         Returning::create([
             'user_id' => auth()->id(),
             'item_id' => $request->item_id,
-            'photo' => $request->photo,
+            'photo' => $newName,
         ]);
 
         return redirect('/pengembalian');
