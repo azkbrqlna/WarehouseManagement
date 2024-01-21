@@ -16,7 +16,6 @@ class Returning extends Model
         'item_id',
         'actual_return_date',
         'photo',
-        'rent_date',
     ];
 
     public function item()

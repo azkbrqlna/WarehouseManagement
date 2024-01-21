@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Models\Rental;
+use App\Models\Returning;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -14,7 +15,10 @@ class RentalController extends Controller
     public function indexAdmin()
     {
         return Inertia::render("Dashboard/Request/index", [
-            'request' => Rental::where('status', true)->get()
+            'rental_log' => Rental::where('status', true)->get(),
+            'return_log' => Returning::where('status', true)->get(),
+            'rental_count' => Rental::count(),
+            'return_count' => Returning::count(),
         ]);
     }
 
@@ -22,7 +26,6 @@ class RentalController extends Controller
     {
         return Inertia::render("Dashboard/Request/Rental/index", [
             'rentals' => Rental::where('status', false)->with(['item', 'user'])->get(),
-            'rental_count' => Rental::count(),
         ]);
     }
 

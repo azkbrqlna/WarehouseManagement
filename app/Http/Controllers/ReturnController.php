@@ -16,11 +16,25 @@ class ReturnController extends Controller
     //for Admin
     public function returnAdmin()
     {
-        $user = auth()->user();
         return Inertia::render("Dashboard/Request/Return/index", [
-            'user' => $user,
-            'returns' => Returning::all(),
+            'returns' => Returning::where('status', false)->with(['item', 'user'])->get(),
         ]);
+    }
+
+    public function acceptReturn(Request $request){
+        $return = Returning::find($request->id);
+        $return->actual_return_date = Carbon::now()->toDateString();
+        $return->status = true;
+        $return->save();
+
+        return redirect('/request/return');
+    }
+
+    public function rejectReturn(Request $request){
+        $return = Returning::find($request->id);
+        Storage::delete('photos/' . $return->photo);
+        $return->delete();
+        return redirect('/request/return');
     }
 
     //For User
@@ -29,7 +43,7 @@ class ReturnController extends Controller
         $user = auth()->user();
         return Inertia::render("Pengembalian/index", [
             'user' => $user,
-            'returns' => Returning::all(),
+            'rentals' => Rental::with(['item', 'user'])->get(),
         ]);
     }
 
@@ -42,17 +56,14 @@ class ReturnController extends Controller
         if ($request->file("photo")) {
             $extension = $request->file("photo")->getClientOriginalExtension();
             $newName = strtolower($request->name) . '-' . now()->timestamp . '.' . $extension;
-
             Storage::disk('public')->putFileAs('photos', $request->file("photo"), $newName);
             $request['photos'] = $newName;
         };
 
-        $request['actual_return_date'] = Carbon::now()->toDateString();
         Returning::create([
             'user_id' => auth()->id(),
             'item_id' => $request->item_id,
-            'photo' => $newName,
-            'actual_return_date' => $request->actual_return_date
+            'photo' => $request->photo,
         ]);
 
         return redirect('/pengembalian');

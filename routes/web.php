@@ -60,12 +60,15 @@ Route::controller(RentalController::class)->middleware('auth')->group(function (
         Route::get('/request/rental', 'rentalAdmin');
         Route::patch('/request/rental/{id}', 'acceptRental');
         Route::delete('/request/rental/{id}', 'rejectRental');
-
     });
 });
 
 Route::controller(ReturnController::class)->middleware('auth')->group(function () {
-    Route::get('/request/return', 'returnAdmin');
     Route::get('/pengembalian', 'indexUser');
     Route::post('/pengembalian', 'storeUser');
+    Route::middleware('only_admin')->group(function(){
+        Route::get('/request/return', 'returnAdmin');
+        Route::patch('/request/return/{id}', 'acceptReturn');
+        Route::delete('/request/return/{id}', 'rejectReturn');
+    });
 });

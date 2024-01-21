@@ -15,7 +15,6 @@ class Rental extends Model
         'reason',
         'rent_date',
         'return_date',
-        'actual_return_date'
     ];
     /**
      * Get the item that owns the Rental
