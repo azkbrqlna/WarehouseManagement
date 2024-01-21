@@ -10,8 +10,6 @@ const RequestPage = ({
     rental_log,
     return_log,
 }) => {
-    console.log(rental_log);
-    console.log(return_log);
     return (
         <>
             <Dashboardlayout title="Request">

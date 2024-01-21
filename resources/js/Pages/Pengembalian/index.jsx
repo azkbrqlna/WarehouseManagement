@@ -106,7 +106,7 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                                 );
                                 return auth.user.id === refund.user_id &&
                                     refund.status &&
-                                    !returning.status ? (
+                                    !returning?.status ? (
                                     <Tr key={refund.id} textColor="white">
                                         <Td>{index + 1}</Td>
                                         <Td>{refund.item.name}</Td>
