@@ -16,7 +16,7 @@ class RentalController extends Controller
     {
         return Inertia::render("Dashboard/Request/index", [
             'rental_log' => Rental::where('status', true)->get(),
-            'return_log' => Returning::where('status', true)->get(),
+            'return_log' => Returning::where('status', true)->with(['item', 'user'])->get(),
             'rental_count' => Rental::count(),
             'return_count' => Returning::count(),
         ]);
