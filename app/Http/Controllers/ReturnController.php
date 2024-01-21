@@ -40,10 +40,10 @@ class ReturnController extends Controller
     //For User
     public function indexUser()
     {
-        $user = auth()->user();
+        $user = auth()->id();
         return Inertia::render("Pengembalian/index", [
             'user' => $user,
-            'rentals' => Rental::with(['item', 'user'])->get(),
+            'rentals' => Rental::with(['item', 'user'])->where('user_id', $user)->get(),
         ]);
     }
 
