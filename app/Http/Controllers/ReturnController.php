@@ -18,7 +18,7 @@ class ReturnController extends Controller
     public function returnAdmin()
     {
         return Inertia::render("Dashboard/Request/Return/index", [
-            'returns' => Returning::where('status', false)->with(['item', 'user'])->get(),
+            'returns' => Returning::where('status', false)->where('photo', '!=', null)->with(['item', 'user'])->get(),
         ]);
     }
 
@@ -32,11 +32,12 @@ class ReturnController extends Controller
         return redirect('/request/return');
     }
 
-    public function rejectReturn(Request $request)
+    public function rejectReturn($id)
     {
-        $return = Returning::find($request->id);
+        $return = Returning::find($id);
         Storage::delete('photos/' . $return->photo);
-        $return->delete();
+        // Storage::delete('photos/' . $return->photo);
+        // $return->delete();
         return redirect('/request/return');
     }
 
@@ -58,7 +59,7 @@ class ReturnController extends Controller
 
         if ($request->file("photo")) {
             $extension = $request->file("photo")->getClientOriginalExtension();
-            $newName = strtolower($request->name) . '-' . now()->timestamp . '.' . $extension;
+            $newName = strtolower($request->item_id) . '-' . now()->timestamp . '.' . $extension;
             Storage::disk('public')->putFileAs('photos', $request->file("photo"), $newName);
             $request['photos'] = $newName;
         };
