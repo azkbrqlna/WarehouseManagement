@@ -27,10 +27,7 @@ import { Bell } from "@phosphor-icons/react";
 const Peminjaman = ({ items, rentals, auth }) => {
     const [isBorder, setBorder] = useState(false);
     const [isLoading, setLoading] = useState(false);
-    const [isInfoOpen, setInfoOpen] = useState(
-        new Array(items.length).fill(false)
-    );
-
+    const [isInfoOpen, setInfoOpen] = useState(Array(items.length).fill(false));
     const toast = useToast();
 
     const borderChange = () => {
