@@ -16,28 +16,28 @@ import {
 } from "@chakra-ui/react";
 import { Head, router, useForm } from "@inertiajs/react";
 import { PaperPlaneRight, UploadSimple } from "@phosphor-icons/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Headroom from "react-headroom";
 
 const Pengembalian = ({ rentals, auth, returns }) => {
     const toast = useToast();
     const [isBorder, setBorder] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
-    const borderChange = () => {
-        setBorder(window.scrollY > 110 ? true : false);
-    };
-    window.addEventListener("scroll", borderChange);
-
+    const [isLoading, setIsLoading] = useState(() =>
+        Array(rentals.length).fill(false)
+    );
     const { data, setData } = useForm({
-        file: null,
+        file: [],
     });
-    const handleRefund = (e, itemID) => {
+    const infoLoading = [...isLoading];
+
+    const handleRefund = (e, itemID, index) => {
         e.preventDefault();
-        setIsLoading(true);
+        infoLoading[index] = !infoLoading[index];
+        setIsLoading(infoLoading);
         router.post(
             "/pengembalian",
             {
-                photo: data.file,
+                photo: data.file[index],
                 item_id: itemID,
             },
             {
@@ -54,11 +54,23 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                     });
                 },
                 onFinish: () => {
-                    setIsLoading(false);
+                    infoLoading[index] = !infoLoading[index];
+                    setIsLoading(infoLoading);
                 },
             }
         );
     };
+    const handleFileChange = (e, index) => {
+        const newFileUpload = Array.isArray(data.file) ? [...data.file] : [];
+        newFileUpload[index] = e.target.files[0];
+        setData("file", newFileUpload);
+    };
+
+    const borderChange = () => {
+        setBorder(window.scrollY > 110 ? true : false);
+    };
+    window.addEventListener("scroll", borderChange);
+
     return (
         <>
             <Head title="Pengembalian" />
@@ -115,7 +127,7 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                                         </Td>
                                         <Td>
                                             <FormLabel
-                                                htmlFor="file_upload"
+                                                htmlFor={`file_upload_${index}`}
                                                 display="flex"
                                                 bg="whiteAlpha.400"
                                                 _hover={{
@@ -133,30 +145,30 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                                             >
                                                 <UploadSimple size={30} />
                                                 <Input
-                                                    id="file_upload"
+                                                    id={`file_upload_${index}`}
                                                     name="file"
                                                     type="file"
                                                     display="none"
                                                     onChange={(e) =>
-                                                        setData(
-                                                            "file",
-                                                            e.target.files[0]
+                                                        handleFileChange(
+                                                            e,
+                                                            index
                                                         )
                                                     }
                                                 />
                                             </FormLabel>
                                         </Td>
                                         <Td>
-                                            {data.file && (
+                                            {(data.file[index] instanceof
+                                            File ? (
                                                 <Box
                                                     w="70px"
                                                     h="70px"
-                                                    border="1px"
                                                     overflow="hidden"
                                                 >
                                                     <img
                                                         src={URL.createObjectURL(
-                                                            data.file
+                                                            data.file[index]
                                                         )}
                                                         style={{
                                                             width: "100%",
@@ -165,8 +177,35 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                                                         }}
                                                     />
                                                 </Box>
-                                            )}
+                                            ) : null) ||
+                                                (returning
+                                                    ? returns
+                                                          .filter(
+                                                              (re) =>
+                                                                  re.item_id ===
+                                                                  refund.item_id
+                                                          )
+                                                          .map((re) => (
+                                                              <Box
+                                                                  key={re.id}
+                                                                  w="70px"
+                                                                  h="70px"
+                                                                  overflow="hidden"
+                                                              >
+                                                                  <img
+                                                                      src={`/storage/photos/${re.photo}`}
+                                                                      style={{
+                                                                          width: "100%",
+                                                                          height: "100%",
+                                                                          objectFit:
+                                                                              "cover",
+                                                                      }}
+                                                                  />
+                                                              </Box>
+                                                          ))
+                                                    : null)}
                                         </Td>
+
                                         <Td>
                                             <Button
                                                 bgColor="blue.500"
@@ -178,14 +217,15 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                                                 onClick={(e) =>
                                                     handleRefund(
                                                         e,
-                                                        refund.item.id
+                                                        refund.item.id,
+                                                        index
                                                     )
                                                 }
                                                 isDisabled={
                                                     returning ? true : false
                                                 }
                                             >
-                                                {isLoading ? (
+                                                {isLoading[index] ? (
                                                     <Spinner />
                                                 ) : (
                                                     <>
