@@ -10,8 +10,6 @@ const RequestPage = ({
     rental_log,
     return_log,
 }) => {
-    console.log(rental_log);
-    console.log(return_log);
     return (
         <>
             <Dashboardlayout title="Request">
@@ -62,7 +60,9 @@ const RequestPage = ({
                                 <Tbody>
                                     {return_log.map((retur, index) => {
                                         const rental = rental_log.find(
-                                            (r) => r.user_id === retur.user_id
+                                            (r) =>
+                                                r.user_id === retur.user_id &&
+                                                r.item_id === retur.item_id
                                         );
                                         return (
                                             <Tr key={retur.id}>

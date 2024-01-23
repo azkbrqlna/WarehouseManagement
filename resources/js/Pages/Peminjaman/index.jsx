@@ -27,8 +27,7 @@ import { Bell } from "@phosphor-icons/react";
 const Peminjaman = ({ items, rentals, auth }) => {
     const [isBorder, setBorder] = useState(false);
     const [isLoading, setLoading] = useState(false);
-    const [isInfoOpen, setInfoOpen] = useState(false);
-
+    const [isInfoOpen, setInfoOpen] = useState(Array(items.length).fill(false));
     const toast = useToast();
 
     const borderChange = () => {
@@ -70,8 +69,10 @@ const Peminjaman = ({ items, rentals, auth }) => {
         );
     };
 
-    const handleButtonInfo = () => {
-        setInfoOpen(!isInfoOpen);
+    const handleButtonInfo = (idx) => {
+        const infoOpen = [...isInfoOpen];
+        infoOpen[idx] = !infoOpen[idx];
+        setInfoOpen(infoOpen);
     };
 
     let acceptData = 1;
@@ -164,7 +165,7 @@ const Peminjaman = ({ items, rentals, auth }) => {
                 <section className="mt-10 w-full grid grid-flow-row px-10">
                     <div className="flex flex-wrap justify-center col-span-5 gap-8 mb-96">
                         {items.length > 0 &&
-                            items.map((item) => (
+                            items.map((item, idx) => (
                                 <CardProduct
                                     key={item.id}
                                     itemID={item.id}
@@ -185,8 +186,8 @@ const Peminjaman = ({ items, rentals, auth }) => {
                                     }
                                     value={data.reason}
                                     isLoading={isLoading}
-                                    infoOpen={handleButtonInfo}
-                                    openInfo={isInfoOpen}
+                                    infoOpen={() => handleButtonInfo(idx)}
+                                    openInfo={isInfoOpen[idx]}
                                 />
                             ))}
                     </div>

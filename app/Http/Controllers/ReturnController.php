@@ -32,9 +32,9 @@ class ReturnController extends Controller
         return redirect('/request/return');
     }
 
-    public function rejectReturn(Request $request)
+    public function rejectReturn($id)
     {
-        $return = Returning::find($request->id);
+        $return = Returning::find($id);
         Storage::delete('photos/' . $return->photo);
         $return->delete();
         return redirect('/request/return');
@@ -54,12 +54,12 @@ class ReturnController extends Controller
     public function storeUser(Request $request)
     {
         $request->validate([
-            'photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048'
+            'photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
 
         if ($request->file("photo")) {
             $extension = $request->file("photo")->getClientOriginalExtension();
-            $newName = strtolower($request->name) . '-' . now()->timestamp . '.' . $extension;
+            $newName = strtolower($request->item_id) . '-' . now()->timestamp . '.' . $extension;
             Storage::disk('public')->putFileAs('photos', $request->file("photo"), $newName);
             $request['photos'] = $newName;
         };
