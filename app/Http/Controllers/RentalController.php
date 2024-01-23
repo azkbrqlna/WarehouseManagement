@@ -68,6 +68,10 @@ class RentalController extends Controller
             'rent_date' => $request->rent_date,
             'return_date' => $request->return_date,    
         ]);
+        $item = Item::find($request->item_id);
+        $item->amount -= $request->amount;
+        $item->save();
+        
         return redirect('/peminjaman');
     }
 }
