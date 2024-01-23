@@ -18,7 +18,7 @@ class ReturnController extends Controller
     public function returnAdmin()
     {
         return Inertia::render("Dashboard/Request/Return/index", [
-            'returns' => Returning::where('status', false)->where('photo', '!=', null)->with(['item', 'user'])->get(),
+            'returns' => Returning::where('status', false)->with(['item', 'user'])->get(),
         ]);
     }
 
@@ -36,8 +36,7 @@ class ReturnController extends Controller
     {
         $return = Returning::find($id);
         Storage::delete('photos/' . $return->photo);
-        // Storage::delete('photos/' . $return->photo);
-        // $return->delete();
+        $return->delete();
         return redirect('/request/return');
     }
 

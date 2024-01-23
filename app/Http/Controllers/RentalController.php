@@ -56,9 +56,6 @@ class RentalController extends Controller
 
     public function storeUser(Request $request)
     {
-        $request['rent_date'] = Carbon::now()->toDateString();
-        $request['return_date'] = Carbon::now()->addDays(7)->toDateString();
-
         $request->validate([
             'reason' => 'required',
         ]);
