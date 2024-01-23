@@ -60,7 +60,9 @@ const RequestPage = ({
                                 <Tbody>
                                     {return_log.map((retur, index) => {
                                         const rental = rental_log.find(
-                                            (r) => r.user_id === retur.user_id
+                                            (r) =>
+                                                r.user_id === retur.user_id &&
+                                                r.item_id === retur.item_id
                                         );
                                         return (
                                             <Tr key={retur.id}>
