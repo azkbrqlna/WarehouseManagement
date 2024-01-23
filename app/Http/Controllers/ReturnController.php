@@ -7,10 +7,9 @@ use App\Models\Rental;
 use App\Models\Returning;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Log;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
-use PhpParser\Node\Stmt\Return_;
 
 class ReturnController extends Controller
 {
@@ -28,6 +27,23 @@ class ReturnController extends Controller
         $return->actual_return_date = Carbon::now()->toDateString();
         $return->status = true;
         $return->save();
+
+        $rental = Rental::where('user_id', $return->user_id)
+            ->where('item_id', $return->item_id)
+            ->where('status', true)
+            ->first();
+
+        if ($return->status && $rental) {
+            Log::create([
+                'user_id' => $return->user_id,
+                'item_id' => $return->item_id,
+                'reason' => $rental->reason,
+                'rent_date' => $rental->rent_date,
+                'photo' => $return->photo,
+                'actual_return_date' => $return->actual_return_date,
+            ]);
+        }
+
 
         return redirect('/request/return');
     }

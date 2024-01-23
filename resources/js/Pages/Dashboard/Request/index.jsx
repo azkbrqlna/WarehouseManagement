@@ -4,12 +4,7 @@ import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import { Link } from "@inertiajs/react";
 import { ArrowCounterClockwise, Note } from "@phosphor-icons/react";
 
-const RequestPage = ({
-    rental_count,
-    return_count,
-    rental_log,
-    return_log,
-}) => {
+const RequestPage = ({ rental_count, return_count, logs }) => {
     return (
         <>
             <Dashboardlayout title="Request">
@@ -58,19 +53,14 @@ const RequestPage = ({
                                     </Tr>
                                 </Thead>
                                 <Tbody>
-                                    {return_log.map((retur, index) => {
-                                        const rental = rental_log.find(
-                                            (r) =>
-                                                r.user_id === retur.user_id &&
-                                                r.item_id === retur.item_id
-                                        );
+                                    {logs.map((log, index) => {
                                         return (
-                                            <Tr key={retur.id}>
+                                            <Tr key={log.id}>
                                                 <Td textAlign="center">
                                                     {index + 1}
                                                 </Td>
                                                 <Td textAlign="center">
-                                                    {retur.user.username}
+                                                    {log.user.username}
                                                 </Td>
                                                 <Td
                                                     display="flex"
@@ -79,7 +69,7 @@ const RequestPage = ({
                                                     <div className="w-20 h-20 overflow-hidden">
                                                         <img
                                                             className="w-full h-full object-cover"
-                                                            src={`/storage/photos/${retur.photo}`}
+                                                            src={`/storage/photos/${log.photo}`}
                                                         />
                                                     </div>
                                                 </Td>
@@ -88,20 +78,20 @@ const RequestPage = ({
                                                         <span className="font-bold">
                                                             Barang:{" "}
                                                         </span>
-                                                        {retur.item.name}
+                                                        {log.item.name}
                                                     </h1>
                                                     <p className="text-sm">
                                                         <span className="font-bold">
                                                             Alasan:{" "}
                                                         </span>
-                                                        {rental.reason}
+                                                        {log.reason}
                                                     </p>
                                                 </Td>
                                                 <Td textAlign="center">
-                                                    {rental.rent_date}
+                                                    {log.rent_date}
                                                 </Td>
                                                 <Td textAlign="center">
-                                                    {retur.actual_return_date}
+                                                    {log.actual_return_date}
                                                 </Td>
                                             </Tr>
                                         );
