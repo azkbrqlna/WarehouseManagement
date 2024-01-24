@@ -28,17 +28,28 @@ class ReturnController extends Controller
         $return->status = true;
         $return->save();
 
-        $logData = Log::where('user_id', $return->user_id)
+        $rental = Rental::where('user_id', $return->user_id)
             ->where('item_id', $return->item_id)
             ->first();
 
-        if ($logData) {
-            $logData->update([
-                'photo' => $return->photo,
-                'actual_return_date' => $return->actual_return_date,
-            ]);
+        // if ($return->status && $rental) {
+        //     Log::create([
+        //         'user_id' => auth()->id(),   
+        //         'item_id' => $rental->item_id,
+        //         'reason' => $rental->reason,
+        //         'rent_date' => $rental->rent_date,
+        //         'return_date' => $rental->return_date,
+        //         'photo' => $return->photo,
+        //         'actual_return_date' => $return->actual_return_date,
+        //     ]);
+        // }
+        if ($return->status) {
+            $log = Log::find($request->all);
+            $log->photo = $return->photo;
+            $log->actual_return_date = $return->actual_return_date;
+            $log->save();
         }
-        return redirect('/requests/return');
+        return redirect('/request/return');
     }
 
     public function rejectReturn($id)
@@ -46,7 +57,7 @@ class ReturnController extends Controller
         $return = Returning::find($id);
         Storage::delete('photos/' . $return->photo);
         $return->delete();
-        return redirect('/requests/return');
+        return redirect('/request/return');
     }
 
     //For User
@@ -71,7 +82,8 @@ class ReturnController extends Controller
             $newName = strtolower($request->item_id) . '-' . now()->timestamp . '.' . $extension;
             Storage::disk('public')->putFileAs('photos', $request->file("photo"), $newName);
             $request['photos'] = $newName;
-        };
+        }
+        ;
 
         Returning::create([
             'user_id' => auth()->id(),
