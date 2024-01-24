@@ -27,10 +27,9 @@ class ReturnController extends Controller
             'photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
         $return = Returning::find($request->id);
-        $return->update([
-            'actual_return_date' => now()->toDateString(),
-            'status' => true,
-        ]);
+        $return->actual_return_date = Carbon::now()->toDateString();
+        $return->status = true;
+        $return->save();
 
         $rental = Rental::where('user_id', $return->user_id)
             ->where('item_id', $return->item_id)
@@ -80,7 +79,8 @@ class ReturnController extends Controller
             $newName = strtolower($request->item_id) . '-' . now()->timestamp . '.' . $extension;
             Storage::disk('public')->putFileAs('photos', $request->file("photo"), $newName);
             $request['photos'] = $newName;
-        };
+        }
+        ;
 
         Returning::create([
             'user_id' => auth()->id(),

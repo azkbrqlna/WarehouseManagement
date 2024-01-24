@@ -37,6 +37,15 @@ class RentalController extends Controller
             'reason' => 'required',
         ]);
         $rental = Rental::find($request->id);
+        // $request['rent_date'] = Carbon::now()->toDateString();
+        // $request['return_date'] = Carbon::now()->addDays(7)->toDateString();
+        // Log::create([
+        //     'user_id' => auth()->id(),
+        //     'item_id' => $request->item_id,
+        //     'reason' => $request->reason,
+        //     'rent_date' => $request->rent_date,
+        //     'return_date' => $request->return_date,
+        // ]);
         $rental->status = true;
         Log::create([
             'user_id' => auth()->id(),
@@ -46,7 +55,7 @@ class RentalController extends Controller
             'return_date' => $request->return_date,
         ]);
         $rental->save();
-
+        
 
         return redirect('/request/rental');
     }
