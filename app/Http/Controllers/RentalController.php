@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
-use App\Models\Log;
 use App\Models\Rental;
 use App\Models\Returning;
+use App\Models\Log;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -16,8 +16,9 @@ class RentalController extends Controller
     public function indexAdmin(Request $request)
     {
         return Inertia::render("Dashboard/Request/index", [
-            'rental_log' => Rental::where('status', true)->get(),
-            'return_log' => Returning::where('status', true)->with(['item', 'user'])->get(),
+            // 'rental_log' => Rental::where('status', true)->get(),
+            // 'return_log' => Returning::where('status', true)->with(['item', 'user'])->get(),
+            'logs' => Log::with(['item', 'user'])->get(),
             'rental_count' => Rental::count(),
             'return_count' => Returning::count(),
         ]);
@@ -34,18 +35,18 @@ class RentalController extends Controller
     public function acceptRental(Request $request)
     {
         $rental = Rental::find($request->id);
-        $request['rent_date'] = Carbon::now()->toDateString();
-        $request['return_date'] = Carbon::now()->addDays(7)->toDateString();
-        Log::create([
-            'user_id' => auth()->id(),
-            'item_id' => $request->item_id,
-            'reason' => $request->reason,
-            'rent_date' => $request->rent_date,
-            'return_date' => $request->return_date,
-        ]);
         $rental->status = true;
         $rental->save();
-        
+
+        if($rental->status){
+            Log::create([
+                'user_id' => $rental->user_id,
+                'item_id' => $rental->item_id,
+                'reason' => $rental->reason,
+                'rent_date' => $rental->rent_date,
+                'return_date' => $rental->return_date
+            ]);
+        }
 
         return redirect('/request/rental');
     }

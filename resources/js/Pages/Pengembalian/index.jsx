@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { Head, router, useForm } from "@inertiajs/react";
 import { PaperPlaneRight, UploadSimple } from "@phosphor-icons/react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Headroom from "react-headroom";
 
 const Pengembalian = ({ rentals, auth, returns }) => {

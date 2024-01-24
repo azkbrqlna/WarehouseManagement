@@ -21,7 +21,6 @@ return new class extends Migration
             $table->date('return_date');
             $table->date('actual_return_date')->nullable();
             $table->string('photo')->nullable();
-            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }
