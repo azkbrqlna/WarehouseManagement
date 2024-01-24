@@ -22,7 +22,6 @@ class RentalController extends Controller
             'rental_count' => Rental::count(),
             'return_count' => Returning::count(),
         ]);
-
     }
 
     public function rentalAdmin()
@@ -34,19 +33,20 @@ class RentalController extends Controller
 
     public function acceptRental(Request $request)
     {
+        $request->validate([
+            'reason' => 'required',
+        ]);
         $rental = Rental::find($request->id);
-        // $request['rent_date'] = Carbon::now()->toDateString();
-        // $request['return_date'] = Carbon::now()->addDays(7)->toDateString();
-        // Log::create([
-        //     'user_id' => auth()->id(),
-        //     'item_id' => $request->item_id,
-        //     'reason' => $request->reason,
-        //     'rent_date' => $request->rent_date,
-        //     'return_date' => $request->return_date,
-        // ]);
         $rental->status = true;
+        Log::create([
+            'user_id' => auth()->id(),
+            'item_id' => $request->item_id,
+            'reason' => $request->reason,
+            'rent_date' => $request->rent_date,
+            'return_date' => $request->return_date,
+        ]);
         $rental->save();
-        
+
 
         return redirect('/request/rental');
     }
@@ -79,12 +79,12 @@ class RentalController extends Controller
             'item_id' => $request->item_id,
             'reason' => $request->reason,
             'rent_date' => $request->rent_date,
-            'return_date' => $request->return_date,    
+            'return_date' => $request->return_date,
         ]);
         $item = Item::find($request->item_id);
-        $item->amount -= $request->amount;
+        // $item->amount -= $request->amount;
         $item->save();
-        
+
         return redirect('/peminjaman');
     }
 }

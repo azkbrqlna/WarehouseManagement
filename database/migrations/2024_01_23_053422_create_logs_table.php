@@ -18,9 +18,9 @@ return new class extends Migration
             $table->string('reason');
             $table->string('amount')->nullable();
             $table->date('rent_date');
+            $table->date('return_date');
             $table->date('actual_return_date')->nullable();
             $table->string('photo')->nullable();
-            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }

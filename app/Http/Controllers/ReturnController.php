@@ -23,10 +23,14 @@ class ReturnController extends Controller
 
     public function acceptReturn(Request $request)
     {
+        $request->validate([
+            'photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+        ]);
         $return = Returning::find($request->id);
-        $return->actual_return_date = Carbon::now()->toDateString();
-        $return->status = true;
-        $return->save();
+        $return->update([
+            'actual_return_date' => now()->toDateString(),
+            'status' => true,
+        ]);
 
         $rental = Rental::where('user_id', $return->user_id)
             ->where('item_id', $return->item_id)
@@ -43,8 +47,6 @@ class ReturnController extends Controller
                 'actual_return_date' => $return->actual_return_date,
             ]);
         }
-
-
         return redirect('/request/return');
     }
 

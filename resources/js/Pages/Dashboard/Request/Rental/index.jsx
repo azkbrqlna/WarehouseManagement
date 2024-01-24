@@ -17,13 +17,17 @@ import Dashboardlayout from "@/Layouts/DashboardLayout";
 import { Link, router } from "@inertiajs/react";
 
 const Rental = ({ rental, index }) => {
+    console.log(rental)
     const toast = useToast();
     const { isOpen, onToggle } = useDisclosure();
 
-    const handleAccept = (id) => {
+    const handleAccept = (id, status, user_id, item_id, reason) => {
         router.patch(
             `/request/rental/${id}`,
             {
+                user_id,
+                item_id,
+                reason,
                 status,
                 rent_date: new Date().toISOString(),
             },
@@ -34,7 +38,8 @@ const Rental = ({ rental, index }) => {
                         status: "success",
                     });
                 },
-                onError: () => {
+                onError: (error) => {
+                    console.log(error);
                     toast({
                         title: "Gagal menyetujui peminjaman",
                         status: "error",
@@ -42,26 +47,29 @@ const Rental = ({ rental, index }) => {
                 },
             }
         );
+        console.log({
+            user_id,
+            item_id,
+            reason,
+            status,
+        })
     };
 
     const handleDeclined = (id) => {
-        router.delete(
-            `/request/rental/${id}`,
-            {
-                onSuccess: () => {
-                    toast({
-                        title: "Berhasil menolak peminjaman",
-                        status: "success",
-                    });
-                },
-                onError: () => {
-                    toast({
-                        title: "Gagal menolak peminjaman",
-                        status: "error",
-                    });
-                },
-            }
-        );
+        router.delete(`/request/rental/${id}`, {
+            onSuccess: () => {
+                toast({
+                    title: "Berhasil menolak peminjaman",
+                    status: "success",
+                });
+            },
+            onError: () => {
+                toast({
+                    title: "Gagal menolak peminjaman",
+                    status: "error",
+                });
+            },
+        });
     };
 
     return (
@@ -108,7 +116,15 @@ const Rental = ({ rental, index }) => {
                     _hover={{
                         background: "green.400",
                     }}
-                    onClick={() => handleAccept(rental.id)}
+                    onClick={() =>
+                        handleAccept(
+                            rental.id,
+                            rental.user_id,
+                            rental.item_id,
+                            rental.reason,
+                            rental.status
+                        )
+                    }
                 >
                     <Check size={20} />
                     Accept
