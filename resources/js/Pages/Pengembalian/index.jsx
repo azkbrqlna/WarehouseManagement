@@ -20,6 +20,8 @@ import { useState } from "react";
 import Headroom from "react-headroom";
 
 const Pengembalian = ({ rentals, auth, returns }) => {
+    console.log("rentals", rentals);
+    console.log("returns", returns);
     const toast = useToast();
     const [isBorder, setBorder] = useState(false);
     const [isLoading, setIsLoading] = useState(() =>
@@ -116,141 +118,148 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                                 const returning = returns.find(
                                     (retur) => retur.item_id === refund.item_id
                                 );
-                                return auth.user.id === refund.user_id &&
-                                    refund.status &&
-                                    !returning?.status ? (
-                                    <Tr key={refund.id} textColor="white">
-                                        <Td>{index + 1}</Td>
-                                        <Td>{refund.item.name}</Td>
-                                        <Td colSpan={2}>
-                                            {refund.return_date}
-                                        </Td>
-                                        <Td>
-                                            <FormLabel
-                                                htmlFor={`file_upload_${index}`}
-                                                display="flex"
-                                                bg="whiteAlpha.400"
-                                                _hover={{
-                                                    background:
-                                                        "whiteAlpha.800",
-                                                }}
-                                                transition="background 0.3s ease-in-out"
-                                                borderRadius="10px"
-                                                w="140px"
-                                                p="8px"
-                                                cursor="pointer"
-                                                justifyContent="center"
-                                                alignItems="center"
-                                                fontSize="700"
-                                            >
-                                                <UploadSimple size={30} />
-                                                <Input
-                                                    id={`file_upload_${index}`}
-                                                    name="file"
-                                                    type="file"
-                                                    display="none"
-                                                    onChange={(e) =>
-                                                        handleFileChange(
+
+                                if (
+                                    auth.user.id === refund.user_id &&
+                                    refund.status
+                                ) {
+                                    return (
+                                        <Tr key={refund.id} textColor="white">
+                                            <Td>{index + 1}</Td>
+                                            <Td>{refund.item.name}</Td>
+                                            <Td colSpan={2}>
+                                                {refund.return_date}
+                                            </Td>
+                                            <Td>
+                                                <FormLabel
+                                                    htmlFor={`file_upload_${index}`}
+                                                    display="flex"
+                                                    bg="whiteAlpha.400"
+                                                    _hover={{
+                                                        background:
+                                                            "whiteAlpha.800",
+                                                    }}
+                                                    transition="background 0.3s ease-in-out"
+                                                    borderRadius="10px"
+                                                    w="140px"
+                                                    p="8px"
+                                                    cursor="pointer"
+                                                    justifyContent="center"
+                                                    alignItems="center"
+                                                    fontSize="700"
+                                                >
+                                                    <UploadSimple size={30} />
+                                                    <Input
+                                                        id={`file_upload_${index}`}
+                                                        name="file"
+                                                        type="file"
+                                                        display="none"
+                                                        onChange={(e) =>
+                                                            handleFileChange(
+                                                                e,
+                                                                index
+                                                            )
+                                                        }
+                                                    />
+                                                </FormLabel>
+                                            </Td>
+                                            <Td>
+                                                {(data.file[index] instanceof
+                                                File ? (
+                                                    <Box
+                                                        w="70px"
+                                                        h="70px"
+                                                        overflow="hidden"
+                                                    >
+                                                        <img
+                                                            src={URL.createObjectURL(
+                                                                data.file[index]
+                                                            )}
+                                                            style={{
+                                                                width: "100%",
+                                                                height: "100%",
+                                                                objectFit:
+                                                                    "cover",
+                                                            }}
+                                                        />
+                                                    </Box>
+                                                ) : null) ||
+                                                    (returning
+                                                        ? returns
+                                                              .filter(
+                                                                  (re) =>
+                                                                      re.item_id ===
+                                                                      refund.item_id
+                                                              )
+                                                              .map((re) => (
+                                                                  <Box
+                                                                      key={
+                                                                          re.id
+                                                                      }
+                                                                      w="70px"
+                                                                      h="70px"
+                                                                      overflow="hidden"
+                                                                  >
+                                                                      <img
+                                                                          src={`/storage/photos/${re.photo}`}
+                                                                          style={{
+                                                                              width: "100%",
+                                                                              height: "100%",
+                                                                              objectFit:
+                                                                                  "cover",
+                                                                          }}
+                                                                      />
+                                                                  </Box>
+                                                              ))
+                                                        : null)}
+                                            </Td>
+
+                                            <Td>
+                                                <Button
+                                                    bgColor="blue.500"
+                                                    textColor="white"
+                                                    _hover={{
+                                                        background: "blue.400",
+                                                    }}
+                                                    type="submit"
+                                                    onClick={(e) =>
+                                                        handleRefund(
                                                             e,
+                                                            refund.item.id,
                                                             index
                                                         )
                                                     }
-                                                />
-                                            </FormLabel>
-                                        </Td>
-                                        <Td>
-                                            {(data.file[index] instanceof
-                                            File ? (
-                                                <Box
-                                                    w="70px"
-                                                    h="70px"
-                                                    overflow="hidden"
+                                                    isDisabled={
+                                                        returning ? true : false
+                                                    }
                                                 >
-                                                    <img
-                                                        src={URL.createObjectURL(
-                                                            data.file[index]
-                                                        )}
-                                                        style={{
-                                                            width: "100%",
-                                                            height: "100%",
-                                                            objectFit: "cover",
-                                                        }}
-                                                    />
-                                                </Box>
-                                            ) : null) ||
-                                                (returning
-                                                    ? returns
-                                                          .filter(
-                                                              (re) =>
-                                                                  re.item_id ===
-                                                                  refund.item_id
-                                                          )
-                                                          .map((re) => (
-                                                              <Box
-                                                                  key={re.id}
-                                                                  w="70px"
-                                                                  h="70px"
-                                                                  overflow="hidden"
-                                                              >
-                                                                  <img
-                                                                      src={`/storage/photos/${re.photo}`}
-                                                                      style={{
-                                                                          width: "100%",
-                                                                          height: "100%",
-                                                                          objectFit:
-                                                                              "cover",
-                                                                      }}
-                                                                  />
-                                                              </Box>
-                                                          ))
-                                                    : null)}
-                                        </Td>
-
-                                        <Td>
-                                            <Button
-                                                bgColor="blue.500"
-                                                textColor="white"
-                                                _hover={{
-                                                    background: "blue.400",
-                                                }}
-                                                type="submit"
-                                                onClick={(e) =>
-                                                    handleRefund(
-                                                        e,
-                                                        refund.item.id,
-                                                        index
-                                                    )
-                                                }
-                                                isDisabled={
-                                                    returning ? true : false
-                                                }
-                                            >
-                                                {isLoading[index] ? (
-                                                    <Spinner />
-                                                ) : (
-                                                    <>
-                                                        {returning ? (
-                                                            returning.status ? (
-                                                                "Pengembalian diterima!"
+                                                    {isLoading[index] ? (
+                                                        <Spinner />
+                                                    ) : (
+                                                        <>
+                                                            {returning ? (
+                                                                returning.status ? (
+                                                                    "Pengembalian diterima!"
+                                                                ) : (
+                                                                    "Tunggu admin!"
+                                                                )
                                                             ) : (
-                                                                "Tunggu admin!"
-                                                            )
-                                                        ) : (
-                                                            <>
-                                                                <PaperPlaneRight
-                                                                    size={20}
-                                                                />
-                                                                Kirim
-                                                            </>
-                                                        )}
-                                                    </>
-                                                )}
-                                            </Button>
-                                        </Td>
-                                    </Tr>
-                                ) : (
-                                    ""
-                                );
+                                                                <>
+                                                                    <PaperPlaneRight
+                                                                        size={
+                                                                            20
+                                                                        }
+                                                                    />
+                                                                    Kirim
+                                                                </>
+                                                            )}
+                                                        </>
+                                                    )}
+                                                </Button>
+                                            </Td>
+                                        </Tr>
+                                    );
+                                }
                             })}
                         </Tbody>
                     </Table>

@@ -75,7 +75,6 @@ const Peminjaman = ({ items, rentals, auth }) => {
             [idx]: !prevState[idx] || false,
         }));
     };
-    console.log(isInfoOpen);
 
     let acceptData = 1;
     const MenuAccept = rentals.map((rental, index) => {
