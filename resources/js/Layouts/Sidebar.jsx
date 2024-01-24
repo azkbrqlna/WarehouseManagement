@@ -13,7 +13,7 @@ const Sidebar = () => {
 
     const tabs = [
         { label: "Dashboard", icon: Gauge, href: "/dashboard" },
-        { label: "Request", icon: Archive, href: "/request" },
+        { label: "Request", icon: Archive, href: "/requests" },
         { label: "Users", icon: Users, href: "/users" },
         { label: "Barang", icon: ListDashes, href: "/items" },
     ];

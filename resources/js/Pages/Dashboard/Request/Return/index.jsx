@@ -23,9 +23,10 @@ const Return = ({ refund, index }) => {
     const { isOpen, onToggle } = useDisclosure();
     const handleAccept = (id, status) => {
         router.patch(
-            `/request/return/${id}`,
+            `/requests/return/${id}`,
             {
                 status,
+                photo: `/storage/photos/${refund.photo}`,
                 actual_return_date: new Date().toISOString(),
             },
             {
@@ -35,7 +36,8 @@ const Return = ({ refund, index }) => {
                         status: "success",
                     });
                 },
-                onError: () => {
+                onError: (error) => {
+                    console.log(error);
                     toast({
                         title: "Gagal menyetujui pengembalian",
                         status: "error",
@@ -43,11 +45,12 @@ const Return = ({ refund, index }) => {
                 },
             }
         );
+        console.log(refund.photo);
     };
 
     const handleDeclined = (id, status) => {
         router.delete(
-            `/request/return/${id}`,
+            `/requests/return/${id}`,
             { status },
             {
                 onSuccess: () => {
@@ -56,7 +59,8 @@ const Return = ({ refund, index }) => {
                         status: "success",
                     });
                 },
-                onError: () => {
+                onError: (error) => {
+                    console.log(error);
                     toast({
                         title: "Gagal menolak peminjaman",
                         status: "error",
@@ -126,7 +130,7 @@ const RequestPage = ({ returns }) => {
     return (
         <>
             <Dashboardlayout title="Request Pengembalian">
-                <Button as={Link} href="/request" className="mt-5">
+                <Button as={Link} href="/requests" className="mt-5">
                     <ArrowLeft size={24} />
                     Kembali
                 </Button>

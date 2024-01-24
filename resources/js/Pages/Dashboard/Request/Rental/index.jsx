@@ -17,19 +17,20 @@ import Dashboardlayout from "@/Layouts/DashboardLayout";
 import { Link, router } from "@inertiajs/react";
 
 const Rental = ({ rental, index }) => {
-    console.log(rental)
+    console.log(rental);
     const toast = useToast();
     const { isOpen, onToggle } = useDisclosure();
 
-    const handleAccept = (id, status, user_id, item_id, reason) => {
+    const handleAccept = (id, status) => {
         router.patch(
-            `/request/rental/${id}`,
+            `/requests/rental/${id}`,
             {
-                user_id,
-                item_id,
-                reason,
+                user_id: rental.user_id,
+                item_id: rental.item_id,
+                reason: rental.reason,
                 status,
-                rent_date: new Date().toISOString(),
+                rent_date: rental.rent_date,
+                return_date: rental.return_date,
             },
             {
                 onSuccess: () => {
@@ -47,16 +48,10 @@ const Rental = ({ rental, index }) => {
                 },
             }
         );
-        console.log({
-            user_id,
-            item_id,
-            reason,
-            status,
-        })
     };
 
     const handleDeclined = (id) => {
-        router.delete(`/request/rental/${id}`, {
+        router.delete(`/requests/rental/${id}`, {
             onSuccess: () => {
                 toast({
                     title: "Berhasil menolak peminjaman",
@@ -116,15 +111,7 @@ const Rental = ({ rental, index }) => {
                     _hover={{
                         background: "green.400",
                     }}
-                    onClick={() =>
-                        handleAccept(
-                            rental.id,
-                            rental.user_id,
-                            rental.item_id,
-                            rental.reason,
-                            rental.status
-                        )
-                    }
+                    onClick={() => handleAccept(rental.id, rental.status)}
                 >
                     <Check size={20} />
                     Accept
@@ -150,7 +137,7 @@ const RequestPage = ({ rentals }) => {
     return (
         <>
             <Dashboardlayout title="Request Peminjaman">
-                <Button as={Link} href="/request" className="mt-5">
+                <Button as={Link} href="/requests" className="mt-5">
                     <ArrowLeft size={24} />
                     Kembali
                 </Button>

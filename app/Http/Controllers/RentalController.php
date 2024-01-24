@@ -38,6 +38,7 @@ class RentalController extends Controller
         ]);
         $rental = Rental::find($request->id);
         $rental->status = true;
+        $rental->save();
         Log::create([
             'user_id' => auth()->id(),
             'item_id' => $request->item_id,
@@ -45,17 +46,14 @@ class RentalController extends Controller
             'rent_date' => $request->rent_date,
             'return_date' => $request->return_date,
         ]);
-        $rental->save();
-        
-
-        return redirect('/request/rental');
+        return redirect('/requests/rental');
     }
 
     public function rejectRental(Request $request)
     {
         $rental = Rental::find($request->id);
         $rental->delete();
-        return redirect('/request/rental');
+        return redirect('/requests/rental');
     }
 
     //for user

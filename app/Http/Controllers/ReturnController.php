@@ -23,30 +23,22 @@ class ReturnController extends Controller
 
     public function acceptReturn(Request $request)
     {
-        $request->validate([
-            'photo' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-        ]);
         $return = Returning::find($request->id);
         $return->actual_return_date = Carbon::now()->toDateString();
         $return->status = true;
         $return->save();
 
-        $rental = Rental::where('user_id', $return->user_id)
+        $logData = Log::where('user_id', $return->user_id)
             ->where('item_id', $return->item_id)
-            ->where('status', true)
             ->first();
 
-        if ($return->status && $rental) {
-            Log::create([
-                'user_id' => $return->user_id,
-                'item_id' => $return->item_id,
-                'reason' => $rental->reason,
-                'rent_date' => $rental->rent_date,
+        if ($logData) {
+            $logData->update([
                 'photo' => $return->photo,
                 'actual_return_date' => $return->actual_return_date,
             ]);
         }
-        return redirect('/request/return');
+        return redirect('/requests/return');
     }
 
     public function rejectReturn($id)
@@ -54,7 +46,7 @@ class ReturnController extends Controller
         $return = Returning::find($id);
         Storage::delete('photos/' . $return->photo);
         $return->delete();
-        return redirect('/request/return');
+        return redirect('/requests/return');
     }
 
     //For User
@@ -79,8 +71,7 @@ class ReturnController extends Controller
             $newName = strtolower($request->item_id) . '-' . now()->timestamp . '.' . $extension;
             Storage::disk('public')->putFileAs('photos', $request->file("photo"), $newName);
             $request['photos'] = $newName;
-        }
-        ;
+        };
 
         Returning::create([
             'user_id' => auth()->id(),

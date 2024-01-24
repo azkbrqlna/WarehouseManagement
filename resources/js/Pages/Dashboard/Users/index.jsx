@@ -22,7 +22,7 @@ const UsersPage = ({ users }) => {
     const { delete: destroy } = useForm();
     const handleClick = (slug) => {
         if (window.confirm("Ingin menghapus user ini?")) {
-            destroy(`/user/${slug}`, {
+            destroy(`/users/${slug}`, {
                 onSuccess: () => {
                     toast({
                         title: 'Berhasil menghapus user!',
@@ -48,7 +48,7 @@ const UsersPage = ({ users }) => {
                         </InputLeftAddon>
                         <Input textColor="white" placeholder="Cari user" />
                     </InputGroup>
-                    <Button as={Link} href="/user/create">
+                    <Button as={Link} href="/users/create">
                         <Plus size={24} />
                         Tambah User
                     </Button>
