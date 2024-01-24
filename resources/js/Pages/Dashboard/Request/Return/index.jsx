@@ -23,7 +23,7 @@ const Return = ({ refund, index }) => {
     const { isOpen, onToggle } = useDisclosure();
     const handleAccept = (id, status) => {
         router.patch(
-            `/requests/return/${id}`,
+            `/request/return/${id}`,
             {
                 status,
                 photo: `/storage/photos/${refund.photo}`,
@@ -50,7 +50,7 @@ const Return = ({ refund, index }) => {
 
     const handleDeclined = (id, status) => {
         router.delete(
-            `/requests/return/${id}`,
+            `/request/return/${id}`,
             { status },
             {
                 onSuccess: () => {

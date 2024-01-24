@@ -39,7 +39,7 @@ class ItemController extends Controller
         };
 
         Item::create($request->all());
-        return redirect('items/create')->with('success', 'Berhasil menambah barang!');
+        return redirect('item/create')->with('success', 'Berhasil menambah barang!');
     }
 
     public function destroy($slug)

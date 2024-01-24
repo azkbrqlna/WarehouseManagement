@@ -13,9 +13,9 @@ const Sidebar = () => {
 
     const tabs = [
         { label: "Dashboard", icon: Gauge, href: "/dashboard" },
-        { label: "Request", icon: Archive, href: "/requests" },
-        { label: "Users", icon: Users, href: "/users" },
-        { label: "Barang", icon: ListDashes, href: "/items" },
+        { label: "Request", icon: Archive, href: ["/requests", "/request/return", "/request/rental"] },
+        { label: "Users", icon: Users, href: ["/users", "/user/create"] },
+        { label: "Barang", icon: ListDashes, href: ["/items", "/item/create"] },
     ];
     const onLogOut = () => {
         router.visit("/logout");
@@ -25,13 +25,13 @@ const Sidebar = () => {
         <>
             <aside className="h-screen p-10 bg-white w-64 2xl:w-72 flex flex-col justify-between">
                 <div className="space-y-5">
-                    {tabs.map((tab) => (
+                    {tabs.map((tab, index) => (
                         <SidebarButton
-                            key={tab.href}
+                            key={index}
                             value={tab.label}
                             icon={tab.icon}
                             href={tab.href}
-                            isActive={url === tab.href}
+                            isActive={url.startsWith(Array.isArray(tab.href) ? tab.href[0] : tab.href)}
                         />
                     ))}
                 </div>

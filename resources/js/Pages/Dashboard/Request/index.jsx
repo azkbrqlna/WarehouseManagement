@@ -5,12 +5,11 @@ import { Link } from "@inertiajs/react";
 import { ArrowCounterClockwise, Minus, Note } from "@phosphor-icons/react";
 
 const RequestPage = ({ rental_count, return_count, logs }) => {
-    console.log(logs);
     return (
         <>
             <Dashboardlayout title="Request">
                 <section className="grid grid-flow-col gap-5 mt-10">
-                    <Link href="/requests/rental">
+                    <Link href="/request/rental">
                         <OverviewCard
                             className={"text-2xl"}
                             title="Request Peminjaman"
@@ -18,7 +17,7 @@ const RequestPage = ({ rental_count, return_count, logs }) => {
                             icon={Note}
                         />
                     </Link>
-                    <Link href="/requests/return">
+                    <Link href="/request/return">
                         <OverviewCard
                             className={"text-2xl"}
                             title="Request Pengembalian"

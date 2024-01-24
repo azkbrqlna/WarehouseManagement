@@ -38,7 +38,7 @@ class ReturnController extends Controller
                 'actual_return_date' => $return->actual_return_date,
             ]);
         }
-        return redirect('/requests/return');
+        return redirect('/request/return');
     }
 
     public function rejectReturn($id)
