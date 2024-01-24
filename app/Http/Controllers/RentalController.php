@@ -46,14 +46,14 @@ class RentalController extends Controller
             'rent_date' => $request->rent_date,
             'return_date' => $request->return_date,
         ]);
-        return redirect('/requests/rental');
+        return redirect('/request/rental');
     }
 
     public function rejectRental(Request $request)
     {
         $rental = Rental::find($request->id);
         $rental->delete();
-        return redirect('/requests/rental');
+        return redirect('/request/rental');
     }
 
     //for user

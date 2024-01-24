@@ -17,13 +17,12 @@ import Dashboardlayout from "@/Layouts/DashboardLayout";
 import { Link, router } from "@inertiajs/react";
 
 const Rental = ({ rental, index }) => {
-    console.log(rental);
     const toast = useToast();
     const { isOpen, onToggle } = useDisclosure();
 
     const handleAccept = (id, status) => {
         router.patch(
-            `/requests/rental/${id}`,
+            `/request/rental/${id}`,
             {
                 user_id: rental.user_id,
                 item_id: rental.item_id,
@@ -51,7 +50,7 @@ const Rental = ({ rental, index }) => {
     };
 
     const handleDeclined = (id) => {
-        router.delete(`/requests/rental/${id}`, {
+        router.delete(`/request/rental/${id}`, {
             onSuccess: () => {
                 toast({
                     title: "Berhasil menolak peminjaman",

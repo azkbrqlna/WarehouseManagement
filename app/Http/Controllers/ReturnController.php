@@ -38,7 +38,7 @@ class ReturnController extends Controller
                 'actual_return_date' => $return->actual_return_date,
             ]);
         }
-        return redirect('/requests/return');
+        return redirect('/request/return');
     }
 
     public function rejectReturn($id)
@@ -46,7 +46,7 @@ class ReturnController extends Controller
         $return = Returning::find($id);
         Storage::delete('photos/' . $return->photo);
         $return->delete();
-        return redirect('/requests/return');
+        return redirect('/request/return');
     }
 
     //For User
