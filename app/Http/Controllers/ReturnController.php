@@ -28,28 +28,17 @@ class ReturnController extends Controller
         $return->status = true;
         $return->save();
 
-        $rental = Rental::where('user_id', $return->user_id)
+        $logData = Log::where('user_id', $return->user_id)
             ->where('item_id', $return->item_id)
             ->first();
 
-        // if ($return->status && $rental) {
-        //     Log::create([
-        //         'user_id' => auth()->id(),   
-        //         'item_id' => $rental->item_id,
-        //         'reason' => $rental->reason,
-        //         'rent_date' => $rental->rent_date,
-        //         'return_date' => $rental->return_date,
-        //         'photo' => $return->photo,
-        //         'actual_return_date' => $return->actual_return_date,
-        //     ]);
-        // }
-        if ($return->status) {
-            $log = Log::find($request->all);
-            $log->photo = $return->photo;
-            $log->actual_return_date = $return->actual_return_date;
-            $log->save();
+        if ($logData) {
+            $logData->update([
+                'photo' => $return->photo,
+                'actual_return_date' => $return->actual_return_date,
+            ]);
         }
-        return redirect('/request/return');
+        return redirect('/requests/return');
     }
 
     public function rejectReturn($id)
