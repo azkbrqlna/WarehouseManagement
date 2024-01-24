@@ -27,6 +27,10 @@ class Log extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+    public function returning()
+    {
+        return $this->belongsTo(Returning::class);
+    }
 
 }
 

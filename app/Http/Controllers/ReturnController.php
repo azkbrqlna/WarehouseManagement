@@ -28,19 +28,32 @@ class ReturnController extends Controller
         $return->status = true;
         $return->save();
 
-        $rental = Rental::where('user_id', $return->user_id)
-            ->where('item_id', $return->item_id)
-            ->where('status', true)
-            ->first();
+        $log = Log::find($request->id);
+        $log->actual_return_date = $return->actual_return_date;
+        $log->photo = $return->photo;
+        $log->save();
 
-        if ($return->status && $rental) {
-            Log::create([
-                'photo' => $return->photo,
-                'actual_return_date' => $return->actual_return_date,
-            ]);
-        }
+        // $rental = Rental::where('user_id', $return->user_id)
+        //     ->where('item_id', $return->item_id)
+        //     ->first();
 
-
+        // // if ($return->status && $rental) {
+        // //     Log::create([
+        // //         'user_id' => auth()->id(),
+        // //         'item_id' => $rental->item_id,
+        // //         'reason' => $rental->reason,
+        // //         'rent_date' => $rental->rent_date,
+        // //         'return_date' => $rental->return_date,
+        // //         'photo' => $return->photo,
+        // //         'actual_return_date' => $return->actual_return_date,
+        // //     ]);
+        // // }
+        // if ($return->status && $rental) {
+        //     $log = Log::find($request->id);
+        //     $log->photo = $return->photo;
+        //     $log->actual_return_date = $return->actual_return_date;
+        //     $log->save();
+        // }
         return redirect('/request/return');
     }
 
