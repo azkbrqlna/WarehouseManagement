@@ -45,7 +45,18 @@ class ReturnController extends Controller
     {
         $return = Returning::find($id);
         Storage::delete('photos/' . $return->photo);
-        $return->delete();
+        $return->update(['photo' => null]);
+
+        $logData = Log::where('user_id', $return->user_id)
+            ->where('item_id', $return->item_id)
+            ->first();
+
+        if ($logData) {
+            $logData->update([
+                'photo' => null,
+                'actual_return_date' => null,
+            ]);
+        }
         return redirect('/request/return');
     }
 
@@ -73,11 +84,12 @@ class ReturnController extends Controller
             $request['photos'] = $newName;
         };
 
-        Returning::create([
-            'user_id' => auth()->id(),
-            'item_id' => $request->item_id,
-            'photo' => $newName,
-        ]);
+        $existingReturn = Returning::where('rent_date', $request->rent_date)->where('item_id', $request->item_id)->first();
+        if ($existingReturn) {
+            $existingReturn->update([
+                'photo' => $newName,
+            ]);
+        }
 
         return redirect('/pengembalian');
     }

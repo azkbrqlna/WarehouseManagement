@@ -20,8 +20,6 @@ import { useState } from "react";
 import Headroom from "react-headroom";
 
 const Pengembalian = ({ rentals, auth, returns }) => {
-    console.log("rentals", rentals);
-    console.log("returns", returns);
     const toast = useToast();
     const [isBorder, setBorder] = useState(false);
     const [isLoading, setIsLoading] = useState(() =>
@@ -32,7 +30,7 @@ const Pengembalian = ({ rentals, auth, returns }) => {
     });
     const infoLoading = [...isLoading];
 
-    const handleRefund = (e, itemID, index) => {
+    const handleRefund = (e, itemID, date, index) => {
         e.preventDefault();
         infoLoading[index] = !infoLoading[index];
         setIsLoading(infoLoading);
@@ -41,6 +39,7 @@ const Pengembalian = ({ rentals, auth, returns }) => {
             {
                 photo: data.file[index],
                 item_id: itemID,
+                rent_date: date,
             },
             {
                 onSuccess: () => {
@@ -102,6 +101,13 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                                 <Th textColor="white" colSpan={2}>
                                     Tanggal Pengembalian
                                 </Th>
+                                <Th
+                                    textColor="white"
+                                    textAlign="center"
+                                    colSpan={2}
+                                >
+                                    Rental Date
+                                </Th>
                                 <Th textColor="white" textAlign="center">
                                     Upload
                                 </Th>
@@ -115,10 +121,10 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                         </Thead>
                         <Tbody>
                             {rentals.map((refund, index) => {
-                                const returning = returns.find(
-                                    (retur) => retur.item_id === refund.item_id
+                                const dateReturn = returns.find(
+                                    (date) =>
+                                        refund.rent_date === date.rent_date
                                 );
-
                                 if (
                                     auth.user.id === refund.user_id &&
                                     refund.status
@@ -129,6 +135,9 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                                             <Td>{refund.item.name}</Td>
                                             <Td colSpan={2}>
                                                 {refund.return_date}
+                                            </Td>
+                                            <Td colSpan={2}>
+                                                {refund.rent_date}
                                             </Td>
                                             <Td>
                                                 <FormLabel
@@ -164,8 +173,7 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                                                 </FormLabel>
                                             </Td>
                                             <Td>
-                                                {(data.file[index] instanceof
-                                                File ? (
+                                                {(data.file[index] ? (
                                                     <Box
                                                         w="70px"
                                                         h="70px"
@@ -175,21 +183,16 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                                                             src={URL.createObjectURL(
                                                                 data.file[index]
                                                             )}
-                                                            style={{
-                                                                width: "100%",
-                                                                height: "100%",
-                                                                objectFit:
-                                                                    "cover",
-                                                            }}
+                                                            className="w-full h-full object-cover"
                                                         />
                                                     </Box>
                                                 ) : null) ||
-                                                    (returning
+                                                    (dateReturn.photo
                                                         ? returns
                                                               .filter(
                                                                   (re) =>
-                                                                      re.item_id ===
-                                                                      refund.item_id
+                                                                      re.rent_date ===
+                                                                      refund.rent_date
                                                               )
                                                               .map((re) => (
                                                                   <Box
@@ -213,7 +216,6 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                                                               ))
                                                         : null)}
                                             </Td>
-
                                             <Td>
                                                 <Button
                                                     bgColor="blue.500"
@@ -226,19 +228,22 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                                                         handleRefund(
                                                             e,
                                                             refund.item.id,
+                                                            refund.rent_date,
                                                             index
                                                         )
                                                     }
                                                     isDisabled={
-                                                        returning ? true : false
+                                                        dateReturn.photo
+                                                            ? true
+                                                            : false
                                                     }
                                                 >
                                                     {isLoading[index] ? (
                                                         <Spinner />
                                                     ) : (
                                                         <>
-                                                            {returning ? (
-                                                                returning.status ? (
+                                                            {dateReturn.photo ? (
+                                                                dateReturn.status ? (
                                                                     "Pengembalian diterima!"
                                                                 ) : (
                                                                     "Tunggu admin!"
