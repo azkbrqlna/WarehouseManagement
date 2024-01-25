@@ -46,6 +46,11 @@ class RentalController extends Controller
             'rent_date' => $request->rent_date,
             'return_date' => $request->return_date,
         ]);
+        Returning::create([
+            'user_id' => auth()->id(),
+            'item_id' => $request->item_id,
+            'rent_date' => $request->rent_date,
+        ]);
         return redirect('/request/rental');
     }
 
@@ -70,7 +75,7 @@ class RentalController extends Controller
         $request->validate([
             'reason' => 'required',
         ]);
-        $request['rent_date'] = Carbon::now()->toDateString();
+        $request['rent_date'] = Carbon::now('Asia/Jakarta')->toDateTimeString();
         $request['return_date'] = Carbon::now()->addDays(7)->toDateString();
         Rental::create([
             'user_id' => auth()->id(),

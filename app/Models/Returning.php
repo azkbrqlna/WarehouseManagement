@@ -14,6 +14,7 @@ class Returning extends Model
     protected $fillable = [
         'user_id',
         'item_id',
+        'rent_date',
         'actual_return_date',
         'photo',
     ];

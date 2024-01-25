@@ -45,7 +45,6 @@ const Return = ({ refund, index }) => {
                 },
             }
         );
-        console.log(refund.photo);
     };
 
     const handleDeclined = (id, status) => {
