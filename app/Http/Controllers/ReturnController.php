@@ -17,27 +17,22 @@ class ReturnController extends Controller
     public function returnAdmin()
     {
         return Inertia::render("Dashboard/Request/Return/index", [
-            'returns' => Returning::where('status', false)->with(['item', 'user'])->get(),
+            'returns' => Returning::where('status', false)->where('photo', '!=', null)->with(['item', 'user'])->get(),
         ]);
     }
 
-    public function acceptReturn(Request $request)
+    public function acceptReturn(Request $request,$id)
     {
         $return = Returning::find($request->id);
-        $return->actual_return_date = Carbon::now()->toDateString();
+        $return->actual_return_date = Carbon::now('Asia/Jakarta')->toDateTimeString();
         $return->status = true;
         $return->save();
 
-        $logData = Log::where('user_id', $return->user_id)
-            ->where('item_id', $return->item_id)
-            ->first();
-
-        if ($logData) {
-            $logData->update([
-                'photo' => $return->photo,
-                'actual_return_date' => $return->actual_return_date,
-            ]);
-        }
+        $logData = Log::find($request->id);
+        $logData->photo = $return->photo;
+        $logData->actual_return_date = $return->actual_return_date;
+        $logData->save();
+        
         return redirect('/request/return');
     }
 
@@ -45,18 +40,11 @@ class ReturnController extends Controller
     {
         $return = Returning::find($id);
         Storage::delete('photos/' . $return->photo);
-        $return->update(['photo' => null]);
+        $return->update([
+            'photo' => null,
+            'actual_return_date' => null,
+        ]);
 
-        $logData = Log::where('user_id', $return->user_id)
-            ->where('item_id', $return->item_id)
-            ->first();
-
-        if ($logData) {
-            $logData->update([
-                'photo' => null,
-                'actual_return_date' => null,
-            ]);
-        }
         return redirect('/request/return');
     }
 
@@ -83,12 +71,10 @@ class ReturnController extends Controller
             Storage::disk('public')->putFileAs('photos', $request->file("photo"), $newName);
             $request['photos'] = $newName;
         }
-        $rental = Rental::find($request->id);
-        Returning::create([
-            'user_id' => auth()->id(),
-            'item_id' => $request->item_id,
+
+        $existingReturn = Returning::where('rent_date', $request->rent_date)->where('item_id', $request->item_id)->first();
+        $existingReturn->update([
             'photo' => $newName,
-            'rent_date' => $rental->rent_date
         ]);
 
         return redirect('/pengembalian');

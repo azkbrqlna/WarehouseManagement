@@ -13,14 +13,12 @@ use Inertia\Inertia;
 class RentalController extends Controller
 {
     //for admin
-    public function indexAdmin(Request $request)
+    public function indexAdmin()
     {
         return Inertia::render("Dashboard/Request/index", [
-            // 'rental_log' => Rental::where('status', true)->get(),
-            // 'return_log' => Returning::where('status', true)->with(['item', 'user'])->get(),
             'logs' => Log::with(['item', 'user'])->get(),
-            'rental_count' => Rental::count(),
-            'return_count' => Returning::count(),
+            'rental_count' => Rental::where('status','!=',1)->count(),
+            'return_count' => Returning::where('status','!=',1)->where('photo','!=',null)->count(),
         ]);
     }
 
@@ -40,13 +38,17 @@ class RentalController extends Controller
         $rental->status = true;
         $rental->save();
         Log::create([
-            'user_id' => auth()->id(),
+            'user_id' => $request->user_id,
             'item_id' => $request->item_id,
             'reason' => $request->reason,
             'rent_date' => $request->rent_date,
             'return_date' => $request->return_date,
         ]);
-       
+        Returning::create([
+            'user_id' => $request->user_id,
+            'item_id' => $request->item_id,
+            'rent_date' => $request->rent_date,
+        ]);
         return redirect('/request/rental');
     }
 
@@ -81,7 +83,7 @@ class RentalController extends Controller
             'return_date' => $request->return_date,
         ]);
         // $item = Item::find($request->item_id);
-        // // $item->amount -= $request->amount;
+        // $item->amount -= $request->amount;
         // $item->save();
 
         return redirect('/peminjaman');
