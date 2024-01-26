@@ -46,11 +46,7 @@ class RentalController extends Controller
             'rent_date' => $request->rent_date,
             'return_date' => $request->return_date,
         ]);
-        Returning::create([
-            'user_id' => auth()->id(),
-            'item_id' => $request->item_id,
-            'rent_date' => $request->rent_date,
-        ]);
+       
         return redirect('/request/rental');
     }
 
@@ -84,9 +80,9 @@ class RentalController extends Controller
             'rent_date' => $request->rent_date,
             'return_date' => $request->return_date,
         ]);
-        $item = Item::find($request->item_id);
-        // $item->amount -= $request->amount;
-        $item->save();
+        // $item = Item::find($request->item_id);
+        // // $item->amount -= $request->amount;
+        // $item->save();
 
         return redirect('/peminjaman');
     }

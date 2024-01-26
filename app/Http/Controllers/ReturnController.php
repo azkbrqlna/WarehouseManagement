@@ -83,14 +83,13 @@ class ReturnController extends Controller
             Storage::disk('public')->putFileAs('photos', $request->file("photo"), $newName);
             $request['photos'] = $newName;
         }
-        ;
-
-        $existingReturn = Returning::where('rent_date', $request->rent_date)->where('item_id', $request->item_id)->first();
-        if ($existingReturn) {
-            $existingReturn->update([
-                'photo' => $newName,
-            ]);
-        }
+        $rental = Rental::find($request->id);
+        Returning::create([
+            'user_id' => auth()->id(),
+            'item_id' => $request->item_id,
+            'photo' => $newName,
+            'rent_date' => $rental->rent_date
+        ]);
 
         return redirect('/pengembalian');
     }
