@@ -125,6 +125,7 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                                     (date) =>
                                         refund.rent_date === date.rent_date
                                 );
+                                console.log(dateReturn)
                                 if (
                                     auth.user.id === refund.user_id &&
                                     refund.status
