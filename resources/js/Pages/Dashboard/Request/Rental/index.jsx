@@ -17,6 +17,7 @@ import Dashboardlayout from "@/Layouts/DashboardLayout";
 import { Link, router } from "@inertiajs/react";
 
 const Rental = ({ rental, index }) => {
+    console.log(rental)
     const toast = useToast();
     const { isOpen, onToggle } = useDisclosure();
 
@@ -128,7 +129,8 @@ const Rental = ({ rental, index }) => {
         </Tr>
     );
 };
-const RequestPage = ({ rentals }) => {
+const RequestPage = ({ rentals, users }) => {
+    console.log(users)
     return (
         <>
             <Dashboardlayout title="Request Peminjaman">

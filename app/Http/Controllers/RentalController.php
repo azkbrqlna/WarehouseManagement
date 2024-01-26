@@ -6,6 +6,7 @@ use App\Models\Item;
 use App\Models\Rental;
 use App\Models\Returning;
 use App\Models\Log;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -26,6 +27,7 @@ class RentalController extends Controller
     {
         return Inertia::render("Dashboard/Request/Rental/index", [
             'rentals' => Rental::where('status', false)->with(['item', 'user'])->get(),
+            'users' => User::all(),
         ]);
     }
 

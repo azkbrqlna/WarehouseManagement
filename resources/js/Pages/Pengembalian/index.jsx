@@ -15,7 +15,7 @@ import {
     useToast,
 } from "@chakra-ui/react";
 import { Head, router, useForm } from "@inertiajs/react";
-import { PaperPlaneRight, UploadSimple } from "@phosphor-icons/react";
+import { Minus, PaperPlaneRight, UploadSimple } from "@phosphor-icons/react";
 import { useState } from "react";
 import Headroom from "react-headroom";
 
@@ -125,7 +125,6 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                                     (date) =>
                                         refund.rent_date === date.rent_date
                                 );
-                                console.log(dateReturn)
                                 if (
                                     auth.user.id === refund.user_id &&
                                     refund.status
@@ -141,6 +140,7 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                                                 {refund.rent_date}
                                             </Td>
                                             <Td>
+                                                {!dateReturn.photo ? (
                                                 <FormLabel
                                                     htmlFor={`file_upload_${index}`}
                                                     display="flex"
@@ -172,6 +172,9 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                                                         }
                                                     />
                                                 </FormLabel>
+                                                ) : (
+                                                    <Minus size={50} />
+                                                )}
                                             </Td>
                                             <Td>
                                                 {(data.file[index] ? (

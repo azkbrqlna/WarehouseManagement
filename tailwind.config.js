@@ -20,6 +20,9 @@ export default {
                 secondary: "#7371E2",
                 hover_scn: '#8E8FFA',
             },
+            screens: {
+                '3xl': '1920px',
+              },
         },
     },
 

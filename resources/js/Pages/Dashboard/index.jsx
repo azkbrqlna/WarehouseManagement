@@ -48,7 +48,7 @@ const Dashboard = ({ auth, user_count, item_count }) => {
                     />
                 </section>
                 <svg
-                    className="absolute w-[1114px] 2xl:w-[1637px] right-0 bottom-0"
+                    className="absolute w-[1114px] 2xl:w-[1252px] 3xl:w-[1637px] right-0 bottom-0"
                     viewBox="0 0 1441 547"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -61,8 +61,7 @@ const Dashboard = ({ auth, user_count, item_count }) => {
                         />
                         <path
                             d="M450.937 133.012C255.133 121.554 5 359.005 5 359.005V547H1441V3.01517C1441 -36.9837 1152.57 533 872.328 423.003C592.083 313.006 651.82 144.766 450.937 133.012Z"
-                            stroke="#7371E2"
-                            stroke-width="2"
+                            // stroke="#7371E2"
                             shape-rendering="crispEdges"
                         />
                     </g>
@@ -110,7 +109,7 @@ const Dashboard = ({ auth, user_count, item_count }) => {
                             x1="723"
                             y1="1"
                             x2="723"
-                            y2="547"
+                            y2="847"
                             gradientUnits="userSpaceOnUse"
                         >
                             <stop stop-color="#7371E2" />
