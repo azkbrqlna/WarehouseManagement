@@ -18,6 +18,7 @@ export default {
             colors: {
                 main: "#DEDADA",
                 secondary: "#7371E2",
+                hover_scn: '#8E8FFA',
             },
         },
     },

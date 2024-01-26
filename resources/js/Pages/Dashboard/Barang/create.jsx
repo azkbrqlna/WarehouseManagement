@@ -9,8 +9,9 @@ import {
     useToast,
 } from "@chakra-ui/react";
 import DashboardLayout from "@/Layouts/DashboardLayout";
-import { Head, useForm } from "@inertiajs/react";
+import { Head, Link, useForm } from "@inertiajs/react";
 import { Upload } from "@phosphor-icons/react/dist/ssr";
+import { ArrowLeft, UploadSimple } from "@phosphor-icons/react";
 
 export default function CreateBarangDashboard() {
     const toast = useToast();
@@ -46,6 +47,19 @@ export default function CreateBarangDashboard() {
         <>
             <Head title="Create Barang" />
             <DashboardLayout title="Create Barang">
+                <div className="flex justify-end">
+                    <Button
+                        as={Link}
+                        href="/items"
+                        className="mt-5"
+                        bg="#7371E2"
+                        _hover={{ background: "#8E8FFA" }}
+                        textColor="white"
+                    >
+                        <ArrowLeft size={24} />
+                        Kembali
+                    </Button>
+                </div>
                 <section className="bg-white p-4 rounded-md mt-5">
                     <form
                         onSubmit={handleSubmit}
@@ -58,6 +72,7 @@ export default function CreateBarangDashboard() {
                                 name="name"
                                 value={data.name}
                                 onChange={handleChange}
+                                placeholder="Masukan nama barang"
                             />
                         </FormControl>
                         <FormControl>
@@ -65,32 +80,43 @@ export default function CreateBarangDashboard() {
                             <NumberInput
                                 value={data.amount}
                                 onChange={handleChange}
-                            >
+                                >
                                 <NumberInputField
                                     name="amount"
                                     value={data.amount}
                                     onChange={handleChange}
+                                    placeholder="Masukan jumlah barang"
                                 />
                             </NumberInput>
                         </FormControl>
                         <FormControl>
-                            <FormLabel>Masukan Gambar Barang</FormLabel>
-                            <FormLabel htmlFor="file-upload" w="30px" h="15px">
+                            <FormLabel htmlFor="file_upload">Masukan Gambar Barang</FormLabel>
+                            <FormLabel
+                                htmlFor="file_upload"
+                                display="flex"
+                                borderWidth='2px'
+                                borderColor="#7371E2"
+                                _hover={{ background: "#8E8FFA" }}
+                                transition="background 0.3s ease-in-out"
+                                borderRadius="10px"
+                                w="140px"
+                                p="8px"
+                                cursor="pointer"
+                                justifyContent="center"
+                                alignItems="center"
+                                fontSize="700"
+                            >
+                                <UploadSimple size={30} color="#7371E2" />
                                 <Input
-                                    id="file-upload"
-                                    type="file"
+                                    id="file_upload"
                                     name="file"
-                                    opacity={0}
-                                    zIndex={1}
+                                    type="file"
+                                    display="none"
                                     onChange={(e) =>
                                         setData("file", e.target.files[0])
                                     }
                                 />
-                                <div className="relative bottom-9 left-1 border border-black rounded-md p-1 w-14 flex justify-center items-center">
-                                    <Upload size={30} />
-                                </div>
                             </FormLabel>
-                            <p className="mt-10 font-medium">Pilih gambar!</p>
                         </FormControl>
                         {data.file && (
                             <Box mt="4">
@@ -114,9 +140,9 @@ export default function CreateBarangDashboard() {
                         )}
                         <Button
                             type="submit"
-                            bg="gray.800"
+                            bg="#7371E2"
+                            _hover={{ background: "#8E8FFA" }}
                             color="white"
-                            _hover={{ background: "gray.600" }}
                         >
                             Create Barang
                         </Button>

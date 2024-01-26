@@ -1,5 +1,5 @@
 import { Link, useForm, usePage } from "@inertiajs/react";
-import { Trash } from "@phosphor-icons/react";
+import { Trash, UserPlus } from "@phosphor-icons/react";
 import { Plus } from "@phosphor-icons/react";
 import {
     Button,
@@ -12,6 +12,7 @@ import {
     Th,
     Thead,
     Tr,
+    theme,
     useToast
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
@@ -42,15 +43,15 @@ const UsersPage = ({ users }) => {
         <>
             <Dashboardlayout title="Users">
                 <div className="p-5 flex items-center justify-end gap-2">
-                    <InputGroup w="300px">
+                    <InputGroup w="300px" bg='white' borderRadius='10px'>
                         <InputLeftAddon>
                             <SearchIcon />
                         </InputLeftAddon>
                         <Input textColor="white" placeholder="Cari user" />
                     </InputGroup>
-                    <Button as={Link} href="/user/create">
-                        <Plus size={24} />
-                        Tambah User
+                    <Button as={Link} href="/user/create" bg='#7371E2' _hover={{ background: '#8E8FFA' }} textColor='white' display='flex' gap='5px'>
+                        <UserPlus size={24} color="#fff" />
+                        Add User
                     </Button>
                 </div>
                 <div className="bg-white p-5 rounded-lg">
