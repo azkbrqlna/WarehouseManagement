@@ -21,7 +21,7 @@ class ReturnController extends Controller
         ]);
     }
 
-    public function acceptReturn(Request $request,$id)
+    public function acceptReturn(Request $request)
     {
         $return = Returning::find($request->id);
         $return->actual_return_date = Carbon::now('Asia/Jakarta')->toDateTimeString();
