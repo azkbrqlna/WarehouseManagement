@@ -95,7 +95,7 @@ const Return = ({ refund, index }) => {
                     </Flex>
                 </Collapse>
             </Td>
-            <Td textAlign="center">
+            <Td display='flex' gap='3px' justifyContent='center'>
                 <Button
                     bgColor="green.500"
                     textColor="white"
@@ -105,10 +105,7 @@ const Return = ({ refund, index }) => {
                     onClick={() => handleAccept(refund.id)}
                 >
                     <Check size={20} />
-                    Accept
                 </Button>
-            </Td>
-            <Td textAlign="center">
                 <Button
                     bgColor="red.500"
                     textColor="white"
@@ -118,7 +115,6 @@ const Return = ({ refund, index }) => {
                     onClick={() => handleDeclined(refund.id)}
                 >
                     <X size={20} />
-                    Declined
                 </Button>
             </Td>
         </Tr>
@@ -134,7 +130,7 @@ const RequestPage = ({ returns }) => {
                     Kembali
                 </Button>
                 <div className="bg-white p-5 rounded-lg mt-5">
-                    <Table>
+                    <Table variant='simple'>
                         <Thead>
                             <Tr>
                                 <Th w="5%" textAlign="center">

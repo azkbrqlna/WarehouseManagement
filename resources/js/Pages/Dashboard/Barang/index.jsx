@@ -15,7 +15,7 @@ import {
     useToast,
 } from "@chakra-ui/react";
 import { Link, useForm, router } from "@inertiajs/react";
-import { Plus, Trash } from "@phosphor-icons/react";
+import { ListPlus, Trash } from "@phosphor-icons/react";
 
 export default function BarangPage({ items, flash }) {
     const toast = useToast();
@@ -46,15 +46,15 @@ export default function BarangPage({ items, flash }) {
         <>
             <Dashboardlayout title="Informasi Barang">
                 <div className="p-5 flex items-center justify-end gap-2">
-                    <InputGroup w="300px">
+                <InputGroup w="300px" bg='white' borderRadius='10px'>
                         <InputLeftAddon>
                             <SearchIcon />
                         </InputLeftAddon>
-                        <Input textColor="white" placeholder="Cari Barang" />
+                        <Input textColor="white" placeholder="Cari user" />
                     </InputGroup>
-                    <Button as={Link} href="/item/create">
-                        <Plus size={24} />
-                        Tambah Barang
+                    <Button as={Link} href="/item/create" bg='#7371E2' _hover={{ background: '#8E8FFA' }} textColor='white' display='flex' gap='5px'>
+                        <ListPlus size={24} color="#fff" />
+                        Add Item
                     </Button>
                 </div>
                 <div className="bg-white p-5 rounded-lg">
