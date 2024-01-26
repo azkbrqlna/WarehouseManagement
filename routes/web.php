@@ -7,6 +7,7 @@ use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\ReturnController;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
     Route::get("/dashboard", [DashboardController::class, "index"])->middleware('only_admin');
-    Route::get("/home", [HomeController::class, "index"]);
+    Route::get("/home", [HomeController::class, "index"])->middleware('only_user');
 });
 
 Route::controller(AuthController::class)->middleware('guest')->group(function () {
@@ -53,8 +54,10 @@ Route::controller(ItemController::class)->middleware('auth')->group(function () 
 });
 
 Route::controller(RentalController::class)->middleware('auth')->group(function () {
-    Route::get('/peminjaman', 'indexUser');
-    Route::post('/peminjaman', 'storeUser');
+    Route::middleware('only_user')->group(function(){
+        Route::get('/peminjaman', 'indexUser');
+        Route::post('/peminjaman', 'storeUser');
+    });
     Route::middleware('only_admin')->group(function () {
         Route::get('/requests', 'indexAdmin');
         Route::get('/request/rental', 'rentalAdmin');
@@ -64,8 +67,10 @@ Route::controller(RentalController::class)->middleware('auth')->group(function (
 });
 
 Route::controller(ReturnController::class)->middleware('auth')->group(function () {
-    Route::get('/pengembalian', 'indexUser');
-    Route::post('/pengembalian', 'storeUser');
+    Route::middleware('only_user')->group(function(){
+        Route::get('/pengembalian', 'indexUser');
+        Route::post('/pengembalian', 'storeUser');
+    });
     Route::middleware('only_admin')->group(function(){
         Route::get('/request/return', 'returnAdmin');
         Route::patch('/request/return/{id}', 'acceptReturn');

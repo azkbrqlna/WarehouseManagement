@@ -48,7 +48,7 @@ const Dashboard = ({ auth, user_count, item_count }) => {
                     />
                 </section>
                 <svg
-                    className="absolute w-[1114px] 2xl:w-[1637px] right-0 bottom-0"
+                    className="absolute w-[1114px] 2xl:w-[1252px] right-0 bottom-0"
                     viewBox="0 0 1441 547"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
