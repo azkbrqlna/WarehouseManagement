@@ -24,11 +24,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth'])->group(function () {
     Route::get("/dashboard", [DashboardController::class, "index"])->middleware('only_admin');
     Route::get("/home", [HomeController::class, "index"])->middleware('only_user');
+    Route::get("/",[HomeController::class, "landing"])->withoutMiddleware('auth');
 });
 
 Route::controller(AuthController::class)->middleware('guest')->group(function () {
-    Route::get('/', 'login')->name('login');
-    Route::post('/', 'authenticate');
+    Route::get('/login', 'login')->name('login');
+    Route::post('/login', 'authenticate');
     Route::get('/register', 'register')->name('register');
     Route::post('/register', 'signup');
     Route::get('/logout', 'logout')->withoutMiddleware('guest')->middleware('auth');
