@@ -54,7 +54,7 @@ class ItemController extends Controller
         $request->validate([
             'status' => 'required|boolean',
         ]);
-        $item = Item::findOrFail($request->id);
+        $item = Item::find($request->id);
         $item->status = $request->status;
         $item->save();
     }

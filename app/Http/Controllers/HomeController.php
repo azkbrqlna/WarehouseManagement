@@ -11,4 +11,7 @@ class HomeController extends Controller
     public function index(){
         return Inertia::render("Home/index");
     }
+    public function landing(){
+        return Inertia::render("Home/landing");
+    }
 }
