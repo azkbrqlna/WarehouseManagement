@@ -40,7 +40,7 @@ export default function BarangPage({ items, flash }) {
     };
 
     const handleSwitch = (id, status) => {
-        router.patch(`items/${id}`, { status });
+        router.patch(`item/${id}`, { status });
     };
     return (
         <>

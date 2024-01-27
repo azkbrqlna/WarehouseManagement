@@ -164,7 +164,7 @@ const Peminjaman = ({ items, rentals, auth }) => {
                     </Menu>
                 </section>
                 <section className="mt-10 w-full grid grid-flow-row px-10">
-                    <div className="flex flex-wrap justify-center col-span-5 gap-8 mb-96">
+                    <div className="flex flex-wrap justify-center col-span-5 gap-8 mb-96 bg-sky-400">
                         {items.length > 0 &&
                             items.map((item, idx) => (
                                 <CardProduct
