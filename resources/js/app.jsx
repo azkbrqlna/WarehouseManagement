@@ -25,7 +25,6 @@ createInertiaApp({
         );
     },
     progress: {
-        color: "#7371E2",
+        color: "#1d4ed8",
     },
-    base: 'https://fa82-2001-448a-4007-42dd-cc50-31c6-bfad-8fa7.ngrok-free.app'
 });

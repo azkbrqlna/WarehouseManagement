@@ -2,7 +2,7 @@ import { List } from "../ListStyle/List";
 
 export const ListStyle = ({ items }) => {
     return (
-        <ul className="text-xl text-zinc-800">
+        <ul className="text-xl text-azka">
             {items.map((items, index) => (
                 <List key={index}>{items}</List>
             ))}

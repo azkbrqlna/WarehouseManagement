@@ -19,7 +19,7 @@ export default {
                 main: "#DEDADA",
                 secondary: "#7371E2",
                 hover_scn: '#8E8FFA',
-                azka: '#6A91A7'
+                azka: '#6A91A7',
             },
             screens: {
                 '3xl': '1920px',
