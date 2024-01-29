@@ -3,12 +3,45 @@ import Dashboardlayout from "@/Layouts/DashboardLayout";
 import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import { Link } from "@inertiajs/react";
 import { ArrowCounterClockwise, Minus, Note } from "@phosphor-icons/react";
+import { useState } from "react";
+
+const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+    const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
+
+    return (
+        <nav>
+            <ul className="pagination">
+                {pages.map((page) => (
+                    <li
+                        key={page}
+                        className={currentPage === page ? "active" : ""}
+                        onClick={() => onPageChange(page)}
+                    >
+                        {page}
+                    </li>
+                ))}
+            </ul>
+        </nav>
+    );
+};
 
 const RequestPage = ({ rental_count, return_count, logs }) => {
+    const itemsPerPage = 5;
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentLogs = logs?.data.slice(indexOfFirstItem, indexOfLastItem);
+
+    const totalPages = Math.ceil(logs?.data.length / itemsPerPage);
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
     return (
         <>
             <Dashboardlayout title="Request">
-                <section className="grid grid-flow-col gap-5 mt-10">
+                <section className="grid grid-flow-col gap-5 mt-5">
                     <Link href="/request/rental">
                         <OverviewCard
                             className={"text-2xl"}
@@ -26,8 +59,8 @@ const RequestPage = ({ rental_count, return_count, logs }) => {
                         />
                     </Link>
                 </section>
-                <section className="mt-10">
-                    <div className="w-full h-[37rem] rounded-lg bg-white pb-16">
+                <section className="mt-5">
+                    <div className="w-full 3xl:h-[40rem] rounded-lg bg-white">
                         <div className="p-2">
                             <Table>
                                 <Thead>
@@ -53,7 +86,7 @@ const RequestPage = ({ rental_count, return_count, logs }) => {
                                     </Tr>
                                 </Thead>
                                 <Tbody>
-                                    {logs.map((log, index) => {
+                                    {logs?.data.map((log, index) => {
                                         const actualDate =
                                             log.actual_return_date
                                                 ? new Date(
@@ -98,14 +131,16 @@ const RequestPage = ({ rental_count, return_count, logs }) => {
                                                     display="flex"
                                                     justifyContent="center"
                                                 >
-                                                    <div className="w-20 h-20 overflow-hidden">
+                                                    <div className="w-[70px] h-[70px] overflow-hidden">
                                                         {log.photo ? (
                                                             <img
                                                                 className="w-full h-full object-cover"
                                                                 src={`/storage/photos/${log.photo}`}
                                                             />
                                                         ) : (
-                                                            <Minus />
+                                                            <div className="h-full flex items-center justify-center">
+                                                                <Minus />
+                                                            </div>
                                                         )}
                                                     </div>
                                                 </Td>
@@ -130,7 +165,9 @@ const RequestPage = ({ rental_count, return_count, logs }) => {
                                                     {log.actual_return_date ? (
                                                         log.actual_return_date
                                                     ) : (
-                                                        <Minus />
+                                                        <div className="flex justify-center">
+                                                            <Minus />
+                                                        </div>
                                                     )}
                                                 </Td>
                                             </Tr>
@@ -138,6 +175,13 @@ const RequestPage = ({ rental_count, return_count, logs }) => {
                                     })}
                                 </Tbody>
                             </Table>
+                            <div className="flex justify-center">
+                                <Pagination
+                                    currentPage={currentPage}
+                                    totalPages={totalPages}
+                                    onPageChange={handlePageChange}
+                                />
+                            </div>
                         </div>
                     </div>
                 </section>

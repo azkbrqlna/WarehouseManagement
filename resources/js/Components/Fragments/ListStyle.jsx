@@ -11,10 +11,10 @@ export const ListStyle = ({ items }) => {
 };
 
 const Rules = [
-    "Peminjaman harus melalui laman warehoouse.",
+    "Peminjaman harus melalui laman warehouse.",
     "Peminjaman barang harus melakukan checkout pada laman peminjaman.",
-    "barang harus melakukan checkout pada laman peminjaman.",
-    "Pengembalian dilakukan maksimal satu bulan setelah peminjaman.",
+    "Barang harus melakukan checkout pada laman peminjaman.",
+    "Pengembalian dilakukan maksimal 7 hari setelah peminjaman.",
     "Terdapat denda yang akan diberikan kepada siswa jika melebihi batas pengembalian.",
     "Ketika pengembalian, kondisi barang harus seperti saat peminjaman.",
 ];

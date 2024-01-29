@@ -25,23 +25,23 @@ const CardProduct = ({
 }) => {
     return (
         <>
-            <div className="flex flex-col gap-3 rounded-lg w-full h-[250px] md:h-full md:w-[15rem] shadow-md shadow-zinc-950 bg-white p-3">
+            <div className="flex flex-col gap-3 rounded-lg w-full h-[300px] md:w-[15rem] shadow-md shadow-zinc-950 bg-white p-3">
                 <div className="w-full flex justify-center group overflow-hidden cursor-zoom-in h-2/3">
                     <img
                         src={src}
                         className="w-40 h-40 object-cover group-hover:scale-125 transition-all duration-300 ease-in-out"
                     />
                 </div>
-                <div className="flex justify-between text-2xl font-bold h-1/3">
-                    <div>
-                        <Text>{itemName}</Text>
+                <div className="text-2xl font-bold h-1/3 space-y-3">
+                    <Text>{itemName}</Text>
+                    <div className="flex items-center justify-between">
                         <Badge borderRadius="5px" colorScheme={colorScheme}>
                             {status}
                         </Badge>
+                        <Button onClick={infoOpen} alignSelf="center">
+                            Pinjam
+                        </Button>
                     </div>
-                    <Button onClick={infoOpen} alignSelf="center">
-                        Pinjam
-                    </Button>
                 </div>
             </div>
             <AnimatePresence>
@@ -72,10 +72,7 @@ const CardProduct = ({
                                     <Badge colorScheme={colorScheme}>
                                         {status}
                                     </Badge>
-                                    <CalendarBlank
-                                        size={30}
-                                        cursor="pointer"
-                                    />
+                                    <CalendarBlank size={30} cursor="pointer" />
                                 </Text>
                                 <Text>Masukan Alasan Peminjaman:</Text>
                                 <Textarea

@@ -28,6 +28,7 @@ const Peminjaman = ({ items, rentals, auth }) => {
     const [isBorder, setBorder] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const [isInfoOpen, setInfoOpen] = useState({});
+    const [filteredItems, setFilteredItems] = useState(items);
     const toast = useToast();
 
     const borderChange = () => {
@@ -64,6 +65,7 @@ const Peminjaman = ({ items, rentals, auth }) => {
                 onFinish: () => {
                     setLoading(false);
                     setInfoOpen(false);
+                    setData("reason", "");
                 },
             }
         );
@@ -74,6 +76,7 @@ const Peminjaman = ({ items, rentals, auth }) => {
             ...prevState,
             [idx]: !prevState[idx] || false,
         }));
+        setData("reason", "");
     };
 
     let acceptData = 1;
@@ -95,14 +98,21 @@ const Peminjaman = ({ items, rentals, auth }) => {
         );
     });
 
+    const handleSearch = (value) => {
+        const filtered = items.filter((item) =>
+            item.name.toLowerCase().includes(value.toLowerCase())
+        );
+        setFilteredItems(filtered);
+    };
+
     return (
         <>
             <Head title="Peminjaman" />
-            <div className="bg-zinc-800 pb-5 min-h-screen">
+            <div className="bg-azka pb-5 min-h-screen">
                 <Headroom>
                     <section
                         id="navbar"
-                        className={`bg-zinc-800 z-10 ${
+                        className={`bg-azka z-10 ${
                             isBorder ? "border-b-2 border-zinc-500" : ""
                         }`}
                     >
@@ -118,6 +128,8 @@ const Peminjaman = ({ items, rentals, auth }) => {
                             <Input
                                 textColor="white"
                                 placeholder="Cari barang"
+                                _placeholder={{ color: "white" }}
+                                onChange={(e) => handleSearch(e.target.value)}
                             />
                         </InputGroup>
                     </div>
@@ -129,7 +141,7 @@ const Peminjaman = ({ items, rentals, auth }) => {
                             _active={{ bg: "transparent" }}
                             _hover={{ bg: "transparent" }}
                         >
-                            <div className="absolute bottom-1 left-4 z-10">
+                            <div className="absolute bottom-1 left-4">
                                 <Bell size={32} color="#ffffff" />
                                 {rentals.map((rental) => {
                                     return auth.user.id === rental.user_id ? (
@@ -164,9 +176,9 @@ const Peminjaman = ({ items, rentals, auth }) => {
                     </Menu>
                 </section>
                 <section className="mt-10 w-full grid grid-flow-row px-10">
-                    <div className="flex flex-wrap justify-center col-span-5 gap-8 mb-96 bg-sky-400">
-                        {items.length > 0 &&
-                            items.map((item, idx) => (
+                    <div className="flex flex-wrap justify-center col-span-5 gap-8 mb-96">
+                        {filteredItems.length > 0 ? (
+                            filteredItems.map((item, idx) => (
                                 <CardProduct
                                     key={item.id}
                                     itemID={item.id}
@@ -190,7 +202,12 @@ const Peminjaman = ({ items, rentals, auth }) => {
                                     infoOpen={() => handleButtonInfo(idx)}
                                     openInfo={isInfoOpen[idx]}
                                 />
-                            ))}
+                            ))
+                        ) : (
+                            <h1 className="font-bold text-4xl text-white">
+                                Tidak ada item yang ditampilkan
+                            </h1>
+                        )}
                     </div>
                 </section>
             </div>
