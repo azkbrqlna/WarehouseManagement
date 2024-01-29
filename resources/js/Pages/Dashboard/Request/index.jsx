@@ -3,41 +3,9 @@ import Dashboardlayout from "@/Layouts/DashboardLayout";
 import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import { Link } from "@inertiajs/react";
 import { ArrowCounterClockwise, Minus, Note } from "@phosphor-icons/react";
-import { useState } from "react";
-
-const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-    const pages = Array.from({ length: totalPages }, (_, index) => index + 1);
-
-    return (
-        <nav>
-            <ul className="pagination">
-                {pages.map((page) => (
-                    <li
-                        key={page}
-                        className={currentPage === page ? "active" : ""}
-                        onClick={() => onPageChange(page)}
-                    >
-                        {page}
-                    </li>
-                ))}
-            </ul>
-        </nav>
-    );
-};
+import Pagination from "@/Components/Fragments/Pagination";
 
 const RequestPage = ({ rental_count, return_count, logs }) => {
-    const itemsPerPage = 5;
-    const [currentPage, setCurrentPage] = useState(1);
-
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentLogs = logs?.data.slice(indexOfFirstItem, indexOfLastItem);
-
-    const totalPages = Math.ceil(logs?.data.length / itemsPerPage);
-
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
-    };
     return (
         <>
             <Dashboardlayout title="Request">
@@ -61,7 +29,7 @@ const RequestPage = ({ rental_count, return_count, logs }) => {
                 </section>
                 <section className="mt-5">
                     <div className="w-full 3xl:h-[40rem] rounded-lg bg-white">
-                        <div className="p-2">
+                        <div className="p-2 flex flex-col justify-between min-h-full">
                             <Table>
                                 <Thead>
                                     <Tr>
@@ -122,7 +90,7 @@ const RequestPage = ({ rental_count, return_count, logs }) => {
                                                 }
                                             >
                                                 <Td textAlign="center">
-                                                    {index + 1}
+                                                    {index + logs.from}
                                                 </Td>
                                                 <Td textAlign="center">
                                                     {log.user.username}
@@ -175,13 +143,16 @@ const RequestPage = ({ rental_count, return_count, logs }) => {
                                     })}
                                 </Tbody>
                             </Table>
-                            <div className="flex justify-center">
-                                <Pagination
-                                    currentPage={currentPage}
-                                    totalPages={totalPages}
-                                    onPageChange={handlePageChange}
-                                />
-                            </div>
+                            <Pagination
+                                className="mt-5"
+                                total={logs.total}
+                                from={logs.from}
+                                to={logs.to}
+                                prevPageUrl={logs.prev_page_url}
+                                nextPageUrl={logs.next_page_url}
+                                links={logs.links}
+                                currentPage={logs.current_page}
+                            />
                         </div>
                     </div>
                 </section>
