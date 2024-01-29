@@ -3,15 +3,42 @@
 namespace App\Exports;
 
 use App\Models\Log;
+use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromQuery;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
 
-class ExportLogs implements FromCollection
+class ExportLogs implements FromQuery,WithMapping,WithHeadings
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
+    use Exportable;
+    public function query()
     {
-        return Log::all();
+        return Log::query();
     }
+
+    public function headings(): array
+    {
+        return [
+            'ID',
+            'Username',
+            'Barang',
+            'Alasan',
+            'Tanggal Peminjaman',
+            'Tanggal Pengembalian',
+        ];
+    }
+    //untuk menambah data ke rows dan memanggil relasi agar masuk di row, jangan lupa memasukan WithMapping
+    public function map($log): array
+    {
+        return [
+            $log->id,
+            $log->user->username,
+            $log->item->name,
+            $log->reason,
+            $log->rent_date,
+            $log->return_date,
+        ];
+    }
+
 }

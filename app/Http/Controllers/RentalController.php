@@ -26,7 +26,8 @@ class RentalController extends Controller
     }
 
     public function exportExcel(){
-        return Excel::download(new ExportLogs, 'logs.xlsx');
+        //return Excel::download(new ExportLogs, 'logs.xlsx');
+        return (new ExportLogs)->download('logs.xlsx');
     }
 
     public function rentalAdmin()
