@@ -50,10 +50,13 @@ const Navbar = () => {
     return (
         <>
             <nav className="w-full py-5 px-5 md:px-12 flex justify-between transition-all duration-300">
-                <div className="hidden md:block">
+                <div className="hidden md:flex items-center gap-4">
                     <a href="https://smkn7semarang.sch.id/">
                         <img className="w-14 md:w-20" src={LogoSMK} />
                     </a>
+                    <h1 className="font-semibold text-lg hidden xl:block text-white">
+                        SMK N 7 Semarang
+                    </h1>
                 </div>
                 <div className="md:hidden relative flex w-full justify-between items-center">
                     <Hamburger
