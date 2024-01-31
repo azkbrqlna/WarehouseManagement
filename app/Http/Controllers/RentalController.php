@@ -19,7 +19,7 @@ class RentalController extends Controller
     public function indexAdmin()
     {
         return Inertia::render("Dashboard/Request/index", [
-            'logs' => Log::with(['item', 'user'])->paginate(5),
+            'logs' => Log::with(['item', 'user'])->latest()->paginate(5),
             'rental_count' => Rental::where('status', '!=', 1)->count(),
             'return_count' => Returning::where('status', '!=', 1)->where('photo', '!=', null)->count(),
         ]);
@@ -27,7 +27,7 @@ class RentalController extends Controller
 
     public function exportExcel(){
         //return Excel::download(new ExportLogs, 'logs.xlsx');
-        return (new ExportLogs)->download('logs.xlsx');
+        return (new ExportLogs)->download('logs-'.Carbon::now()->toDateString().'.xlsx');
     }
 
     public function rentalAdmin()
