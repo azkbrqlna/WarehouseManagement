@@ -7,17 +7,10 @@
 html,
 body {
     scroll-behavior: smooth;
-<<<<<<< HEAD
-    font-family: 'Josefin Sans';
-}
 
-#app {
-    font-family: 'Josefin Sans';
-}
-=======
 }
 
 .shadow-top-right-bottom {
     box-shadow: 20px 20px 5px -5px rgba(100, 100, 100, 100.75);
 }
->>>>>>> 509e8969240b5dfcf8df80a235d94b9deffcc7fa
+

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Exports\ExportLogs;
 use App\Models\Item;
 use App\Models\Rental;
 use App\Models\Returning;
@@ -11,23 +10,17 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Maatwebsite\Excel\Facades\Excel;
 
 class RentalController extends Controller
 {
     //for admin
     public function indexAdmin()
     {
-        return Inertia::render("Dashboard/Request/index", [
-            'logs' => Log::with(['item', 'user'])->latest()->paginate(10),
-            'rental_count' => Rental::where('status', '!=', 1)->count(),
-            'return_count' => Returning::where('status', '!=', 1)->where('photo', '!=', null)->count(),
-        ]);
-    }
-
-    public function exportExcel(){
-        //return Excel::download(new ExportLogs, 'logs.xlsx');
-        return (new ExportLogs)->download('logs-'.Carbon::now()->toDateString().'.xlsx');
+        // return Inertia::render("Dashboard/Request/index", [
+        //     'rental_count' => Rental::where('status', '!=', 1)->count(),
+        //     'return_count' => Returning::where('status', '!=', 1)->where('photo', '!=', null)->count(),
+        // ]);
+        dd('halo');
     }
 
     public function rentalAdmin()

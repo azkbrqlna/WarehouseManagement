@@ -12,7 +12,7 @@ class UserController extends Controller
     public function index()
     {
         return Inertia::render("Dashboard/Users/index", [
-            "users" => User::where('role_id',2)->latest()->get(),
+            "users" => User::with('role')->where('role_id',2)->latest()->get(),
         ]);
     }
 

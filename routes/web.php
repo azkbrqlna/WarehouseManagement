@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\ItemController;
+use App\Http\Controllers\Dashboard\LogController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RentalController;
@@ -61,7 +62,6 @@ Route::controller(RentalController::class)->middleware('auth')->group(function (
     });
     Route::middleware('only_admin')->group(function () {
         Route::get('/requests', 'indexAdmin');
-        Route::get('/requests/export', 'exportExcel');
         Route::get('/request/rental', 'rentalAdmin');
         Route::patch('/request/rental/{id}', 'acceptRental');
         Route::delete('/request/rental/{id}', 'rejectRental');
@@ -77,5 +77,12 @@ Route::controller(ReturnController::class)->middleware('auth')->group(function (
         Route::get('/request/return', 'returnAdmin');
         Route::patch('/request/return/{id}', 'acceptReturn');
         Route::delete('/request/return/{id}', 'rejectReturn');
+    });
+});
+
+Route::controller(LogController::class)->middleware('auth')->group(function () {
+    Route::middleware('only_admin')->group(function(){
+        Route::get('/logs', 'index');
+        Route::get('/logs/export', 'exportExcel');
     });
 });
