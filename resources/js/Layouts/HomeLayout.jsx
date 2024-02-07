@@ -16,8 +16,8 @@ export default function HomeLayout({ children }) {
         <>
             <Headroom>{children}</Headroom>
             <section className="relative h-screen bg-azka">
-                <div className="flex flex-col px-5 md:px-40 md:flex-row gap-10">
-                    <div className="flex flex-col gap-10 md:w-3/4 text-white justify-center">
+                <div className="flex flex-col px-5 md:px-20 xl:px-40 xl:flex-row gap-10">
+                    <div className="flex flex-col gap-10 xl:w-3/4 text-white justify-center">
                         <h2 className="uppercase text-3xl text-center md:text-start font-bold">
                             Warehouse Management SMKN 7 Semarang
                         </h2>
@@ -33,7 +33,7 @@ export default function HomeLayout({ children }) {
                             Learn More
                         </button>
                     </div>
-                    <div className="md:w-1/3 flex justify-center">
+                    <div className="xl:w-1/3 flex justify-center">
                         <img src={HomeIllustrator} alt="Image Illustrator" />
                     </div>
                 </div>
@@ -49,17 +49,17 @@ export default function HomeLayout({ children }) {
                     ></path>
                 </svg>
             </section>
-            <section className="bg-white h-screen" id="rules">
-                <div className="flex flex-wrap h-screen justify-center relative">
-                    <div className="flex w-full md:w-5/12 justify-center items-center">
+            <section id="rules">
+                <div className="flex flex-wrap h-screen justify-center relative overflow-hidden z-0">
+                    <div className="hidden xl:flex w-full md:w-5/12 justify-center items-center py-2">
                         <img className="w-96 h-96" src={RulesImage} />
                     </div>
                     <div className="flex flex-col justify-center py-5 px-10 gap-8 md:w-7/12">
-                        <h1 className="text-7xl text-azka font-bold">Rules</h1>
+                        <h1 className="text-5xl text-azka font-bold">Rules</h1>
                         <ListStyle items={Rules} />
                     </div>
                     <svg
-                        className="hidden md:block absolute md:-bottom-16 3xl:-bottom-[90px]"
+                        className="hidden md:block absolute md:-bottom-10 3xl:-bottom-[90px] -z-10"
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 1440 320"
                     >
@@ -71,11 +71,11 @@ export default function HomeLayout({ children }) {
                     </svg>
                 </div>
             </section>
-            <section className="bg-azka h-screen">
-                <div className="w-full h-screen md:flex flex-col justify-center items-center">
+            <section>
+                <div className="w-full h-screen md:flex flex-col justify-center items-center bg-azka">
                     <div className="h-full flex justify-center w-full">
                         <div className="flex flex-col justify-center items-center gap-5 w-1/2 text-white">
-                            <h1 className=" text-3xl text-center font-bold">
+                            <h1 className="text-3xl text-center font-bold">
                                 Visi
                             </h1>
                             <p className="text-lg text-center">

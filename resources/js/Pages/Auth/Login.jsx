@@ -42,14 +42,14 @@ export default function LoginPage() {
     };
     return (
         <AuthLayout endpoint='Login'>
-            <h1 className="font-bold text-4xl 2xl:text-5xl mb-2 capitalize">
+            <h1 className="font-bold text-3xl md:text-4xl 2xl:text-5xl mb-2 capitalize">
                 Silahkan masukan akun anda!
             </h1>
-            <p className="font-light text-lg mb-5 2xl:mb-10">
+            <p className="font-light text-lg mb-5 2xl:mb-10 md:text-xl">
                 Masukkan Username, NIS, dan Password anda
             </p>
             <form onSubmit={formik.handleSubmit} className="w-full">
-                <VStack spacing={3}>
+                <VStack spacing={{ base: 3, md: 5 }}>
                     <FormControl
                         isInvalid={
                             formik.errors.username && formik.touched.username
@@ -132,7 +132,7 @@ export default function LoginPage() {
                                 xl: "blackAlpha.800",
                             },
                             textColor: {
-                                base: "orange",
+                                base: "gray.600",
                                 xl: "white",
                             },
                         }}

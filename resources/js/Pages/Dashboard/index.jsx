@@ -57,11 +57,11 @@ const Dashboard = ({ auth, user_count, item_count }) => {
                         <path
                             d="M450.937 133.012C255.133 121.554 5 359.005 5 359.005V547H1441V3.01517C1441 -36.9837 1152.57 533 872.328 423.003C592.083 313.006 651.82 144.766 450.937 133.012Z"
                             fill="url(#paint0_linear_78_162)"
-                            shape-rendering="crispEdges"
+                            shapeRendering="crispEdges"
                         />
                         <path
                             d="M450.937 133.012C255.133 121.554 5 359.005 5 359.005V547H1441V3.01517C1441 -36.9837 1152.57 533 872.328 423.003C592.083 313.006 651.82 144.766 450.937 133.012Z"
-                            shape-rendering="crispEdges"
+                            shapeRendering="crispEdges"
                         />
                     </g>
                     <defs>
@@ -72,10 +72,10 @@ const Dashboard = ({ auth, user_count, item_count }) => {
                             width="1446"
                             height="556"
                             filterUnits="userSpaceOnUse"
-                            color-interpolation-filters="sRGB"
+                            colorInterpolationFilters="sRGB"
                         >
                             <feFlood
-                                flood-opacity="0"
+                                floodOpacity="0"
                                 result="BackgroundImageFix"
                             />
                             <feColorMatrix
@@ -111,11 +111,11 @@ const Dashboard = ({ auth, user_count, item_count }) => {
                             y2="847"
                             gradientUnits="userSpaceOnUse"
                         >
-                            <stop stop-color="#7371E2" />
+                            <stop stopColor="#7371E2" />
                             <stop
                                 offset="1"
-                                stop-color="#7371E2"
-                                stop-opacity="0"
+                                stopColor="#7371E2"
+                                stopOpacity="0"
                             />
                         </linearGradient>
                     </defs>

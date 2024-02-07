@@ -1,22 +1,28 @@
 import SidebarButton from "@/Components/Fragments/SidebarButton";
 import { router, usePage } from "@inertiajs/react";
 import {
-    Archive,
-    ChartPie,
-    Gauge,
-    ListDashes,
+    ClockCounterClockwise,
+    House,
+    NotePencil,
+    Package,
     SignOut,
     Users,
 } from "@phosphor-icons/react";
+import Logo from "../../asset/profile-image.png";
 
 const Sidebar = () => {
     const { url } = usePage();
 
     const tabs = [
-        { label: "Dashboard", icon: ChartPie, href: "/dashboard" },
-        { label: "Request", icon: Archive, href: ["/requests", "/request/return", "/request/rental"] },
+        { label: "Dashboard", icon: House, href: "/dashboard" },
+        {
+            label: "Request",
+            icon: NotePencil,
+            href: ["/requests", "/request/return", "/request/rental"],
+        },
         { label: "Users", icon: Users, href: ["/users", "/user/create"] },
-        { label: "Barang", icon: ListDashes, href: ["/items", "/item/create"] },
+        { label: "Barang", icon: Package, href: ["/items", "/item/create"] },
+        { label: "Logs", icon: ClockCounterClockwise, href: "/logs" },
     ];
     const onLogOut = () => {
         router.visit("/logout");
@@ -24,17 +30,29 @@ const Sidebar = () => {
 
     return (
         <>
-            <aside className="h-screen p-10 bg-white w-64 2xl:w-72 flex flex-col justify-between">
-                <div className="space-y-5">
-                    {tabs.map((tab, index) => (
-                        <SidebarButton
-                            key={index}
-                            value={tab.label}
-                            icon={tab.icon}
-                            href={tab.href}
-                            isActive={url.startsWith(Array.isArray(tab.href) ? tab.href[0] : tab.href)}
-                        />
-                    ))}
+            <aside className="h-screen p-5 pb-20 bg-secondary w-64 2xl:w-72 flex flex-col justify-between">
+                <div className="space-y-10">
+                    <div className="flex items-center gap-4 px-3 py-2">
+                        <div className="w-10 overflow-hidden rounded-full">
+                            <img src={Logo} alt="logo" />
+                        </div>
+                        <h1 className="text-xl font-bold text-white">Admin</h1>
+                    </div>
+                    <div className="space-y-4">
+                        {tabs.map((tab, index) => (
+                            <SidebarButton
+                                key={index}
+                                value={tab.label}
+                                icon={tab.icon}
+                                href={tab.href}
+                                isActive={url.startsWith(
+                                    Array.isArray(tab.href)
+                                        ? tab.href[0]
+                                        : tab.href
+                                )}
+                            />
+                        ))}
+                    </div>
                 </div>
                 <div>
                     <button

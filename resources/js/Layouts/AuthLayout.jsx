@@ -16,7 +16,7 @@ export default function AuthLayout({ endpoint, children }) {
                             className="object-cover w-full h-screen"
                         />
                         <div className="absolute top-0 w-full h-screen">
-                            <div className="flex flex-col justify-between text-white h-full xl:bg-gradient-to-t from-azka px-10 py-8 3xl:pb-20 pr-[10%]">
+                            <div className="flex flex-col justify-between text-white h-full xl:bg-gradient-to-t from-azka px-5 xl:px-10 py-8 3xl:pb-20 pr-[10%]">
                                 <Box
                                     as={Link}
                                     href="/"
@@ -40,7 +40,7 @@ export default function AuthLayout({ endpoint, children }) {
                             </div>
                         </div>
                     </div>
-                    <div className="absolute xl:static xl:w-2/5 xl:min-h-full p-5 xl:px-7 rounded-lg backdrop-blur-md xl:backdrop-blur-0 shadow-azka shadow-xl flex items-center">
+                    <div className="absolute mt-14 md:mt-0 max-w-[20rem] md:max-w-xl xl:max-w-3xl xl:static xl:w-2/5 xl:min-h-full xl:px-7 rounded-lg backdrop-blur-md xl:backdrop-blur-0 shadow-azka shadow-xl flex items-center">
                         <div className="w-full p-5 text-white xl:text-black flex items-center flex-col">
                             {children}
                         </div>

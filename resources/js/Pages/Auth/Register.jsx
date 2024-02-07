@@ -1,5 +1,4 @@
 import { Head, Link, router, usePage } from "@inertiajs/react";
-import Wave from "react-wavify";
 import {
     FormControl,
     FormErrorMessage,
@@ -7,13 +6,10 @@ import {
     VStack,
     Button,
     FormLabel,
-    Box,
 } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Alert from "@/Components/Fragments/Alert";
-import BackgroundImage from "../../../asset/background-gudang.jpeg";
-import { ArrowLeft } from "@phosphor-icons/react";
 import AuthLayout from "@/Layouts/AuthLayout";
 
 const Register = () => {
@@ -52,16 +48,16 @@ const Register = () => {
     };
     return (
         <AuthLayout endpoint='Register'>
-            <h1 className="font-bold text-4xl 2xl:text-5xl mb-2">
+            <h1 className="font-bold text-2xl md:text-3xl 2xl:text-5xl mb-2">
                 Silahkan daftarkan akun mu!
             </h1>
-            <p className="font-light text-lg mb-5 2xl:mb-10">
+            <p className="font-light text-lg mb-5 2xl:mb-10 md:text-lg">
                 Masukkan Username, NIS, Kelas, dan password!
             </p>
             <form onSubmit={formik.handleSubmit} className="w-full">
                 <VStack spacing={5}>
-                    <div className="flex flex-col gap-3 md:flex-row 2xl:flex-col w-full">
-                        <div className="flex flex-col gap-4 md:gap-2 md:w-1/2 2xl:w-full">
+                    <div className="flex flex-col gap-3 2xl:flex-col w-full">
+                        <div className="flex flex-col gap-4 md:gap-2 2xl:w-full">
                             <FormControl
                                 isInvalid={
                                     formik.errors.username &&
@@ -154,7 +150,7 @@ const Register = () => {
                                 </FormErrorMessage>
                             </FormControl>
                         </div>
-                        <div className="flex flex-col gap-4 md:gap-2 md:w-1/2 2xl:w-full">
+                        <div className="flex flex-col gap-4 md:gap-2 2xl:w-full">
                             <FormControl
                                 isInvalid={
                                     formik.errors.password &&
@@ -233,7 +229,7 @@ const Register = () => {
                                 xl: "blackAlpha.800",
                             },
                             textColor: {
-                                base: "orange",
+                                base: "gray.600",
                                 xl: "white",
                             },
                         }}

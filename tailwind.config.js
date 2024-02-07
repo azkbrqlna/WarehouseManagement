@@ -16,9 +16,9 @@ export default {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
             },
             colors: {
-                main: "#DEDADA",
-                secondary: "#7371E2",
-                hover_scn: '#8E8FFA',
+                main: "#EDEDED",
+                secondary: "#212143",
+                hover_secondary: '#464662',
                 azka: '#6A91A7',
             },
             screens: {

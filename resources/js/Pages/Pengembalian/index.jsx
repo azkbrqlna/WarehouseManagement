@@ -75,11 +75,11 @@ const Pengembalian = ({ rentals, auth, returns }) => {
     return (
         <>
             <Head title="Pengembalian" />
-            <div className="bg-zinc-800 pb-5 min-h-screen">
+            <div className="bg-azka pb-5 min-h-screen">
                 <Headroom>
                     <div
-                        className={`bg-zinc-800 z-10 ${
-                            isBorder ? "border-b-2 border-zinc-500" : ""
+                        className={`bg-azka z-10 ${
+                            isBorder ? "border-b-2 border-azka" : ""
                         }`}
                     >
                         <Navbar />
@@ -87,7 +87,7 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                 </Headroom>
                 <section className="px-10 py-5">
                     <div className="flex justify-center">
-                        <h1 className="font-bold text-md text-zinc-400">
+                        <h1 className="font-bold text-md text-white">
                             Upload foto barang yang hendak anda kembalikan!
                         </h1>
                     </div>
@@ -100,13 +100,6 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                                 <Th textColor="white">Item</Th>
                                 <Th textColor="white" colSpan={2}>
                                     Tanggal Pengembalian
-                                </Th>
-                                <Th
-                                    textColor="white"
-                                    textAlign="center"
-                                    colSpan={2}
-                                >
-                                    Rental Date
                                 </Th>
                                 <Th textColor="white" textAlign="center">
                                     Upload
@@ -135,9 +128,6 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                                             <Td>{refund.item.name}</Td>
                                             <Td colSpan={2}>
                                                 {refund.return_date}
-                                            </Td>
-                                            <Td colSpan={2}>
-                                                {refund.rent_date}
                                             </Td>
                                             <Td>
                                                 {!dateReturn.photo ? (

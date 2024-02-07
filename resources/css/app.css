@@ -5,3 +5,7 @@
 html {
     scroll-behavior: smooth;
 }
+
+.shadow-top-right-bottom {
+    box-shadow: 20px 20px 5px -5px rgba(100, 100, 100, 100.75);
+}

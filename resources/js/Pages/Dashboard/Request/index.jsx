@@ -1,32 +1,12 @@
-import OverviewCard from "@/Components/Fragments/OverviewCard";
-import Dashboardlayout from "@/Layouts/DashboardLayout";
 import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
-import { Link } from "@inertiajs/react";
-import { ArrowCounterClockwise, Minus, Note } from "@phosphor-icons/react";
+import { Minus } from "@phosphor-icons/react";
 import Pagination from "@/Components/Fragments/Pagination";
+import RequestLayout from "@/Pages/Dashboard/Request";
 
-const RequestPage = ({ rental_count, return_count, logs }) => {
+const RequestPage = ({ logs }) => {
     return (
         <>
-            <Dashboardlayout title="Request">
-                <section className="grid grid-flow-col gap-5 mt-5">
-                    <Link href="/request/rental">
-                        <OverviewCard
-                            className={"text-2xl"}
-                            title="Request Peminjaman"
-                            value={rental_count}
-                            icon={Note}
-                        />
-                    </Link>
-                    <Link href="/request/return">
-                        <OverviewCard
-                            className={"text-2xl"}
-                            title="Request Pengembalian"
-                            value={return_count}
-                            icon={ArrowCounterClockwise}
-                        />
-                    </Link>
-                </section>
+            <RequestLayout>
                 <section className="mt-5">
                     <div className="w-full 3xl:h-[40rem] rounded-lg bg-white">
                         <div className="p-2 flex flex-col justify-between min-h-full">
@@ -145,18 +125,18 @@ const RequestPage = ({ rental_count, return_count, logs }) => {
                             </Table>
                             <Pagination
                                 className="mt-5"
-                                total={logs.total}
-                                from={logs.from}
-                                to={logs.to}
-                                prevPageUrl={logs.prev_page_url}
-                                nextPageUrl={logs.next_page_url}
-                                links={logs.links}
-                                currentPage={logs.current_page}
+                                total={logs?.total}
+                                from={logs?.from}
+                                to={logs?.to}
+                                prevPageUrl={logs?.prev_page_url}
+                                nextPageUrl={logs?.next_page_url}
+                                links={logs?.links}
+                                currentPage={logs?.current_page}
                             />
                         </div>
                     </div>
                 </section>
-            </Dashboardlayout>
+            </RequestLayout>
         </>
     );
 };
