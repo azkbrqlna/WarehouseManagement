@@ -19,7 +19,7 @@ class RentalController extends Controller
     public function indexAdmin()
     {
         return Inertia::render("Dashboard/Request/index", [
-            'logs' => Log::with(['item', 'user'])->latest()->paginate(5),
+            'logs' => Log::with(['item', 'user'])->latest()->paginate(10),
             'rental_count' => Rental::where('status', '!=', 1)->count(),
             'return_count' => Returning::where('status', '!=', 1)->where('photo', '!=', null)->count(),
         ]);

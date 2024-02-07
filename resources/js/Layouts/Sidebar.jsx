@@ -3,6 +3,7 @@ import { router, usePage } from "@inertiajs/react";
 import {
     Archive,
     ChartPie,
+    ChartPieSlice,
     Gauge,
     ListDashes,
     SignOut,
@@ -13,7 +14,7 @@ const Sidebar = () => {
     const { url } = usePage();
 
     const tabs = [
-        { label: "Dashboard", icon: ChartPie, href: "/dashboard" },
+        { label: "Dashboard", icon: ChartPieSlice, href: "/dashboard" },
         { label: "Request", icon: Archive, href: ["/requests", "/request/return", "/request/rental"] },
         { label: "Users", icon: Users, href: ["/users", "/user/create"] },
         { label: "Barang", icon: ListDashes, href: ["/items", "/item/create"] },
