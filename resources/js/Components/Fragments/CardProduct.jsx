@@ -25,23 +25,36 @@ const CardProduct = ({
 }) => {
     return (
         <>
-            <div className="flex flex-col gap-3 rounded-lg w-full h-[300px] md:w-[15rem] shadow-md shadow-zinc-950 bg-white p-3">
-                <div className="w-full flex justify-center group overflow-hidden cursor-zoom-in h-2/3">
+            <div className="flex flex-col gap-3 rounded-3xl w-[15rem] h-min md:w-[15rem] bg-white px-5 py-2 pb-5 shadow-top-right-bottom">
+                <div>
+                    <Text fontWeight="bold" fontSize="40px">
+                        {itemName}
+                    </Text>
+                    <Badge
+                        borderRadius="5px"
+                        colorScheme={colorScheme}
+                        py="5px"
+                        px="10px"
+                    >
+                        {status}
+                    </Badge>
+                </div>
+                <div className="w-full flex justify-center group overflow-hidden cursor-zoom-in">
                     <img
                         src={src}
                         className="w-40 h-40 object-cover group-hover:scale-125 transition-all duration-300 ease-in-out"
                     />
                 </div>
-                <div className="text-2xl font-bold h-1/3 space-y-3">
-                    <Text>{itemName}</Text>
-                    <div className="flex items-center justify-between">
-                        <Badge borderRadius="5px" colorScheme={colorScheme}>
-                            {status}
-                        </Badge>
-                        <Button onClick={infoOpen} alignSelf="center">
-                            Pinjam
-                        </Button>
-                    </div>
+                <div className="text-2xl font-bold space-y-2">
+                    <Text fontSize="lg">
+                        Stok: <span>5</span>
+                    </Text>
+                    <button
+                        onClick={infoOpen}
+                        className="w-full px-2 py-1 border border-azka rounded-2xl text-lg hover:bg-azka hover:text-white transition-all duration-200 ease-in"
+                    >
+                        Pinjam
+                    </button>
                 </div>
             </div>
             <AnimatePresence>
@@ -59,13 +72,13 @@ const CardProduct = ({
                             </h1>
                             <CloseButton size="lg" onClick={infoOpen} />
                         </div>
-                        <div className="px-5 md:flex block">
-                            <div className="w-full md:w-1/3 h-60 overflow-hidden flex justify-center">
-                                <img src={src} />
+                        <div className="px-5 md:flex block space-x-2">
+                            <div className="w-full md:w-60 md:h-52 overflow-hidden flex justify-center">
+                                <img src={src} className="object-cover" />
                             </div>
                             <form
                                 onSubmit={clickSubmitPeminjaman}
-                                className="w-full md:w-2/3"
+                                className="w-full"
                             >
                                 <Text fontWeight="bold" fontSize="x-large">
                                     {itemName}{" "}

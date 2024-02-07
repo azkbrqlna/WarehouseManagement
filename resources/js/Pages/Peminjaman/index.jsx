@@ -113,7 +113,7 @@ const Peminjaman = ({ items, rentals, auth }) => {
                     <section
                         id="navbar"
                         className={`bg-azka z-10 ${
-                            isBorder ? "border-b-2 border-zinc-500" : ""
+                            isBorder ? "border-b-2 border-azka" : ""
                         }`}
                     >
                         <Navbar />

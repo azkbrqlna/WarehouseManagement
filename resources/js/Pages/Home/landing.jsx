@@ -23,7 +23,7 @@ const LandingPage = () => {
             <Head title="Home" />
             <HomeLayout>
                 <nav
-                    className={`bg-azka z-[9999] flex justify-between py-3 px-7 ${
+                    className={`bg-azka flex justify-between py-3 px-7 ${
                         isBorder ? "shadow-lg border-b border-cyan-600" : ""
                     }`}
                 >

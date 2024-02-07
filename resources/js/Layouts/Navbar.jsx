@@ -60,7 +60,7 @@ const Navbar = () => {
                 </div>
                 <div className="md:hidden relative flex w-full justify-between items-center">
                     <Hamburger
-                        color="#adb5bd"
+                        color="#fff"
                         toggled={isHamburgerOpen}
                         toggle={onToggle}
                     />

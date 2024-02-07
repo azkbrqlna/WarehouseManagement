@@ -19,7 +19,7 @@ const NavbarHamburger = ({ isOpen, onClose, btnRef, onToggle }) => {
             >
                 <DrawerOverlay />
                 <DrawerContent>
-                    <DrawerCloseButton onClick={onToggle} />
+                    <DrawerCloseButton fontSize='20px' onClick={onToggle} />
                     <DrawerBody pt="100px">
                         <Flex h="100%" justifyContent="center">
                             <ul className="flex flex-col gap-5 w-full">
