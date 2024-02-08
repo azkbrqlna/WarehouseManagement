@@ -13,10 +13,9 @@ use Maatwebsite\Excel\Facades\Excel;
 class LogController extends Controller
 {
     public function index(){
-        // return Inertia::render("Dashboard/Logs/index", [
-        //     'logs' => Log::with(['item', 'user'])->latest()->paginate(10),
-        // ]);
-        dd('INI LOGS');
+        return Inertia::render("Dashboard/Logs/index", [
+            'logs' => Log::with(['item', 'user'])->latest()->paginate(10),
+        ]);
     }
 
     //buat download excel

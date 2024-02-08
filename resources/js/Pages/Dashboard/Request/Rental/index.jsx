@@ -17,7 +17,7 @@ import Dashboardlayout from "@/Layouts/DashboardLayout";
 import { Link, router } from "@inertiajs/react";
 
 const Rental = ({ rental, index }) => {
-    console.log(rental)
+    console.log(rental);
     const toast = useToast();
     const { isOpen, onToggle } = useDisclosure();
 
@@ -130,16 +130,24 @@ const Rental = ({ rental, index }) => {
     );
 };
 const RequestPage = ({ rentals, users }) => {
-    console.log(users)
+    console.log(users);
     return (
         <>
             <Dashboardlayout title="Request Peminjaman">
-                <Button as={Link} href="/requests" className="mt-5">
+                <Button
+                    as={Link}
+                    bg="#212143"
+                    _hover={{ bg: "#464662" }}
+                    _focus={{ bg: "#212143" }}
+                    textColor="white"
+                    href="/requests"
+                    className="mt-5"
+                >
                     <ArrowLeft size={24} />
                     Kembali
                 </Button>
                 <div className="bg-white p-5 rounded-lg mt-5">
-                    <Table variant='simple'>
+                    <Table variant="simple">
                         <Thead>
                             <Tr>
                                 <Th w="5%" textAlign="center">

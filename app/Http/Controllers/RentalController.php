@@ -16,11 +16,10 @@ class RentalController extends Controller
     //for admin
     public function indexAdmin()
     {
-        // return Inertia::render("Dashboard/Request/index", [
-        //     'rental_count' => Rental::where('status', '!=', 1)->count(),
-        //     'return_count' => Returning::where('status', '!=', 1)->where('photo', '!=', null)->count(),
-        // ]);
-        dd('halo');
+        return Inertia::render("Dashboard/Request/index", [
+            'rental_count' => Rental::where('status', '!=', 1)->count(),
+            'return_count' => Returning::where('status', '!=', 1)->where('photo', '!=', null)->count(),
+        ]);
     }
 
     public function rentalAdmin()

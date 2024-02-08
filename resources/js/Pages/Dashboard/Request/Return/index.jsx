@@ -95,7 +95,7 @@ const Return = ({ refund, index }) => {
                     </Flex>
                 </Collapse>
             </Td>
-            <Td display='flex' gap='3px' justifyContent='center'>
+            <Td display="flex" gap="3px" justifyContent="center">
                 <Button
                     bgColor="green.500"
                     textColor="white"
@@ -125,12 +125,20 @@ const RequestPage = ({ returns }) => {
     return (
         <>
             <Dashboardlayout title="Request Pengembalian">
-                <Button as={Link} href="/requests" className="mt-5">
+                <Button
+                    as={Link}
+                    bg="#212143"
+                    _hover={{ bg: "#464662" }}
+                    _focus={{ bg: "#212143" }}
+                    textColor="white"
+                    href="/requests"
+                    className="mt-5"
+                >
                     <ArrowLeft size={24} />
                     Kembali
                 </Button>
                 <div className="bg-white p-5 rounded-lg mt-5">
-                    <Table variant='simple'>
+                    <Table variant="simple">
                         <Thead>
                             <Tr>
                                 <Th w="5%" textAlign="center">

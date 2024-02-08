@@ -54,7 +54,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "laravel/dusk"
+            ]
         }
     },
     "config": {
@@ -66,7 +68,10 @@
             "php-http/discovery": true
         },
         "disable-tls": true,
-        "secure-http": false
+        "secure-http": false,
+        "platform": {
+
+        }
     },
     "minimum-stability": "stable",
     "prefer-stable": true

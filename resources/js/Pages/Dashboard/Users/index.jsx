@@ -26,7 +26,7 @@ import Dashboardlayout from "@/Layouts/DashboardLayout";
 import Sidebar from "@/Layouts/Sidebar";
 import Pagination from "@/Components/Fragments/Pagination";
 
-const UsersPage = ({ users }) => {
+const UsersPage = ({ users, users_count }) => {
     const toast = useToast();
     const { delete: destroy } = useForm();
     const handleClick = (slug) => {
@@ -59,10 +59,10 @@ const UsersPage = ({ users }) => {
                             <span>Add User</span>
                         </button>
                     </div>
-                    <header className="bg-white mt-[50px] rounded-md min-h-full p-7">
+                    <header className="bg-white mt-[50px] rounded-md max-h-screen p-7">
                         <div className="flex justify-between">
                             <h1 className="text-lg font-bold">
-                                All Users {"10"}
+                                All Users {users_count}
                             </h1>
                             <div>
                                 <InputGroup color="red">
@@ -87,28 +87,36 @@ const UsersPage = ({ users }) => {
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-gray-200">
-                                    <tr className="divide-x-2 divide-neutral-300">
-                                        <td className="px-4 py-2">Azka Putra</td>
-                                        <td className="px-4 py-2">1234567890</td>
-                                        <td className="px-4 py-2">XIIII SIJA 9</td>
-                                        <td className="px-4 py-2">User</td>
-                                    </tr>
+                                    {users?.data.map((user) => (
+                                        <tr
+                                            className="divide-x-2 divide-neutral-300"
+                                            key={user.id}
+                                        >
+                                            <td className="px-4 py-2">
+                                                {user.username}
+                                            </td>
+                                            <td className="px-4 py-2">
+                                                {user.nis}
+                                            </td>
+                                            <td className="px-4 py-2">
+                                                {user.kelas}
+                                            </td>
+                                            <td className="px-4 py-2">User</td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>
-                        <div className="flex justify-end p-4">
-                            <div className="inline-flex gap-2">
-                                <button className="p-2 border border-neutral-200 rounded-lg">
-                                    <CaretLeft />
-                                </button>
-                                <button className="p-2 border border-neutral-200 rounded-lg">
-                                    Prev
-                                </button>
-                                <button className="p-2 border border-neutral-200 rounded-lg">
-                                    Next
-                                </button>
-                            </div>
-                        </div>
+                        <Pagination
+                            className="mt-5"
+                            total={users?.total}
+                            from={users?.from}
+                            to={users?.to}
+                            prevPageUrl={users?.prev_page_url}
+                            nextPageUrl={users?.next_page_url}
+                            links={users?.links}
+                            currentPage={users?.current_page}
+                        />
                     </header>
                 </main>
             </div>

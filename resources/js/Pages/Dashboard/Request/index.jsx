@@ -1,12 +1,20 @@
 import { Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
-import { Minus } from "@phosphor-icons/react";
+import {
+    ArrowCounterClockwise,
+    Cube,
+    Minus,
+    Note,
+} from "@phosphor-icons/react";
 import Pagination from "@/Components/Fragments/Pagination";
 import RequestLayout from "@/Pages/Dashboard/Request";
+import Dashboardlayout from "@/Layouts/DashboardLayout";
+import { Link } from "@inertiajs/react";
+import OverviewCard from "@/Components/Fragments/OverviewCard";
 
-const RequestPage = ({ logs }) => {
+const RequestsPage = ({ rental_count, return_count }) => {
     return (
         <>
-            <RequestLayout>
+            {/* <RequestLayout>
                 <section className="mt-5">
                     <div className="w-full 3xl:h-[40rem] rounded-lg bg-white">
                         <div className="p-2 flex flex-col justify-between min-h-full">
@@ -136,9 +144,37 @@ const RequestPage = ({ logs }) => {
                         </div>
                     </div>
                 </section>
-            </RequestLayout>
+            </RequestLayout> */}
+            <Dashboardlayout title="Requests">
+                <section className="grid grid-flow-col gap-5 mt-5">
+                    <Link href="/request/rental">
+                        <OverviewCard
+                            className={"text-2xl"}
+                            title="Borrow"
+                            value={rental_count}
+                            icon={Cube}
+                        />
+                    </Link>
+                    <Link href="/request/return">
+                        <OverviewCard
+                            className={"text-2xl"}
+                            title="Return"
+                            value={return_count}
+                            icon={ArrowCounterClockwise}
+                        />
+                    </Link>
+                    <Link href="/logs">
+                        <OverviewCard
+                            className={"text-2xl"}
+                            title="Logs"
+                            value="0"
+                            icon={Note}
+                        />
+                    </Link>
+                </section>
+            </Dashboardlayout>
         </>
     );
 };
 
-export default RequestPage;
+export default RequestsPage;
