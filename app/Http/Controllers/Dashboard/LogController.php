@@ -14,7 +14,7 @@ class LogController extends Controller
 {
     public function index(){
         return Inertia::render("Dashboard/Logs/index", [
-            'logs' => Log::with(['item', 'user'])->latest()->paginate(6),
+            'logs' => Log::with(['item', 'user'])->latest()->paginate(10),
         ]);
     }
 
