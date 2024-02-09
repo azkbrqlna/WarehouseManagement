@@ -13,7 +13,8 @@ class ItemController extends Controller
     public function index()
     {
         return Inertia::render("Dashboard/Barang/index", [
-            'items' => Item::all()
+            'items' => Item::paginate(5),
+            'item_count' => Item::count(),
         ]);
     }
 

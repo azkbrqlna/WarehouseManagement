@@ -30,15 +30,15 @@ const Sidebar = () => {
 
     return (
         <>
-            <aside className="h-screen p-5 pb-20 bg-secondary w-64 2xl:w-72 flex flex-col justify-between">
-                <div className="space-y-10">
-                    <div className="flex items-center gap-4 px-3 py-2">
-                        <div className="w-10 overflow-hidden rounded-full">
+            <aside className="h-screen p-5 pb-20 bg-secondary w-56 2xl:w-72 flex flex-col justify-between">
+                <div className="space-y-5">
+                    <div className="flex items-center gap-3 px-3 py-2">
+                        <div className="w-7 overflow-hidden rounded-full">
                             <img src={Logo} alt="logo" />
                         </div>
-                        <h1 className="text-xl font-bold text-white">Admin</h1>
+                        <h1 className="text-lg font-bold text-white">Admin</h1>
                     </div>
-                    <div className="space-y-4">
+                    <div className="space-y-3">
                         {tabs.map((tab, index) => (
                             <SidebarButton
                                 key={index}
@@ -57,10 +57,10 @@ const Sidebar = () => {
                 <div>
                     <button
                         onClick={onLogOut}
-                        className="flex w-full items-center gap-5 px-5 py-2 rounded-lg transition-all duration-300 hover:bg-red-100 border text-red-500 border-red-500"
+                        className="flex w-full justify-center items-center gap-2 px-5 py-2 rounded-lg transition-all duration-300 hover:bg-red-100 border text-red-500 border-red-500"
                     >
-                        <SignOut size={24} />
-                        <span className="text-xl">Logout</span>
+                        <SignOut size={18} />
+                        <span className="text-base">Logout</span>
                     </button>
                 </div>
             </aside>

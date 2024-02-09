@@ -21,11 +21,11 @@ const SidebarButton = ({ icon: Icon, value, href, isActive }) => {
             >
                 <Box
                     as={Icon}
-                    size={24}
+                    size={18}
                     color='#fff'
                 />
                 <span
-                    className="text-white text-lg"
+                    className="text-white text-sm"
                 >
                     {value}
                 </span>

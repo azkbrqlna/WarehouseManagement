@@ -15,7 +15,7 @@ export default function Pagination({
     const applyClass = (condition, classNames) => (condition ? classNames : "");
     return (
         <div
-            className={`flex items-center justify-between ${applyClass(
+            className={`flex items-center justify-between text-xs ${applyClass(
                 className,
                 className
             )}`}

@@ -1,4 +1,9 @@
-import { Users, NotePencil, Bag } from "@phosphor-icons/react";
+import {
+    Users,
+    NotePencil,
+    ClockCounterClockwise,
+    Package,
+} from "@phosphor-icons/react";
 import LogoDashboard from "../../../asset/background-dashboard.png";
 import OverviewCard from "@/Components/Fragments/OverviewCard";
 import Dashboardlayout from "@/Layouts/DashboardLayout";
@@ -7,7 +12,7 @@ const Dashboard = ({ auth, user_count, item_count }) => {
     return (
         <>
             <Dashboardlayout title="Dashboard">
-                <section className="relative flex items-center justify-between py-20 mt-10 space-y-2 shadow-sm px-20 2xl:px-36 bg-white rounded-xl z-10">
+                <section className="relative flex items-center justify-between py-16 mt-10 space-y-2 shadow-sm px-20 2xl:px-36 bg-white rounded-xl z-10">
                     <div>
                         <h3 className="text-2xl ">
                             <span className="font-semibold">
@@ -30,11 +35,11 @@ const Dashboard = ({ auth, user_count, item_count }) => {
                         />
                     </div>
                 </section>
-                <section className="grid grid-flow-col gap-5 mt-10">
+                <section className="grid grid-cols-4 gap-5 mt-10">
                     <OverviewCard
                         title="Total Barang"
                         value={item_count}
-                        icon={Bag}
+                        icon={Package}
                     />
                     <OverviewCard
                         title="Total Request"
@@ -46,9 +51,14 @@ const Dashboard = ({ auth, user_count, item_count }) => {
                         value={user_count}
                         icon={Users}
                     />
+                    <OverviewCard
+                        title="Total Logs"
+                        value={user_count}
+                        icon={ClockCounterClockwise}
+                    />
                 </section>
                 <svg
-                    className="absolute w-[1114px] 2xl:w-[1252px] 3xl:w-[1637px] right-0 bottom-0"
+                    className="absolute w-[1175px] 2xl:w-[1252px] 3xl:w-[1637px] right-0 bottom-0"
                     viewBox="0 0 1441 547"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"

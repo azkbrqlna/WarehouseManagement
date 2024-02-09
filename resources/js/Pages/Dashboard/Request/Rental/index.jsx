@@ -1,4 +1,4 @@
-import { ArrowLeft, Check, X } from "@phosphor-icons/react";
+import { ArrowDown, ArrowLeft, Check, X } from "@phosphor-icons/react";
 import {
     Box,
     Button,
@@ -12,12 +12,11 @@ import {
     useDisclosure,
     useToast,
 } from "@chakra-ui/react";
-import { ArrowDownIcon } from "@chakra-ui/icons";
-import Dashboardlayout from "@/Layouts/DashboardLayout";
-import { Link, router } from "@inertiajs/react";
+import { router } from "@inertiajs/react";
+import AdminLayout from "@/Layouts/AdminLayout";
+import Pagination from "@/Components/Fragments/Pagination";
 
 const Rental = ({ rental, index }) => {
-    console.log(rental);
     const toast = useToast();
     const { isOpen, onToggle } = useDisclosure();
 
@@ -68,120 +67,100 @@ const Rental = ({ rental, index }) => {
     };
 
     return (
-        <Tr key={index}>
-            <Td textAlign="center">{index + 1}</Td>
-            <Td textAlign="center">{rental.user.username}</Td>
-            <Td textAlign="center">{rental.user.nis}</Td>
-            <Td textAlign="center">{rental.user.kelas}</Td>
-            <Td textAlign="center">
-                <Button onClick={onToggle} w="100%">
-                    <ArrowDownIcon />
-                    Request
-                </Button>
-                <Collapse in={isOpen} animateOpacity>
-                    <Box
-                        p="10px"
-                        color="black"
-                        mt="4"
-                        bg="gray.200"
-                        rounded="md"
-                        shadow="md"
-                        display="flex"
-                        flexDirection="column"
-                        gap="10px"
-                        textAlign="left"
+        <>
+            <tr key={index}>
+                <td className="px-4 py-2">{index + 1}</td>
+                <td className="px-4 py-2">{rental.user.username}</td>
+                <td className="px-4 py-2 max-w-max">{rental.user.nis}</td>
+                <td className="px-4 py-2 max-w-max">{rental.user.kelas}</td>
+                <td className="px-4 py-2 w-80">
+                    <button
+                        onClick={onToggle}
+                        className="p-2 bg-black rounded-md w-full text-white flex justify-center items-center"
                     >
-                        <h1 className="text-xl">
-                            Barang yang dipinjam:{" "}
-                            <span className="font-semibold">
-                                {rental.item.name}
-                            </span>
-                        </h1>
-                        <p className="text-lg">
-                            Alasan:{" "}
-                            <span className="font-medium">{rental.reason}</span>
-                        </p>
-                    </Box>
-                </Collapse>
-            </Td>
-            <Td display="flex" gap="3px" justifyContent="center">
-                <Button
-                    bgColor="green.500"
-                    textColor="white"
-                    _hover={{
-                        background: "green.400",
-                    }}
-                    onClick={() => handleAccept(rental.id, rental.status)}
-                >
-                    <Check size={20} />
-                </Button>
-                <Button
-                    bgColor="red.500"
-                    textColor="white"
-                    _hover={{
-                        background: "red.400",
-                    }}
-                    onClick={() => handleDeclined(rental.id)}
-                >
-                    <X size={20} />
-                </Button>
-            </Td>
-        </Tr>
+                        <ArrowDown size={20} />
+                        Request
+                    </button>
+                    <Collapse in={isOpen} animateOpacity>
+                        <div className="p-2 border border-black rounded-md">
+                            <h1>
+                                Barang yang dipinjam:{" "}
+                                <span className="font-semibold">
+                                    {rental.item.name}
+                                </span>
+                            </h1>
+                            <p>
+                                Alasan:{" "}
+                                <span className="font-medium">
+                                    {rental.reason}
+                                </span>
+                            </p>
+                        </div>
+                    </Collapse>
+                </td>
+                <td className="flex px-4 py-2 gap-1">
+                    <button
+                        onClick={() => handleAccept(rental.id, rental.status)}
+                        className="p-2 bg-green-600 hover:bg-green-500 transition-all duration-100 ease-in rounded-md w-full text-white flex justify-center items-center"
+                    >
+                        <Check size={20} />
+                    </button>
+                    <button
+                        onClick={() => handleDeclined(rental.id)}
+                        className="p-2 bg-red-600 hover:bg-red-500 transition-all duration-100 ease-in rounded-md w-full text-white flex justify-center items-center"
+                    >
+                        <X size={20} />
+                    </button>
+                </td>
+            </tr>
+        </>
     );
 };
-const RequestPage = ({ rentals, users }) => {
-    console.log(users);
+const RequestPage = ({ rentals }) => {
     return (
         <>
-            <Dashboardlayout title="Request Peminjaman">
-                <Button
-                    as={Link}
-                    bg="#212143"
-                    _hover={{ bg: "#464662" }}
-                    _focus={{ bg: "#212143" }}
-                    textColor="white"
-                    href="/requests"
-                    className="mt-5"
-                >
-                    <ArrowLeft size={24} />
-                    Kembali
-                </Button>
-                <div className="bg-white p-5 rounded-lg mt-5">
-                    <Table variant="simple">
-                        <Thead>
-                            <Tr>
-                                <Th w="5%" textAlign="center">
-                                    Nomer
-                                </Th>
-                                <Th w="18%" textAlign="center">
-                                    Username
-                                </Th>
-                                <Th w="10%" textAlign="center">
-                                    NIS
-                                </Th>
-                                <Th w="10%" textAlign="center">
-                                    Kelas
-                                </Th>
-                                <Th w="37%" textAlign="center">
-                                    Request
-                                </Th>
-                                <Th colSpan={2} textAlign="center">
-                                    Action
-                                </Th>
-                            </Tr>
-                        </Thead>
-                        <Tbody>
-                            {rentals.map((rental, index) => (
-                                <Rental
-                                    key={index}
-                                    rental={rental}
-                                    index={index}
-                                />
-                            ))}
-                        </Tbody>
-                    </Table>
-                </div>
-            </Dashboardlayout>
+            <AdminLayout
+                title="Borrow"
+                content="Back"
+                href="/requests"
+                icon={ArrowLeft}
+            >
+                <header className="bg-white mt-5 rounded-md max-h-screen p-7">
+                    <div className="mt-5">
+                        <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+                            <thead className="bg-neutral-200 text-left">
+                                <tr className="divide-x-2 divide-neutral-300">
+                                    <th className="px-4 py-2 max-w-max">No.</th>
+                                    <th className="px-4 py-2">Username</th>
+                                    <th className="px-4 py-2">NIS</th>
+                                    <th className="px-4 py-2">Kelas</th>
+                                    <th className="px-4 py-2">Requests</th>
+                                    <th className="px-4 py-2 w-20">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-200">
+                                {rentals?.data.map((rental, index) => (
+                                    <Rental
+                                        key={index}
+                                        rental={rental}
+                                        index={index}
+                                    />
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    <Pagination
+                        className="mt-5"
+                        total={rentals?.total}
+                        from={rentals?.from}
+                        to={rentals?.to}
+                        prevPageUrl={rentals?.prev_page_url}
+                        nextPageUrl={rentals?.next_page_url}
+                        links={rentals?.links}
+                        currentPage={rentals?.current_page}
+                    />
+                </header>
+            </AdminLayout>
         </>
     );
 };

@@ -17,7 +17,7 @@ class ReturnController extends Controller
     public function returnAdmin()
     {
         return Inertia::render("Dashboard/Request/Return/index", [
-            'returns' => Returning::where('status', false)->where('photo', '!=', null)->with(['item', 'user'])->get(),
+            'returns' => Returning::where('status', false)->where('photo', '!=', null)->with(['item', 'user'])->paginate(5),
         ]);
     }
 

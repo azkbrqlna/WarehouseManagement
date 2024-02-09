@@ -1,4 +1,4 @@
-import { Check, X } from "@phosphor-icons/react";
+import { ArrowDown, Check, X } from "@phosphor-icons/react";
 import {
     Box,
     Button,
@@ -17,6 +17,8 @@ import { ArrowDownIcon } from "@chakra-ui/icons";
 import Dashboardlayout from "@/Layouts/DashboardLayout";
 import { Link, router } from "@inertiajs/react";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr";
+import AdminLayout from "@/Layouts/AdminLayout";
+import Pagination from "@/Components/Fragments/Pagination";
 
 const Return = ({ refund, index }) => {
     const toast = useToast();
@@ -70,109 +72,92 @@ const Return = ({ refund, index }) => {
     };
 
     return (
-        <Tr key={refund.id}>
-            <Td textAlign="center">{index + 1}</Td>
-            <Td textAlign="center">{refund.user.username}</Td>
-            <Td textAlign="center">{refund.user.nis}</Td>
-            <Td textAlign="center">{refund.user.kelas}</Td>
-            <Td textAlign="center">
-                <Button onClick={onToggle}>
-                    <ArrowDownIcon />
-                    Pengembalian
-                </Button>
-                <Collapse in={isOpen} animateOpacity>
-                    <Flex justifyContent="center" alignItems="center" mt="10px">
-                        <Box w="70px" h="70px" border="1px" overflow="hidden">
+        <>
+            <tr key={index}>
+                <td className="px-4 py-2 w-16">{index + 1 + "."}</td>
+                <td className="px-4 py-2 w-60">{refund.user.username}</td>
+                <td className="px-4 py-2 w-10">{refund.user.nis}</td>
+                <td className="px-4 py-2 w-20">{refund.user.kelas}</td>
+                <td className="px-4 py-2 w-20">
+                    <button
+                        onClick={onToggle}
+                        className="p-2 bg-black rounded-md w-full text-white flex justify-center items-center"
+                    >
+                        <ArrowDown size={20} />
+                        Pengembalian
+                    </button>
+                    <Collapse in={isOpen} animateOpacity>
+                        <div className="p-2 border border-black rounded-md">
                             <img
                                 src={`/storage/photos/${refund.photo}`}
-                                style={{
-                                    width: "100%",
-                                    height: "100%",
-                                    objectFit: "cover",
-                                }}
+                                className="w-10 h-10 object-cover mx-auto"
                             />
-                        </Box>
-                    </Flex>
-                </Collapse>
-            </Td>
-            <Td display="flex" gap="3px" justifyContent="center">
-                <Button
-                    bgColor="green.500"
-                    textColor="white"
-                    _hover={{
-                        background: "green.400",
-                    }}
-                    onClick={() => handleAccept(refund.id)}
-                >
-                    <Check size={20} />
-                </Button>
-                <Button
-                    bgColor="red.500"
-                    textColor="white"
-                    _hover={{
-                        background: "red.400",
-                    }}
-                    onClick={() => handleDeclined(refund.id)}
-                >
-                    <X size={20} />
-                </Button>
-            </Td>
-        </Tr>
+                        </div>
+                    </Collapse>
+                </td>
+                <td className="flex px-4 py-2 gap-1">
+                    <button
+                        onClick={() => handleAccept(refund.id)}
+                        className="p-2 bg-green-600 hover:bg-green-500 transition-all duration-100 ease-in rounded-md w-full text-white flex justify-center items-center"
+                    >
+                        <Check size={20} />
+                    </button>
+                    <button
+                        onClick={() => handleDeclined(refund.id)}
+                        className="p-2 bg-red-600 hover:bg-red-500 transition-all duration-100 ease-in rounded-md w-full text-white flex justify-center items-center"
+                    >
+                        <X size={20} />
+                    </button>
+                </td>
+            </tr>
+        </>
     );
 };
 
 const RequestPage = ({ returns }) => {
+    console.log(returns);
     return (
         <>
-            <Dashboardlayout title="Request Pengembalian">
-                <Button
-                    as={Link}
-                    bg="#212143"
-                    _hover={{ bg: "#464662" }}
-                    _focus={{ bg: "#212143" }}
-                    textColor="white"
-                    href="/requests"
-                    className="mt-5"
-                >
-                    <ArrowLeft size={24} />
-                    Kembali
-                </Button>
-                <div className="bg-white p-5 rounded-lg mt-5">
-                    <Table variant="simple">
-                        <Thead>
-                            <Tr>
-                                <Th w="5%" textAlign="center">
-                                    Nomer
-                                </Th>
-                                <Th w="18%" textAlign="center">
-                                    Username
-                                </Th>
-                                <Th w="10%" textAlign="center">
-                                    NIS
-                                </Th>
-                                <Th w="10%" textAlign="center">
-                                    Kelas
-                                </Th>
-                                <Th w="37%" textAlign="center">
-                                    Pengembalian
-                                </Th>
-                                <Th colSpan={2} textAlign="center">
-                                    Action
-                                </Th>
-                            </Tr>
-                        </Thead>
-                        <Tbody>
-                            {returns.map((refund, index) => (
+            <AdminLayout
+                title="Return"
+                content="Back"
+                href="/requests"
+                icon={ArrowLeft}
+            >
+                <header className="bg-white mt-5 rounded-md max-h-screen p-7">
+                    <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+                        <thead className="bg-neutral-200 text-left">
+                            <tr className="divide-x-2 divide-neutral-300">
+                                <th className="px-4 py-2 max-w-max">No.</th>
+                                <th className="px-4 py-2">Username</th>
+                                <th className="px-4 py-2">NIS</th>
+                                <th className="px-4 py-2">Kelas</th>
+                                <th className="px-4 py-2">Requests</th>
+                                <th className="px-4 py-2 w-20">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200">
+                            {returns?.data.map((returning, index) => (
                                 <Return
                                     key={index}
-                                    refund={refund}
+                                    refund={returning}
                                     index={index}
                                 />
                             ))}
-                        </Tbody>
-                    </Table>
-                </div>
-            </Dashboardlayout>
+                        </tbody>
+                    </table>
+                    <Pagination
+                        className="mt-5"
+                        total={returns?.total}
+                        from={returns?.from}
+                        to={returns?.to}
+                        prevPageUrl={returns?.prev_page_url}
+                        nextPageUrl={returns?.next_page_url}
+                        links={returns?.links}
+                        currentPage={returns?.current_page}
+                    />
+                </header>
+            </AdminLayout>
         </>
     );
 };

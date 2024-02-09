@@ -25,7 +25,7 @@ class RentalController extends Controller
     public function rentalAdmin()
     {
         return Inertia::render("Dashboard/Request/Rental/index", [
-            'rentals' => Rental::where('status', false)->with(['item', 'user'])->get(),
+            'rentals' => Rental::where('status', false)->with(['item', 'user'])->paginate(5),
             'users' => User::all(),
         ]);
     }

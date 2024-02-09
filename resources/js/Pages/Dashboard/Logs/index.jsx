@@ -1,142 +1,133 @@
 import React from "react";
 import Dashboardlayout from "@/Layouts/DashboardLayout";
-import { Button, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
-import { ArrowLeft, Minus } from "@phosphor-icons/react";
+import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
+import { Minus } from "@phosphor-icons/react";
 import Pagination from "@/Components/Fragments/Pagination";
-import { Link } from "@inertiajs/react";
+import { SearchIcon } from "@chakra-ui/icons";
 
 export default function LogsPage({ logs }) {
     return (
         <Dashboardlayout title="Logs">
-            <Button
-                as={Link}
-                bg="#212143"
-                _hover={{ bg: "#464662" }}
-                _focus={{ bg: "#212143" }}
-                textColor="white"
-                href="/requests"
-                className="mt-5"
-            >
-                <ArrowLeft size={24} color="#fff" />
-                Kembali
-            </Button>
-            <section className="mt-5">
-                <div className="w-full 3xl:h-[40rem] rounded-lg bg-white">
-                    <div className="p-2 flex flex-col justify-between min-h-full">
-                        <Table>
-                            <Thead>
-                                <Tr>
-                                    <Th textAlign="center" w="10px">
-                                        Nomer
-                                    </Th>
-                                    <Th textAlign="center" w="300px">
-                                        Username
-                                    </Th>
-                                    <Th textAlign="center" w="100px">
-                                        Pengembalian
-                                    </Th>
-                                    <Th textAlign="center" w="800px">
-                                        Peminjaman
-                                    </Th>
-                                    <Th textAlign="center">Waktu Peminjaman</Th>
-                                    <Th textAlign="center">
-                                        Waktu Pengembalian
-                                    </Th>
-                                </Tr>
-                            </Thead>
-                            <Tbody>
-                                {logs?.data.map((log, index) => {
-                                    const actualDate = log.actual_return_date
-                                        ? new Date(log.actual_return_date)
-                                        : null;
-                                    const returnDate = new Date(
-                                        log.return_date
-                                    );
-                                    let statusClass = "";
+            <header className="bg-white mt-5 rounded-md max-h-full p-5">
+                <div className="flex justify-end">
+                    <div>
+                        <InputGroup color="red">
+                            <InputLeftElement
+                                pointerEvents="none"
+                                children={<SearchIcon color="gray.300" />}
+                            />
+                            <Input type="text" placeholder="Search" />
+                        </InputGroup>
+                    </div>
+                </div>
+                <div className="mt-5">
+                    <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden text-xs">
+                        <thead className="bg-neutral-200 text-left">
+                            <tr className="divide-x-2 divide-neutral-300">
+                                <th className="px-4 py-2 w-10">No.</th>
+                                <th className="px-4 py-2">Username</th>
+                                <th className="px-4 py-2 w-32">Barang</th>
+                                <th className="px-4 py-2 w-64">Peminjaman</th>
+                                <th className="px-4 py-2 w-20">Pengembalian</th>
+                                <th className="px-4 py-2 w-[150px]">
+                                    Tanggal Peminjaman
+                                </th>
+                                <th className="px-4 py-2 w-40">
+                                    Tanggal Pengembalian
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200">
+                            {logs?.data.map((log, index) => {
+                                const actualDate = log.actual_return_date
+                                    ? new Date(log.actual_return_date)
+                                    : null;
+                                const returnDate = new Date(log.return_date);
+                                let statusClass = "";
 
-                                    if (actualDate && actualDate > returnDate) {
-                                        statusClass = "#E53E3E";
-                                    } else if (
-                                        actualDate &&
-                                        actualDate < returnDate
-                                    ) {
-                                        statusClass = "#48BB78";
-                                    } else {
-                                        statusClass =
-                                            "rgba(255, 255, 255, 0.48)";
-                                    }
-                                    return (
-                                        <Tr
-                                            key={log.id}
-                                            bg={actualDate ? statusClass : ""}
-                                        >
-                                            <Td textAlign="center">
-                                                {index + logs.from}
-                                            </Td>
-                                            <Td textAlign="center">
-                                                {log.user.username}
-                                            </Td>
-                                            <Td
-                                                display="flex"
-                                                justifyContent="center"
-                                            >
-                                                <div className="w-[70px] h-[70px] overflow-hidden">
-                                                    {log.photo ? (
-                                                        <img
-                                                            className="w-full h-full object-cover"
-                                                            src={`/storage/photos/${log.photo}`}
-                                                        />
-                                                    ) : (
-                                                        <div className="h-full flex items-center justify-center">
-                                                            <Minus />
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </Td>
-                                            <Td>
-                                                <h1 className="text-lg">
-                                                    <span className="font-bold">
-                                                        Barang:{" "}
-                                                    </span>
-                                                    {log.item.name}
-                                                </h1>
-                                                <p className="text-sm">
-                                                    <span className="font-bold">
-                                                        Alasan:{" "}
-                                                    </span>
-                                                    {log.reason}
-                                                </p>
-                                            </Td>
-                                            <Td textAlign="center">
-                                                {log.rent_date}
-                                            </Td>
-                                            <Td textAlign="center">
-                                                {log.actual_return_date ? (
-                                                    log.actual_return_date
+                                if (actualDate && actualDate > returnDate) {
+                                    statusClass = "bg-red-500";
+                                } else if (
+                                    actualDate &&
+                                    actualDate < returnDate
+                                ) {
+                                    statusClass = "bg-green-500";
+                                } else {
+                                    statusClass = "bg-yellow-500";
+                                }
+                                return (
+                                    <tr
+                                        key={index}
+                                        className={`${
+                                            actualDate ? statusClass : ""
+                                        }`}
+                                    >
+                                        <td className="px-4 py-2">
+                                            {index + 1 + "."}
+                                        </td>
+                                        <td className="px-4 py-2">
+                                            {log.user.username}
+                                        </td>
+                                        <td className="px-4 py-2">
+                                            {log.item.name}
+                                        </td>
+                                        <td className="px-4 py-2">
+                                            <h1 className="text-sm">
+                                                <span className="font-bold">
+                                                    Barang:{" "}
+                                                </span>
+                                                {log.item.name}
+                                            </h1>{" "}
+                                            <p className="text-xs">
+                                                <span className="font-bold">
+                                                    Alasan:{" "}
+                                                </span>
+                                                {log.reason}
+                                            </p>
+                                        </td>
+                                        <td className="px-4 py-2 text-center">
+                                            <div className="w-full overflow-hidden flex justify-center">
+                                                {log.photo ? (
+                                                    <img
+                                                        className="w-[40px] h-[40px] object-cover"
+                                                        src={`/storage/photos/${log.photo}`}
+                                                    />
                                                 ) : (
-                                                    <div className="flex justify-center">
+                                                    <div className="h-full flex items-center justify-center">
                                                         <Minus />
                                                     </div>
                                                 )}
-                                            </Td>
-                                        </Tr>
-                                    );
-                                })}
-                            </Tbody>
-                        </Table>
-                        <Pagination
-                            className="mt-5"
-                            total={logs?.total}
-                            from={logs?.from}
-                            to={logs?.to}
-                            prevPageUrl={logs?.prev_page_url}
-                            nextPageUrl={logs?.next_page_url}
-                            links={logs?.links}
-                            currentPage={logs?.current_page}
-                        />
-                    </div>
+                                            </div>
+                                        </td>
+                                        <td className="px-4 py-2 text-center">
+                                            {log.rent_date}
+                                        </td>
+                                        <td className="px-4 py-2 text-center">
+                                            {log.actual_return_date ? (
+                                                log.actual_return_date
+                                            ) : (
+                                                <div className="flex justify-center">
+                                                    <Minus />
+                                                </div>
+                                            )}
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
                 </div>
-            </section>
+                <Pagination
+                    className="mt-5"
+                    total={logs?.total}
+                    from={logs?.from}
+                    to={logs?.to}
+                    prevPageUrl={logs?.prev_page_url}
+                    nextPageUrl={logs?.next_page_url}
+                    links={logs?.links}
+                    currentPage={logs?.current_page}
+                />
+            </header>
         </Dashboardlayout>
     );
 }
