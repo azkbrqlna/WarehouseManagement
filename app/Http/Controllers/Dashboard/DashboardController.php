@@ -24,13 +24,16 @@ class DashboardController extends Controller
         $return_count = Returning::where('status', '!=', 1)->whereNotNull('photo')->count();
         $total = $rental_count + $return_count;
         return Inertia::render("Dashboard/index", [
-            "user_count" => User::where('role_id', 2)->count(),
-            "item_count" => Item::count(),
-            "logs_count" => Log::count(),
+            'user_count' => User::where('role_id', 2)->count(),
+            'user_rental' => Rental::where('status', 1)->count(),
+            'item_available' => Item::where('status', 1)->count(),
+            'itam_notAvailable' => Item::where('status', 0)->count(),
+            'logs_count' => Log::count(),
             'rental_count' => $rental_count,
             'return_count' => $return_count,
             'total' => $total
         ]);
+        
     }
 
     public function indexLog()
