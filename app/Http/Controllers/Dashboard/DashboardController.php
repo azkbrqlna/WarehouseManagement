@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Item;
+use App\Models\Log;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -16,8 +17,9 @@ class DashboardController extends Controller
     public function index()
     {
         return Inertia::render("Dashboard/index",[
-            "user_count"=> User::where('role_id',2)->count(),
-            "item_count"=> Item::count(),
+            'user_count'=> User::where('role_id',2)->count(),
+            'item_count'=> Item::count(),
+            'logs' => Log::with(['item', 'user'])->latest()->paginate(5),
         ]);
     }
 

@@ -6,6 +6,7 @@ import Pagination from "@/Components/Fragments/Pagination";
 import { SearchIcon } from "@chakra-ui/icons";
 
 export default function LogsPage({ logs }) {
+    console.log(logs);
     return (
         <Dashboardlayout title="Logs">
             <header className="bg-white mt-5 rounded-md max-h-full p-5">
