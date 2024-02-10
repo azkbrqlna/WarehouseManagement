@@ -1,12 +1,13 @@
-const OverviewCard = ({ icon: Icon, value, title, className }) => {
+const OverviewCard = ({ content, children, value, title, total }) => {
     return (
-        <div className="flex items-center justify-center gap-5 px-5 2xl:px-16 py-5 bg-white hover:bg-neutral-50 transition-all duration-200 ease-in shadow-sm rounded-xl z-[999]">
-            <div className="p-5 rounded-3xl bg-secondary">
-                <Icon size={48} color="#ffffff" />
-            </div>
-            <div className="space-y-2">
-                <h4 className="text-4xl font-bold">{value}</h4>
-                <p className={className}>{title}</p>
+        <div className="flex flex-col py-2 px-3 bg-white rounded-md">
+            <h1 className="text-base">{title}</h1>
+            <span className="text-xl text-blue-500 font-bold">{total}</span>
+            <div className="flex items-center gap-3">
+                <p className="text-xs font-light text-neutral-400">
+                    {content} <span className="text-blue-500">{value}</span>
+                </p>
+                {children}
             </div>
         </div>
     );

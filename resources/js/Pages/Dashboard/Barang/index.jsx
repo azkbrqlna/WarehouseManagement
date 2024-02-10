@@ -92,7 +92,7 @@ export default function BarangPage({ items, flash, item_count }) {
                                         </td>
                                         <td className="px-2 py-1 text-center">
                                             <Switch
-                                                size="lg"
+                                                size="md"
                                                 isChecked={item.status}
                                                 onChange={() =>
                                                     handleSwitch(

@@ -1,18 +1,15 @@
-import {
-    Users,
-    NotePencil,
-    ClockCounterClockwise,
-    Package,
-} from "@phosphor-icons/react";
+import { Minus } from "@phosphor-icons/react";
 import LogoDashboard from "../../../asset/background-dashboard.png";
 import OverviewCard from "@/Components/Fragments/OverviewCard";
 import Dashboardlayout from "@/Layouts/DashboardLayout";
+import { Badge } from "@chakra-ui/react";
+import Pagination from "@/Components/Fragments/Pagination";
 
-const Dashboard = ({ auth, user_count, item_count }) => {
+const Dashboard = ({ auth, user_count, item_count, logs, rental_count, return_count, total_requests }) => {
     return (
         <>
             <Dashboardlayout title="Dashboard">
-                <section className="relative flex items-center justify-between py-16 mt-10 space-y-2 shadow-sm px-20 2xl:px-36 bg-white rounded-xl z-10">
+                <section className="relative flex items-center justify-between py-10 mt-5 space-y-2 shadow-sm px-20 2xl:px-36 bg-white rounded-xl z-10">
                     <div>
                         <h3 className="text-2xl ">
                             <span className="font-semibold">
@@ -28,108 +25,154 @@ const Dashboard = ({ auth, user_count, item_count }) => {
                             lupa untuk selalu jaga kesehatan!
                         </p>
                     </div>
-                    <div className="absolute bottom-10 right-20 2xl:right-40 w-40">
+                    <div className="absolute right-20 2xl:right-40 w-40">
                         <img
                             src={LogoDashboard}
                             className="object-cover w-full"
                         />
                     </div>
                 </section>
-                <section className="grid grid-cols-4 gap-5 mt-10">
+                <section className="grid grid-cols-4 gap-5 mt-5">
                     <OverviewCard
-                        title="Total Barang"
-                        value={item_count}
-                        icon={Package}
+                        title="Total Requests"
+                        total={total_requests}
+                        content="Borrow"
+                        value={rental_count}
                     />
                     <OverviewCard
-                        title="Total Request"
-                        value="11"
-                        icon={NotePencil}
+                        title="Total Requests"
+                        total={total_requests}
+                        content="Return"
+                        value={return_count}
                     />
                     <OverviewCard
                         title="Total Users"
-                        value={user_count}
-                        icon={Users}
+                        total={user_count}
+                        content="Borrower"
+                        value="12"
                     />
                     <OverviewCard
-                        title="Total Logs"
-                        value={user_count}
-                        icon={ClockCounterClockwise}
+                        title="Total Items"
+                        total={item_count}
+                        content="Available"
+                        value="18"
+                    >
+                        <p className="text-xs font-light text-neutral-400">
+                            Not Available{" "}
+                            <span className="text-red-500">2</span>
+                        </p>
+                    </OverviewCard>
+                </section>
+                <section className="bg-white mt-5 rounded-md max-h-full p-5">
+                    <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden text-xs">
+                        <thead className="bg-neutral-200 text-left">
+                            <tr className="divide-x-2 divide-neutral-300">
+                                <th className="px-2 py-1 w-10">No.</th>
+                                <th className="px-2 py-1">Username</th>
+                                <th className="px-2 py-1 w-32">Barang</th>
+                                <th className="px-2 py-1 w-48">Peminjaman</th>
+                                <th className="px-2 py-1 w-20">Pengembalian</th>
+                                <th className="px-2 py-1 w-[150px]">
+                                    Tanggal Peminjaman
+                                </th>
+                                <th className="px-2 py-1 w-[150px]">
+                                    Tanggal Pengembalian
+                                </th>
+                                <th className="px-2 py-1 w-24">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200">
+                            {logs?.data.map((log, index) => {
+                                const actualDate = log.actual_return_date
+                                    ? new Date(log.actual_return_date)
+                                    : null;
+                                const returnDate = new Date(log.return_date);
+                                return (
+                                    <tr key={index}>
+                                        <td className="px-2 py-1">
+                                            {index + 1 + "."}
+                                        </td>
+                                        <td className="px-2 py-1">
+                                            {log.user.username}
+                                        </td>
+                                        <td className="px-2 py-1">
+                                            {log.item.name}
+                                        </td>
+                                        <td className="px-2 py-1">
+                                            {log.reason}
+                                        </td>
+                                        <td className="px-2 py-1 text-center">
+                                            <div className="w-full overflow-hidden flex justify-center">
+                                                {log.photo ? (
+                                                    // <img
+                                                    //     className="w-[20px] h-[20px] object-cover"
+                                                    //     src={`/storage/photos/${log.photo}`}
+                                                    // />
+                                                    <h1>Returning</h1>
+                                                ) : (
+                                                    <div className="h-full flex items-center justify-center">
+                                                        <Minus />
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </td>
+                                        <td className="px-2 py-1 text-center">
+                                            {log.rent_date}
+                                        </td>
+                                        <td className="px-2 py-1 text-center">
+                                            {log.actual_return_date ? (
+                                                log.actual_return_date
+                                            ) : (
+                                                <div className="flex justify-center">
+                                                    <Minus />
+                                                </div>
+                                            )}
+                                        </td>
+                                        <td className="px-2 py-1 text-center">
+                                            {actualDate &&
+                                            actualDate > returnDate ? (
+                                                <Badge
+                                                    borderRadius="10px"
+                                                    textTransform="capitalize"
+                                                    colorScheme="yellow"
+                                                >
+                                                    Late
+                                                </Badge>
+                                            ) : actualDate &&
+                                              actualDate < returnDate ? (
+                                                <Badge
+                                                    borderRadius="10px"
+                                                    textTransform="capitalize"
+                                                    colorScheme="green"
+                                                >
+                                                    Accepted
+                                                </Badge>
+                                            ) : (
+                                                <Badge
+                                                    borderRadius="10px"
+                                                    textTransform="capitalize"
+                                                    colorScheme="red"
+                                                >
+                                                    Not Accepted
+                                                </Badge>
+                                            )}
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
+                    </table>
+                    <Pagination
+                        className="mt-5"
+                        total={logs?.total}
+                        from={logs?.from}
+                        to={logs?.to}
+                        prevPageUrl={logs?.prev_page_url}
+                        nextPageUrl={logs?.next_page_url}
+                        links={logs?.links}
+                        currentPage={logs?.current_page}
                     />
                 </section>
-                <svg
-                    className="absolute w-[1175px] 2xl:w-[1252px] 3xl:w-[1637px] right-0 bottom-0"
-                    viewBox="0 0 1441 547"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <g filter="url(#filter0_d_78_162)">
-                        <path
-                            d="M450.937 133.012C255.133 121.554 5 359.005 5 359.005V547H1441V3.01517C1441 -36.9837 1152.57 533 872.328 423.003C592.083 313.006 651.82 144.766 450.937 133.012Z"
-                            fill="url(#paint0_linear_78_162)"
-                            shapeRendering="crispEdges"
-                        />
-                        <path
-                            d="M450.937 133.012C255.133 121.554 5 359.005 5 359.005V547H1441V3.01517C1441 -36.9837 1152.57 533 872.328 423.003C592.083 313.006 651.82 144.766 450.937 133.012Z"
-                            shapeRendering="crispEdges"
-                        />
-                    </g>
-                    <defs>
-                        <filter
-                            id="filter0_d_78_162"
-                            x="0"
-                            y="-0.000116348"
-                            width="1446"
-                            height="556"
-                            filterUnits="userSpaceOnUse"
-                            colorInterpolationFilters="sRGB"
-                        >
-                            <feFlood
-                                floodOpacity="0"
-                                result="BackgroundImageFix"
-                            />
-                            <feColorMatrix
-                                in="SourceAlpha"
-                                type="matrix"
-                                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                                result="hardAlpha"
-                            />
-                            <feOffset dy="4" />
-                            <feGaussianBlur stdDeviation="2" />
-                            <feComposite in2="hardAlpha" operator="out" />
-                            <feColorMatrix
-                                type="matrix"
-                                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
-                            />
-                            <feBlend
-                                mode="normal"
-                                in2="BackgroundImageFix"
-                                result="effect1_dropShadow_78_162"
-                            />
-                            <feBlend
-                                mode="normal"
-                                in="SourceGraphic"
-                                in2="effect1_dropShadow_78_162"
-                                result="shape"
-                            />
-                        </filter>
-                        <linearGradient
-                            id="paint0_linear_78_162"
-                            x1="723"
-                            y1="1"
-                            x2="723"
-                            y2="847"
-                            gradientUnits="userSpaceOnUse"
-                        >
-                            <stop stopColor="#7371E2" />
-                            <stop
-                                offset="1"
-                                stopColor="#7371E2"
-                                stopOpacity="0"
-                            />
-                        </linearGradient>
-                    </defs>
-                </svg>
             </Dashboardlayout>
         </>
     );

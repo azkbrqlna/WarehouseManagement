@@ -35,9 +35,9 @@ export default function Pagination({
                     <Button
                         as={Link}
                         href={prevPageUrl}
-                        size="sm"
+                        size="xs"
                         variant="outline"
-                        className={`w-10 h-10 ${applyClass(
+                        className={`w-5 h-5 ${applyClass(
                             prevPageUrl,
                             "border-red-500"
                         )}`}
@@ -51,9 +51,9 @@ export default function Pagination({
                             as={Link}
                             key={link.label}
                             href={link.url}
-                            size="sm"
+                            size="xs"
                             variant={link.active ? "solid" : "outline"}
-                            className={`w-10 h-10 ${applyClass(
+                            className={`w-5 h-5 ${applyClass(
                                 link.active,
                                 "bg-blue-500"
                             )}`}
@@ -65,9 +65,9 @@ export default function Pagination({
                     <Button
                         as={Link}
                         href={nextPageUrl}
-                        size="sm"
+                        size="xs"
                         variant="outline"
-                        className={`w-10 h-10 ${applyClass(
+                        className={`w-5 h-5 ${applyClass(
                             nextPageUrl,
                             "border-green-500"
                         )}`}
