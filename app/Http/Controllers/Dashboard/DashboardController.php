@@ -24,16 +24,19 @@ class DashboardController extends Controller
         $return_count = Returning::where('status', '!=', 1)->whereNotNull('photo')->count();
         $total = $rental_count + $return_count;
         return Inertia::render("Dashboard/index", [
-            //untuk count data
-            'user_count' => User::where('role_id', 2)->count(),
+            //untuk count user
+            'user_all' => User::where('role_id', 2)->count(),
             'user_rental' => Rental::where('status', 1)->count(),
+            //untuk count item
             'item_all' => Item::count(),
             'item_available' => Item::where('status', 1)->count(),
             'item_notAvailable' => Item::where('status', 0)->count(),
+            //untuk count logs
             'logs_count' => Log::count(),
+            //untuk count request
             'rental_count' => $rental_count,
             'return_count' => $return_count,
-            'total_requests' => $total,
+            'total_request' => $total,
             //untuk menampilkan logs    
             'logs' => Log::with(['item', 'user'])->latest()->paginate(10),
         ]);
