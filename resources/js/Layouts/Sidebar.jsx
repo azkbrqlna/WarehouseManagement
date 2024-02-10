@@ -22,7 +22,6 @@ const Sidebar = () => {
         },
         { label: "Users", icon: Users, href: ["/users", "/user/create"] },
         { label: "Barang", icon: Package, href: ["/items", "/item/create"] },
-        { label: "Logs", icon: ClockCounterClockwise, href: "/logs" },
     ];
     const onLogOut = () => {
         router.visit("/logout");

@@ -1,23 +1,15 @@
-import {
-    Users,
-    NotePencil,
-    ClockCounterClockwise,
-    Package,
-    Minus,
-} from "@phosphor-icons/react";
+import { Minus } from "@phosphor-icons/react";
 import LogoDashboard from "../../../asset/background-dashboard.png";
 import OverviewCard from "@/Components/Fragments/OverviewCard";
 import Dashboardlayout from "@/Layouts/DashboardLayout";
-import { Badge, Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
-import { SearchIcon } from "@chakra-ui/icons";
+import { Badge } from "@chakra-ui/react";
 import Pagination from "@/Components/Fragments/Pagination";
 
-const Dashboard = ({ auth, user_count, item_count, logs }) => {
-    console.log(logs);
+const Dashboard = ({ auth, user_count, item_count, logs, rental_count, return_count, total_requests }) => {
     return (
         <>
             <Dashboardlayout title="Dashboard">
-                <section className="relative flex items-center justify-between py-14 mt-5 space-y-2 shadow-sm px-20 2xl:px-36 bg-white rounded-xl z-10">
+                <section className="relative flex items-center justify-between py-10 mt-5 space-y-2 shadow-sm px-20 2xl:px-36 bg-white rounded-xl z-10">
                     <div>
                         <h3 className="text-2xl ">
                             <span className="font-semibold">
@@ -33,7 +25,7 @@ const Dashboard = ({ auth, user_count, item_count, logs }) => {
                             lupa untuk selalu jaga kesehatan!
                         </p>
                     </div>
-                    <div className="absolute bottom-8 right-20 2xl:right-40 w-40">
+                    <div className="absolute right-20 2xl:right-40 w-40">
                         <img
                             src={LogoDashboard}
                             className="object-cover w-full"
@@ -43,25 +35,25 @@ const Dashboard = ({ auth, user_count, item_count, logs }) => {
                 <section className="grid grid-cols-4 gap-5 mt-5">
                     <OverviewCard
                         title="Total Requests"
-                        total="15"
+                        total={total_requests}
                         content="Borrow"
-                        value="11"
+                        value={rental_count}
                     />
                     <OverviewCard
                         title="Total Requests"
-                        total="15"
+                        total={total_requests}
                         content="Return"
-                        value="4"
+                        value={return_count}
                     />
                     <OverviewCard
                         title="Total Users"
-                        total="10"
+                        total={user_count}
                         content="Borrower"
                         value="12"
                     />
                     <OverviewCard
                         title="Total Items"
-                        total="20"
+                        total={item_count}
                         content="Available"
                         value="18"
                     >
@@ -95,7 +87,6 @@ const Dashboard = ({ auth, user_count, item_count, logs }) => {
                                     ? new Date(log.actual_return_date)
                                     : null;
                                 const returnDate = new Date(log.return_date);
-                                let statusClass = "";
                                 return (
                                     <tr key={index}>
                                         <td className="px-2 py-1">
@@ -139,12 +130,32 @@ const Dashboard = ({ auth, user_count, item_count, logs }) => {
                                         </td>
                                         <td className="px-2 py-1 text-center">
                                             {actualDate &&
-                                            actualDate > returnDate
-                                                ? <Badge borderRadius="10px" textTransform="capitalize" colorScheme='yellow'>Late</Badge>
-                                                : actualDate &&
-                                                  actualDate < returnDate
-                                                ? <Badge borderRadius="10px" textTransform="capitalize" colorScheme='green'>Accepted</Badge>
-                                                : <Badge borderRadius="10px" textTransform="capitalize" colorScheme='red'>Not Accepted</Badge>}
+                                            actualDate > returnDate ? (
+                                                <Badge
+                                                    borderRadius="10px"
+                                                    textTransform="capitalize"
+                                                    colorScheme="yellow"
+                                                >
+                                                    Late
+                                                </Badge>
+                                            ) : actualDate &&
+                                              actualDate < returnDate ? (
+                                                <Badge
+                                                    borderRadius="10px"
+                                                    textTransform="capitalize"
+                                                    colorScheme="green"
+                                                >
+                                                    Accepted
+                                                </Badge>
+                                            ) : (
+                                                <Badge
+                                                    borderRadius="10px"
+                                                    textTransform="capitalize"
+                                                    colorScheme="red"
+                                                >
+                                                    Not Accepted
+                                                </Badge>
+                                            )}
                                         </td>
                                     </tr>
                                 );

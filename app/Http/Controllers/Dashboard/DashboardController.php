@@ -24,21 +24,21 @@ class DashboardController extends Controller
         $return_count = Returning::where('status', '!=', 1)->whereNotNull('photo')->count();
         $total = $rental_count + $return_count;
         return Inertia::render("Dashboard/index", [
-            "user_count" => User::where('role_id', 2)->count(),
-            "item_count" => Item::count(),
-            "logs_count" => Log::count(),
+            'user_count' => User::where('role_id', 2)->count(),
+            'item_count' => Item::count(),
+            'logs' => Log::with(['item', 'user'])->latest()->paginate(6),
             'rental_count' => $rental_count,
             'return_count' => $return_count,
-            'total' => $total
+            'total_requests' => $total
         ]);
     }
 
-    public function indexLog()
-    {
-        return Inertia::render("Dashboard/Logs/index", [
-            'logs' => Log::with(['item', 'user'])->latest()->paginate(10),
-        ]);
-    }
+    // public function indexLog()
+    // {
+    //     return Inertia::render("Dashboard/Logs/index", [
+    //         'logs' => Log::with(['item', 'user'])->latest()->paginate(10),
+    //     ]);
+    // }
 
     //buat download excel
     public function exportExcel()
@@ -46,5 +46,4 @@ class DashboardController extends Controller
         //return Excel::download(new ExportLogs, 'logs.xlsx');
         return (new ExportLogs)->download('logs-' . Carbon::now()->toDateString() . '.xlsx');
     }
-
 }

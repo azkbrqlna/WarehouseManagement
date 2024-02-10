@@ -38,7 +38,6 @@ Route::controller(AuthController::class)->middleware('guest')->group(function ()
 Route::controller(DashboardController::class)->middleware('auth')->group(function () {
     Route::middleware('only_admin')->group(function(){
         Route::get("/dashboard","index"); 
-        Route::get("/dashboard","indexLog");
         Route::get("/dashboard/export","exportExcel");
     }); 
 });
