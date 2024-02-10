@@ -14,7 +14,7 @@ class ExportLogs implements FromQuery,WithMapping,WithHeadings
     use Exportable;
     public function query()
     {
-        return Log::query();
+        return Log::query()->whereMonth('rent_date', date('m'))->whereYear('rent_date', date('Y'));
     }
 
     public function headings(): array
@@ -37,7 +37,7 @@ class ExportLogs implements FromQuery,WithMapping,WithHeadings
             $log->item->name,
             $log->reason,
             $log->rent_date,
-            $log->return_date,
+            $log->actual_return_date,
         ];
     }
 
