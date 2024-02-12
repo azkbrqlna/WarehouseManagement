@@ -5,7 +5,18 @@ import Dashboardlayout from "@/Layouts/DashboardLayout";
 import { Badge } from "@chakra-ui/react";
 import Pagination from "@/Components/Fragments/Pagination";
 
-const Dashboard = ({ auth, user_count, item_count, logs, rental_count, return_count, total_requests }) => {
+const Dashboard = ({
+    auth,
+    user_all,
+    user_rental,
+    item_all,
+    item_available,
+    item_notAvailable,
+    rental_count,
+    return_count,
+    total_requests,
+    logs,
+}) => {
     return (
         <>
             <Dashboardlayout title="Dashboard">
@@ -47,19 +58,21 @@ const Dashboard = ({ auth, user_count, item_count, logs, rental_count, return_co
                     />
                     <OverviewCard
                         title="Total Users"
-                        total={user_count}
+                        total={user_all}
                         content="Borrower"
-                        value="12"
+                        value={user_rental}
                     />
                     <OverviewCard
                         title="Total Items"
-                        total={item_count}
+                        total={item_all}
                         content="Available"
-                        value="18"
+                        value={item_available}
                     >
                         <p className="text-xs font-light text-neutral-400">
                             Not Available{" "}
-                            <span className="text-red-500">2</span>
+                            <span className="text-red-500">
+                                {item_notAvailable}
+                            </span>
                         </p>
                     </OverviewCard>
                 </section>
@@ -90,7 +103,7 @@ const Dashboard = ({ auth, user_count, item_count, logs, rental_count, return_co
                                 return (
                                     <tr key={index}>
                                         <td className="px-2 py-1">
-                                            {index + 1 + "."}
+                                            {log.id + "."}
                                         </td>
                                         <td className="px-2 py-1">
                                             {log.user.username}
@@ -104,10 +117,6 @@ const Dashboard = ({ auth, user_count, item_count, logs, rental_count, return_co
                                         <td className="px-2 py-1 text-center">
                                             <div className="w-full overflow-hidden flex justify-center">
                                                 {log.photo ? (
-                                                    // <img
-                                                    //     className="w-[20px] h-[20px] object-cover"
-                                                    //     src={`/storage/photos/${log.photo}`}
-                                                    // />
                                                     <h1>Returning</h1>
                                                 ) : (
                                                     <div className="h-full flex items-center justify-center">
@@ -163,7 +172,7 @@ const Dashboard = ({ auth, user_count, item_count, logs, rental_count, return_co
                         </tbody>
                     </table>
                     <Pagination
-                        className="mt-5"
+                        className="mt-3"
                         total={logs?.total}
                         from={logs?.from}
                         to={logs?.to}

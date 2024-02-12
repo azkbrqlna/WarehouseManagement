@@ -67,7 +67,7 @@ Route::controller(RentalController::class)->middleware('auth')->group(function (
         Route::post('/peminjaman', 'storeUser');
     });
     Route::middleware('only_admin')->group(function () {
-        Route::get('/requests', 'indexAdmin');
+        // Route::get('/requests', 'indexAdmin');
         Route::get('/request/rental', 'rentalAdmin');
         Route::patch('/request/rental/{id}', 'acceptRental');
         Route::delete('/request/rental/{id}', 'rejectRental');

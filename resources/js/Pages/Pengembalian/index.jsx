@@ -131,39 +131,43 @@ const Pengembalian = ({ rentals, auth, returns }) => {
                                             </Td>
                                             <Td>
                                                 {!dateReturn.photo ? (
-                                                <FormLabel
-                                                    htmlFor={`file_upload_${index}`}
-                                                    display="flex"
-                                                    bg="whiteAlpha.400"
-                                                    _hover={{
-                                                        background:
-                                                            "whiteAlpha.800",
-                                                    }}
-                                                    transition="background 0.3s ease-in-out"
-                                                    borderRadius="10px"
-                                                    w="140px"
-                                                    p="8px"
-                                                    cursor="pointer"
-                                                    justifyContent="center"
-                                                    alignItems="center"
-                                                    fontSize="700"
-                                                >
-                                                    <UploadSimple size={30} />
-                                                    <Input
-                                                        id={`file_upload_${index}`}
-                                                        name="file"
-                                                        type="file"
-                                                        display="none"
-                                                        onChange={(e) =>
-                                                            handleFileChange(
-                                                                e,
-                                                                index
-                                                            )
-                                                        }
-                                                    />
-                                                </FormLabel>
+                                                    <FormLabel
+                                                        htmlFor={`file_upload_${index}`}
+                                                        display="flex"
+                                                        bg="whiteAlpha.400"
+                                                        _hover={{
+                                                            background:
+                                                                "whiteAlpha.800",
+                                                        }}
+                                                        transition="background 0.3s ease-in-out"
+                                                        borderRadius="10px"
+                                                        w="140px"
+                                                        p="8px"
+                                                        cursor="pointer"
+                                                        justifyContent="center"
+                                                        alignItems="center"
+                                                        fontSize="700"
+                                                    >
+                                                        <UploadSimple
+                                                            size={30}
+                                                        />
+                                                        <Input
+                                                            id={`file_upload_${index}`}
+                                                            name="file"
+                                                            type="file"
+                                                            display="none"
+                                                            onChange={(e) =>
+                                                                handleFileChange(
+                                                                    e,
+                                                                    index
+                                                                )
+                                                            }
+                                                        />
+                                                    </FormLabel>
                                                 ) : (
-                                                    <Minus size={50} />
+                                                    <div className="h-full flex items-center justify-center">
+                                                        <Minus size={20} />
+                                                    </div>
                                                 )}
                                             </Td>
                                             <Td>

@@ -1,31 +1,23 @@
 import SidebarButton from "@/Components/Fragments/SidebarButton";
-import { router, usePage } from "@inertiajs/react";
-import {
-    ClockCounterClockwise,
-    House,
-    NotePencil,
-    Package,
-    SignOut,
-    Users,
-} from "@phosphor-icons/react";
+import { Link, router, usePage } from "@inertiajs/react";
+import { House, NotePencil, SignOut } from "@phosphor-icons/react";
 import Logo from "../../asset/profile-image.png";
+import { useState, useEffect } from "react";
 
 const Sidebar = () => {
+    const [isOpen, setIsOpen] = useState(false);
     const { url } = usePage();
-
-    const tabs = [
-        { label: "Dashboard", icon: House, href: "/dashboard" },
-        {
-            label: "Request",
-            icon: NotePencil,
-            href: ["/requests", "/request/return", "/request/rental"],
-        },
-        { label: "Users", icon: Users, href: ["/users", "/user/create"] },
-        { label: "Barang", icon: Package, href: ["/items", "/item/create"] },
-    ];
     const onLogOut = () => {
         router.visit("/logout");
     };
+
+    useEffect(() => {
+        if (url === "/request/rental" || url === "/request/return") {
+            setIsOpen(true);
+        } else {
+            setIsOpen(false);
+        }
+    }, [url]);
 
     return (
         <>
@@ -38,19 +30,79 @@ const Sidebar = () => {
                         <h1 className="text-lg font-bold text-white">Admin</h1>
                     </div>
                     <div className="space-y-3">
-                        {tabs.map((tab, index) => (
-                            <SidebarButton
-                                key={index}
-                                value={tab.label}
-                                icon={tab.icon}
-                                href={tab.href}
-                                isActive={url.startsWith(
-                                    Array.isArray(tab.href)
-                                        ? tab.href[0]
-                                        : tab.href
+                        <SidebarButton
+                            value="Dashboard"
+                            icon={House}
+                            href="/dashboard"
+                        />
+                        <div>
+                            <button
+                                onClick={() => setIsOpen(!isOpen)}
+                                className={`flex flex-col min-w-full group gap-5 px-3 py-2 rounded-lg transition-all duration-300 hover:bg-hover_secondary ${
+                                    isOpen && "bg-hover_secondary"
+                                }`}
+                            >
+                                <div className="flex items-center gap-4">
+                                    <NotePencil size={18} color="#fff" />
+                                    <div className="flex items-center text-white justify-between w-full">
+                                        <span className="text-white text-sm">
+                                            Requests
+                                        </span>
+                                        <svg
+                                            className={`w-4 h-4 transition-all duration-100 ease-in ${
+                                                isOpen
+                                                    ? "transform rotate-180"
+                                                    : ""
+                                            }`}
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke="currentColor"
+                                        >
+                                            <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth="2"
+                                                d="M19 9l-7 7-7-7"
+                                            />
+                                        </svg>
+                                    </div>
+                                </div>
+                                {isOpen && (
+                                    <div className="rounded-lg transition-all duration-200 ease-in-out">
+                                        <Link
+                                            href="/request/rental"
+                                            className={`text-white px-3 py-2 flex text-xs rounded-lg hover:bg-secondary transition-all duration-200 ease-in-out ${
+                                                url === "/request/rental"
+                                                    ? "bg-secondary"
+                                                    : ""
+                                            }`}
+                                        >
+                                            <span>Borrow</span>
+                                        </Link>
+                                        <Link
+                                            href="/request/return"
+                                            className={`text-white px-3 py-2 flex text-xs rounded-lg hover:bg-secondary transition-all duration-200 ease-in-out ${
+                                                url === "/request/return"
+                                                    ? "bg-secondary"
+                                                    : ""
+                                            }`}
+                                        >
+                                            <span>Return</span>
+                                        </Link>
+                                    </div>
                                 )}
-                            />
-                        ))}
+                            </button>
+                        </div>
+                        <SidebarButton
+                            value="Users"
+                            icon={House}
+                            href="/users"
+                        />
+                        <SidebarButton
+                            value="Items"
+                            icon={House}
+                            href="/items"
+                        />
                     </div>
                 </div>
                 <div>

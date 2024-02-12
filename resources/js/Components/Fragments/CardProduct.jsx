@@ -25,16 +25,15 @@ const CardProduct = ({
 }) => {
     return (
         <>
-            <div className="flex flex-col gap-3 rounded-3xl w-[15rem] h-min md:w-[15rem] bg-white px-5 py-2 pb-5 shadow-top-right-bottom">
+            <div className="flex flex-col gap-3 rounded-3xl w-40 h-min md:w-[200px] bg-white px-5 py-2 pb-5 shadow-top-right-bottom">
                 <div>
-                    <Text fontWeight="bold" fontSize="40px">
-                        {itemName}
-                    </Text>
+                    <h1 className="font-bold text-lg md:text-3xl">{itemName}</h1>
                     <Badge
                         borderRadius="5px"
                         colorScheme={colorScheme}
                         py="5px"
                         px="10px"
+                        fontSize="10px"
                     >
                         {status}
                     </Badge>
@@ -42,7 +41,7 @@ const CardProduct = ({
                 <div className="w-full flex justify-center group overflow-hidden cursor-zoom-in">
                     <img
                         src={src}
-                        className="w-40 h-40 object-cover group-hover:scale-125 transition-all duration-300 ease-in-out"
+                        className="w-20 h-20 md:w-40 md:h-40 object-cover group-hover:scale-125 transition-all duration-300 ease-in-out"
                     />
                 </div>
                 <div className="text-2xl font-bold space-y-2">
