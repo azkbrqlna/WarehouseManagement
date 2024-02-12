@@ -48,8 +48,8 @@ const Register = () => {
     };
     return (
         <AuthLayout endpoint='Register'>
-            <h1 className="font-bold text-2xl md:text-3xl 2xl:text-5xl mb-2">
-                Silahkan daftarkan akun mu!
+            <h1 className="font-bold text-3xl md:text-4xl 2xl:text-3xl mb-2 capitalize">
+                Silahkan daftarkan akun anda!
             </h1>
             <p className="font-light text-lg mb-5 2xl:mb-10 md:text-lg">
                 Masukkan Username, NIS, Kelas, dan password!

@@ -42,10 +42,10 @@ export default function LoginPage() {
     };
     return (
         <AuthLayout endpoint='Login'>
-            <h1 className="font-bold text-3xl md:text-4xl 2xl:text-5xl mb-2 capitalize">
-                Silahkan masukan akun anda!
+            <h1 className="font-bold text-3xl md:text-4xl 2xl:text-3xl mb-2 capitalize">
+                Silahkan masukkan akun anda!
             </h1>
-            <p className="font-light text-lg mb-5 2xl:mb-10 md:text-xl">
+            <p className="font-light text-lg mb-5 2xl:mb-10 md:text-lg">
                 Masukkan Username, NIS, dan Password anda
             </p>
             <form onSubmit={formik.handleSubmit} className="w-full">
