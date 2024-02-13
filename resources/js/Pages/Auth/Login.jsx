@@ -42,7 +42,7 @@ export default function LoginPage() {
     };
     return (
         <AuthLayout endpoint='Login'>
-            <h1 className="font-bold text-3xl md:text-4xl 2xl:text-5xl mb-2 capitalize">
+            <h1 className="font-bold text-3xl md:text-4xl 3xl:6xl mb-2 capitalize">
                 Silahkan masukan akun anda!
             </h1>
             <p className="font-light text-lg mb-5 2xl:mb-10 md:text-xl">

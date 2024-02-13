@@ -35,20 +35,20 @@ const LandingPage = () => {
                             SMK N 7 Semarang
                         </h1>
                     </div>
-                    <div className="hidden md:flex items-center gap-8 text-white">
+                    <div className="hidden md:flex items-center gap-5 text-white">
                         <Link
                             href="/login"
-                            className="text-lg flex items-center gap-1 border rounded-md px-2 py-1 hover:bg-cyan-500 transition-all duration-200 ease-in"
+                            className="flex items-center gap-2 hover:bg-white hover:text-azka w-min px-3 py-1 rounded-lg transition-all duration-200 ease-in"
                         >
                             <SignIn size={20} />
-                            <span>Login</span>
+                            <h1 className="text-base font-bold">Login</h1>
                         </Link>
                         <Link
                             href="/register"
-                            className="text-lg flex items-center gap-1 border rounded-md px-2 py-1 hover:bg-cyan-500 transition-all duration-200 ease-in"
+                            className="flex items-center gap-2 hover:bg-white hover:text-azka w-min px-3 py-1 rounded-lg transition-all duration-200 ease-in"
                         >
                             <NotePencil size={20} />
-                            <span>Register</span>
+                            <h1 className="text-base font-bold">Register</h1>
                         </Link>
                     </div>
                     <div className="md:hidden flex items-center">
