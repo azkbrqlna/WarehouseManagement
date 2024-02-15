@@ -43,7 +43,7 @@ const Sidebar = () => {
                                 }`}
                             >
                                 <div className="flex items-center gap-4">
-                                    <NotePencil size={18} color="#fff" />
+                                    <NotePencil size={20} color="#fff" />
                                     <div className="flex items-center text-white justify-between w-full">
                                         <span className="text-white text-sm">
                                             Requests

@@ -1,6 +1,6 @@
 const OverviewCard = ({ content, children, value, title, total }) => {
     return (
-        <div className="flex flex-col py-2 px-3 bg-white rounded-md">
+        <div className="flex flex-col py-2 px-7 bg-white rounded-md">
             <h1 className="text-base">{title}</h1>
             <span className="text-xl text-blue-500 font-bold">{total}</span>
             <div className="flex items-center gap-3">

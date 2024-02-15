@@ -17,10 +17,11 @@ const Dashboard = ({
     total_requests,
     logs,
 }) => {
+    console.log(logs);
     return (
         <>
             <Dashboardlayout title="Dashboard">
-                <section className="relative flex items-center justify-between py-10 mt-5 space-y-2 shadow-sm px-20 2xl:px-36 bg-white rounded-xl z-10">
+                <section className="relative flex items-center justify-between py-10 mt-5 space-y-2 shadow-sm px-10 bg-white rounded-xl z-10">
                     <div>
                         <h3 className="text-2xl ">
                             <span className="font-semibold">
@@ -36,7 +37,7 @@ const Dashboard = ({
                             lupa untuk selalu jaga kesehatan!
                         </p>
                     </div>
-                    <div className="absolute right-20 2xl:right-40 w-40">
+                    <div className="absolute right-20 w-40">
                         <img
                             src={LogoDashboard}
                             className="object-cover w-full"
