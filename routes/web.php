@@ -45,8 +45,8 @@ Route::controller(DashboardController::class)->middleware('auth')->group(functio
 Route::controller(UserController::class)->middleware('auth')->group(function () {
     Route::middleware('only_admin')->group(function () {
         Route::get('/users', 'index');
-        Route::get('/user/create', 'create');
-        Route::post('/user/create', 'store');
+        Route::get('/users', 'create');
+        Route::post('/users', 'store');
         Route::delete('/user/{slug}', 'destroy');
     });
 });
@@ -54,8 +54,8 @@ Route::controller(UserController::class)->middleware('auth')->group(function () 
 Route::controller(ItemController::class)->middleware('auth')->group(function () {
     Route::middleware('only_admin')->group(function () {
         Route::get('/items', 'index');
-        Route::get('/item/create', 'create');
-        Route::post('/item/create', 'store');
+        Route::get('/items', 'create');
+        Route::post('/items', 'store');
         Route::delete('/item/{slug}', 'destroy');
         Route::patch('/item/{id}', 'update');
     });

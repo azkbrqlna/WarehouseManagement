@@ -25,7 +25,7 @@ class RentalController extends Controller
     public function rentalAdmin()
     {
         return Inertia::render("Dashboard/Request/Rental/index", [
-            'rentals' => Rental::where('status', false)->with(['item', 'user'])->paginate(5),
+            'rentals' => Rental::where('status', false)->with(['item', 'user'])->paginate(10),
             'users' => User::all(),
         ]);
     }
@@ -61,7 +61,7 @@ class RentalController extends Controller
     }
 
     //for user
-    public function indexUser(Request $request)
+    public function indexUser()
     {
         return Inertia::render("Peminjaman/index", [
             'items' => Item::all(),
