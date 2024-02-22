@@ -14,12 +14,15 @@ export default {
         extend: {
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
+                main: ['Josefin Sans', 'sans-serif'],
+                upload: ['Oooh Baby', 'cursive'],
             },
             colors: {
                 main: "#EDEDED",
                 secondary: "#212143",
                 hover_secondary: '#464662',
                 azka: '#6A91A7',
+                upload: "#536D7C"
             },
             screens: {
                 '3xl': '1920px',

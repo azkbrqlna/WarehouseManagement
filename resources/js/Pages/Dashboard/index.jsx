@@ -77,22 +77,22 @@ const Dashboard = ({
                         </p>
                     </OverviewCard>
                 </section>
-                <section className="bg-white mt-5 rounded-md max-h-full p-5">
+                <section className="bg-white mt-5 rounded-md max-h-full p-4">
                     <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden text-xs">
                         <thead className="bg-neutral-200 text-left">
                             <tr className="divide-x-2 divide-neutral-300">
-                                <th className="px-2 py-1 w-10">No.</th>
-                                <th className="px-2 py-1">Username</th>
-                                <th className="px-2 py-1 w-32">Barang</th>
-                                <th className="px-2 py-1 w-48">Peminjaman</th>
-                                <th className="px-2 py-1 w-20">Pengembalian</th>
-                                <th className="px-2 py-1 w-[150px]">
+                                <th className="p-2 w-10">No.</th>
+                                <th className="px-2">Username</th>
+                                <th className="px-2 w-32">Barang</th>
+                                <th className="px-2 w-48">Peminjaman</th>
+                                <th className="px-2 w-20">Pengembalian</th>
+                                <th className="px-2 w-[150px]">
                                     Tanggal Peminjaman
                                 </th>
-                                <th className="px-2 py-1 w-[150px]">
+                                <th className="px-2 w-[150px]">
                                     Tanggal Pengembalian
                                 </th>
-                                <th className="px-2 py-1 w-24">Action</th>
+                                <th className="px-2 w-24">Action</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200">

@@ -35,22 +35,39 @@ class RentalController extends Controller
         $request->validate([
             'reason' => 'required',
         ]);
+
         $rental = Rental::find($request->id);
-        $rental->status = true;
-        $rental->save();
-        Log::create([
-            'user_id' => $request->user_id,
-            'item_id' => $request->item_id,
-            'reason' => $request->reason,
-            'rent_date' => $request->rent_date,
-            'return_date' => $request->return_date,
-        ]);
-        Returning::create([
-            'user_id' => $request->user_id,
-            'item_id' => $request->item_id,
-            'rent_date' => $request->rent_date,
-        ]);
-        return redirect('/request/rental');
+        $item = Item::find($request->item_id);
+
+        if ($rental && $item) {
+            // Mengurangi stok barang
+            $item->total_item -= $rental->amount_rental;
+            $item->save();
+
+            // Mengubah status penyewaan
+            $rental->status = true;
+            $rental->save();
+
+            // Membuat log
+            Log::create([
+                'user_id' => $request->user_id,
+                'item_id' => $request->item_id,
+                'reason' => $request->reason,
+                'amount_rental' => $rental->amount_rental, // Mengambil nilai amount_rental dari $rental
+                'rent_date' => $request->rent_date,
+                'return_date' => $request->return_date,
+            ]);
+
+            // Membuat data pengembalian
+            Returning::create([
+                'user_id' => $request->user_id,
+                'item_id' => $request->item_id,
+                'amount_return' => $rental->amount_rental, // Mengambil nilai amount_rental dari $rental
+                'rent_date' => $request->rent_date,
+            ]);
+
+            return redirect('/request/rental');
+        }
     }
 
     public function rejectRental(Request $request)
@@ -66,6 +83,8 @@ class RentalController extends Controller
         return Inertia::render("Peminjaman/index", [
             'items' => Item::all(),
             'rentals' => Rental::with(['item', 'user'])->get(),
+            'rental_count' => Rental::where('status', '!=', 1)->count(),
+            'return_count' => Returning::where('status', '!=', 1)->whereNotNull('photo')->count(),
         ]);
     }
 
@@ -73,6 +92,7 @@ class RentalController extends Controller
     {
         $request->validate([
             'reason' => 'required',
+            'amount_rental' => 'required',
         ]);
         $request['rent_date'] = Carbon::now('Asia/Jakarta')->toDateTimeString();
         $request['return_date'] = Carbon::now()->addDays(7)->toDateString();
@@ -80,11 +100,12 @@ class RentalController extends Controller
             'user_id' => auth()->id(),
             'item_id' => $request->item_id,
             'reason' => $request->reason,
+            'amount_rental' => $request->amount_rental,
             'rent_date' => $request->rent_date,
             'return_date' => $request->return_date,
         ]);
         // $item = Item::find($request->item_id);
-        // $item->amount -= $request->amount;
+        // $item->total_item -= $request->amount_rental;
         // $item->save();
 
         return redirect('/peminjaman');

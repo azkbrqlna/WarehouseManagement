@@ -19,19 +19,20 @@ import {
     AlertDialogBody,
 } from "@chakra-ui/react";
 
-const ModalProfile = (props) => {
-    const {
-        isModalOpen,
-        onModalClose,
-        onAlertDialogClose,
-        LogoProfile,
-        onAlertDialogOpen,
-        cancelRef,
-        isAlertDialogOpen,
-        onLogOut,
-        user,
-        kelas
-    } = props;
+const ModalProfile = ({
+    isModalOpen,
+    onModalClose,
+    onAlertDialogClose,
+    LogoProfile,
+    onAlertDialogOpen,
+    cancelRef,
+    isAlertDialogOpen,
+    onLogOut,
+    user,
+    kelas,
+    peminjaman,
+    pengembalian,
+}) => {
     return (
         <>
             <Modal isOpen={isModalOpen} onClose={onModalClose}>
@@ -84,7 +85,7 @@ const ModalProfile = (props) => {
                                             fontSize="xl"
                                             textAlign="center"
                                         >
-                                            0
+                                            {peminjaman}
                                         </Text>
                                         <Text color="gray.400" fontWeight="500">
                                             Peminjaman
@@ -96,7 +97,7 @@ const ModalProfile = (props) => {
                                             fontSize="xl"
                                             textAlign="center"
                                         >
-                                            0
+                                            {pengembalian}
                                         </Text>
                                         <Text color="gray.400" fontWeight="500">
                                             Pengembalian

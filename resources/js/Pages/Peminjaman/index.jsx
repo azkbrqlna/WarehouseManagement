@@ -10,12 +10,6 @@ import {
     MenuItem,
     MenuButton,
     Button,
-    Table,
-    Thead,
-    Tbody,
-    Tr,
-    Td,
-    Th,
     Progress,
 } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
@@ -24,10 +18,11 @@ import { useState } from "react";
 import Headroom from "react-headroom";
 import { Bell } from "@phosphor-icons/react";
 
-const Peminjaman = ({ items, rentals, auth }) => {
+const Peminjaman = ({ items, rentals, auth, rental_count, return_count }) => {
     const [isBorder, setBorder] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const [isInfoOpen, setInfoOpen] = useState({});
+    const [isBorrowAmount, setBorrowAmount] = useState(1);
     const [filteredItems, setFilteredItems] = useState(items);
     const toast = useToast();
 
@@ -40,7 +35,7 @@ const Peminjaman = ({ items, rentals, auth }) => {
         reason: "",
     });
 
-    const handleSubmit = (e, itemID) => {
+    const handleSubmit = (e, itemID, amount_rental) => {
         e.preventDefault();
         setLoading(true);
         router.post(
@@ -48,6 +43,7 @@ const Peminjaman = ({ items, rentals, auth }) => {
             {
                 reason: data.reason,
                 item_id: itemID,
+                amount_rental,
             },
             {
                 onSuccess: () => {
@@ -82,17 +78,22 @@ const Peminjaman = ({ items, rentals, auth }) => {
     let acceptData = 1;
     const MenuAccept = rentals.map((rental, index) => {
         return auth.user.id === rental.user_id ? (
-            <Tr key={rental.id}>
-                <Td>{index + 1}</Td>
-                <Td>{rental.item.name}</Td>
-                <Td>
+            <tr
+                key={rental.id}
+                className="bg-white hover:bg-gray-100 divide-x divide-gray-100"
+            >
+                <td className="px-4 py-2 whitespace-nowrap">{index + 1}</td>
+                <td className="px-4 py-2 whitespace-nowrap">
+                    {rental.item.name}
+                </td>
+                <td className="px-4 py-2 whitespace-nowrap">
                     {rental.status ? (
                         rental.return_date
                     ) : (
                         <Progress isIndeterminate size="xs" />
                     )}
-                </Td>
-            </Tr>
+                </td>
+            </tr>
         ) : (
             ""
         );
@@ -116,7 +117,7 @@ const Peminjaman = ({ items, rentals, auth }) => {
                             isBorder ? "border-b-2 border-azka" : ""
                         }`}
                     >
-                        <Navbar />
+                        <Navbar peminjaman={rental_count} pengembalian={return_count} />
                     </section>
                 </Headroom>
                 <section className="flex justify-center gap-2 relative">
@@ -159,18 +160,24 @@ const Peminjaman = ({ items, rentals, auth }) => {
                                 })}
                             </div>
                         </MenuButton>
-                        <MenuList>
+                        <MenuList zIndex={0.1}>
                             <MenuItem>
-                                <Table>
-                                    <Thead>
-                                        <Tr>
-                                            <Th>No.</Th>
-                                            <Th>Item</Th>
-                                            <Th>Keterangan</Th>
-                                        </Tr>
-                                    </Thead>
-                                    <Tbody>{MenuAccept}</Tbody>
-                                </Table>
+                                <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+                                    <thead className="bg-gray-200">
+                                        <tr className="divide-x divide-gray-50">
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                No.
+                                            </th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Item
+                                            </th>
+                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Keterangan
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>{MenuAccept}</tbody>
+                                </table>
                             </MenuItem>
                         </MenuList>
                     </Menu>
@@ -184,15 +191,24 @@ const Peminjaman = ({ items, rentals, auth }) => {
                                     itemID={item.id}
                                     src={`/storage/cover/${item.cover}`}
                                     itemName={item.name}
+                                    amount={item.total_item}
                                     colorScheme={item.status ? "green" : "red"}
                                     status={
                                         item.status
                                             ? "Available"
                                             : "Not Available"
                                     }
+                                    amountBorrow={isBorrowAmount}
+                                    handlePlus={() =>
+                                        setBorrowAmount(isBorrowAmount + 1)
+                                    }
+                                    handleMinus={() =>
+                                        isBorrowAmount !== 1 &&
+                                        setBorrowAmount(isBorrowAmount - 1)
+                                    }
                                     notAvailable={item.status}
                                     clickSubmitPeminjaman={(e) =>
-                                        handleSubmit(e, item.id)
+                                        handleSubmit(e, item.id, isBorrowAmount)
                                     }
                                     onChange={(e) =>
                                         setData("reason", e.target.value)

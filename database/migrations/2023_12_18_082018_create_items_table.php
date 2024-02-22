@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->nullable();
             $table->string('cover')->nullable();
-            $table->string('amount');
+            $table->string('total_item');
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

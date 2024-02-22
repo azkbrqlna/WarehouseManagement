@@ -1,6 +1,6 @@
 import SidebarButton from "@/Components/Fragments/SidebarButton";
 import { Link, router, usePage } from "@inertiajs/react";
-import { House, NotePencil, SignOut } from "@phosphor-icons/react";
+import { House, NotePencil, Package, SignOut, Users } from "@phosphor-icons/react";
 import Logo from "../../asset/profile-image.png";
 import { useState, useEffect } from "react";
 
@@ -95,12 +95,12 @@ const Sidebar = () => {
                         </div>
                         <SidebarButton
                             value="Users"
-                            icon={House}
+                            icon={Users}
                             href="/users"
                         />
                         <SidebarButton
                             value="Items"
-                            icon={House}
+                            icon={Package}
                             href="/items"
                         />
                     </div>

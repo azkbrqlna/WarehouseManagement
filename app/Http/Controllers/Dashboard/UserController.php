@@ -13,14 +13,9 @@ class UserController extends Controller
     public function index()
     {
         return Inertia::render("Dashboard/Users/index", [
-            "users" => User::with('role')->where('role_id',2)->latest()->paginate(10),
+            "users" => User::with('role')->where('role_id',2)->paginate(10),
             "users_count" => User::with('role')->where('role_id',2)->count(),
         ]);
-    }
-
-    public function create()
-    {
-        return Inertia::render('Dashboard/Users/create');
     }
 
     public function store(Request $request)

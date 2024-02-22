@@ -38,7 +38,7 @@ class DashboardController extends Controller
             'return_count' => $return_count,
             'total_requests' => $total,
             //untuk menampilkan logs    
-            'logs' => Log::with(['item', 'user'])->paginate(10),
+            'logs' => Log::with(['item', 'user'])->paginate(6),
         ]);
         
     }

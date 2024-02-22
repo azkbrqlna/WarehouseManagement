@@ -14,7 +14,7 @@ import {
 import { router, usePage } from "@inertiajs/react";
 import { Turn as Hamburger } from "hamburger-react";
 
-const Navbar = () => {
+const Navbar = ({ peminjaman, pengembalian }) => {
     const { auth } = usePage().props;
     const btnRef = useRef();
     const cancelRef = useRef();
@@ -106,6 +106,8 @@ const Navbar = () => {
                         onLogOut={onLogOut}
                         user={auth.user.username}
                         kelas={auth.user.kelas}
+                        peminjaman={peminjaman}
+                        pengembalian={pengembalian}
                     />
                 </div>
             </nav>

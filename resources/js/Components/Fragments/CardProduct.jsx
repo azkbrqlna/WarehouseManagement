@@ -7,7 +7,7 @@ import {
     Text,
     Textarea,
 } from "@chakra-ui/react";
-import { CalendarBlank } from "@phosphor-icons/react";
+import { MinusCircle, PlusCircle } from "@phosphor-icons/react";
 
 const CardProduct = ({
     itemName,
@@ -22,12 +22,18 @@ const CardProduct = ({
     notAvailable,
     infoOpen,
     openInfo,
+    amount,
+    handlePlus,
+    handleMinus,
+    amountBorrow
 }) => {
     return (
         <>
             <div className="flex flex-col gap-3 rounded-3xl w-40 h-min md:w-[200px] bg-white px-5 py-2 pb-5 shadow-top-right-bottom">
                 <div>
-                    <h1 className="font-bold text-lg md:text-3xl">{itemName}</h1>
+                    <h1 className="font-bold text-lg md:text-3xl">
+                        {itemName}
+                    </h1>
                     <Badge
                         borderRadius="5px"
                         colorScheme={colorScheme}
@@ -46,7 +52,7 @@ const CardProduct = ({
                 </div>
                 <div className="text-2xl font-bold space-y-2">
                     <Text fontSize="lg">
-                        Stok: <span>5</span>
+                        Stok: <span>{amount}</span>
                     </Text>
                     <button
                         onClick={infoOpen}
@@ -84,7 +90,20 @@ const CardProduct = ({
                                     <Badge colorScheme={colorScheme}>
                                         {status}
                                     </Badge>
-                                    <CalendarBlank size={30} cursor="pointer" />
+                                    <div className="flex flex-col justify-between w-40">
+                                        <h1 className="text-base font-semibold text-center">
+                                            Jumlah Peminjaman
+                                        </h1>
+                                        <div className="flex gap-3 justify-center py-1">
+                                            <button type="button" onClick={handleMinus}>
+                                                <MinusCircle size={25} />
+                                            </button>
+                                            <span className="text-lg">{amountBorrow}</span>
+                                            <button type="button" onClick={handlePlus}>
+                                                <PlusCircle size={25} />
+                                            </button>
+                                        </div>
+                                    </div>
                                 </Text>
                                 <Text>Masukan Alasan Peminjaman:</Text>
                                 <Textarea

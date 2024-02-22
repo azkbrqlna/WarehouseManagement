@@ -13,6 +13,7 @@ class Log extends Model
         'user_id',
         'item_id',
         'reason',
+        'amount_rental',
         'rent_date',
         'return_date',
         'actual_return_date',

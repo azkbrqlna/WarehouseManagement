@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\Log;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
+use PhpParser\Node\Stmt\Return_;
 
 class ReturnController extends Controller
 {
@@ -23,16 +24,25 @@ class ReturnController extends Controller
 
     public function acceptReturn(Request $request)
     {
+        // Menandai pengembalian barang
         $return = Returning::find($request->id);
         $return->actual_return_date = Carbon::now('Asia/Jakarta')->toDateTimeString();
         $return->status = true;
         $return->save();
 
+        // Menambahkan kembali stok barang
+        $rental = Log::find($request->id);
+        $item = Item::where('id', $rental->item_id)->first();
+        $amount = Returning::find($request->item_id);
+        $item->total_item += $amount->amount_return;
+        $item->save();
+
+        // Memperbarui log dengan informasi pengembalian
         $logData = Log::find($request->id);
-        $logData->photo = $return->photo;
-        $logData->actual_return_date = $return->actual_return_date;
-        $logData->save();
-        
+        $logData->update([
+            'photo' => $return->photo,
+            'actual_return_date' => $return->actual_return_date,
+        ]);
         return redirect('/request/return');
     }
 
@@ -55,7 +65,9 @@ class ReturnController extends Controller
         return Inertia::render("Pengembalian/index", [
             'rentals' => Rental::with(['item', 'user'])->where('user_id', $user)->get(),
             'returns' => Returning::all(),
-            'items' => Item::all()
+            'items' => Item::all(),
+            'rental_count' => Rental::where('status', '!=', 1)->count(),
+            'return_count' => Returning::where('status', '!=', 1)->whereNotNull('photo')->count(),
         ]);
     }
 

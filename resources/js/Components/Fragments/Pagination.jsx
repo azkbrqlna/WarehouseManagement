@@ -60,21 +60,22 @@ export default function Pagination({
                         <ArrowLeft />
                     </Button>
                 )}
-                {visibleLinks.map((link) => (
-                    <Button
-                        as={Link}
-                        key={link.label}
-                        href={link.url}
-                        size="xs"
-                        variant={link.active ? "solid" : "outline"}
-                        className={`w-5 h-5 ${applyClass(
-                            link.active,
-                            "bg-blue-500"
-                        )}`}
-                    >
-                        {link.label}
-                    </Button>
-                ))}
+                {visibleLinks &&
+                    visibleLinks?.map((link) => (
+                        <Button
+                            as={Link}
+                            key={link.label}
+                            href={link.url}
+                            size="xs"
+                            variant={link.active ? "solid" : "outline"}
+                            className={`w-5 h-5 ${applyClass(
+                                link.active,
+                                "bg-blue-500"
+                            )}`}
+                        >
+                            {link.label}
+                        </Button>
+                    ))}
                 {nextPageUrl && (
                     <Button
                         as={Link}
