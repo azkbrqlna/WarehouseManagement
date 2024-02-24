@@ -5,7 +5,9 @@ import ItemForm from "./ItemForm";
 export default function ModalEditItem({
     isEditModal,
     selectedItem,
-    editItem,
+    data,
+    setData,
+    errors,
     handleChangeEdit,
     onModalClose,
     onSubmit,
@@ -14,7 +16,7 @@ export default function ModalEditItem({
         isEditModal && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-20">
                 <div className="relative p-4 w-full max-w-2xl">
-                    <div className="relative bg-white rounded-lg shadow ">
+                    <div className="relative bg-white rounded-lg shadow">
                         <div className="flex items-center justify-between py-3 px-4 rounded-t">
                             <h3 className="text-xl font-semibold text-gray-900">
                                 Edit Item of {selectedItem && selectedItem.name}
@@ -29,8 +31,9 @@ export default function ModalEditItem({
                         <div className="p-4 md:p-5 space-y-4">
                             <ItemForm
                                 id="edit_item"
-                                data={editItem.data}
-                                setData={editItem.setData}
+                                data={data}
+                                setData={setData}
+                                errors={errors}
                                 handleChange={handleChangeEdit}
                                 onSubmit={onSubmit}
                             />
@@ -42,13 +45,6 @@ export default function ModalEditItem({
                                 className="text-white bg-black hover:bg-zinc-800 focus:ring-2 focus:outline-none focus:ring-zinc-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                             >
                                 Edit Item
-                            </button>
-                            <button
-                                onClick={onModalClose}
-                                type="button"
-                                className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                            >
-                                Close
                             </button>
                         </div>
                     </div>

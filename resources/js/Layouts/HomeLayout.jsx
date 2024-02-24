@@ -4,17 +4,10 @@ import HomeIllustrator from "../../asset/image-welcome.png";
 import RulesImage from "../../asset/rules-image.png";
 import { Rules, ListStyle, Misi } from "@/Components/Fragments/ListStyle";
 
-export default function HomeLayout({ children }) {
-    const handleClickScrollRules = () => {
-        const element = document.getElementById("rules");
-        if (element) {
-            element.scrollIntoView({ behavior: "smooth" });
-        }
-    };
-
+export default function HomeLayout({ children, navbar, handleClickScrollRules }) {
     return (
         <>
-            <Headroom>{children}</Headroom>
+            <Headroom>{navbar}</Headroom>
             <section className="relative h-screen bg-azka 2xl:bottom-1">
                 <div className="flex flex-col px-5 md:px-20 xl:px-40 xl:flex-row gap-10">
                     <div className="flex flex-col gap-10 xl:w-3/4 text-white justify-center">
@@ -49,7 +42,8 @@ export default function HomeLayout({ children }) {
                     ></path>
                 </svg>
             </section>
-            <section id="rules">
+            {children}
+            {/* <section id="rules">
                 <div className="flex flex-wrap h-screen justify-center relative overflow-hidden z-0">
                     <div className="hidden xl:flex w-full md:w-5/12 justify-center items-center py-2">
                         <img className="w-96 h-96" src={RulesImage} />
@@ -97,7 +91,7 @@ export default function HomeLayout({ children }) {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> */}
         </>
     );
 }

@@ -27,14 +27,13 @@ const Misi = [
     "Melakukan inovasi dalam platform, baik dari segi fitur maupun tampilan untuk memberikan pengalaman yang lebih baik bagi pengguna.",
 ];
 
-const request = [];
-    for (let i = 0; i < 5; i++) {
-        request.push({
-            id: i,
-            username: `Ahmad Chomsin S.`,
-            nis: `2006817395`,
-            kelas: `XIII SIJA 2`,
-        });
-    }
+const Tutor = [
+    "Kunjungi website Warehouse SMKN 7 Semarang",
+    "Baca peraturan yang tertera di website Warehouse SMKN 7 Semarang",
+    "Login ke akun anda",
+    "Cari barang yang akan anda pinjam",
+    "Masukkan alasan peminjaman barang",
+    "Lalu klick “Submit” untuk meminjam barang",
+]
 
-export { Rules, Misi, request };
+export { Rules, Misi, Tutor };

@@ -1,16 +1,8 @@
-import { Head, Link } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 import { useState } from "react";
-import LogoSMK from "../../../asset/logo-smkn7-smg.png";
-import { NotePencil, SignIn } from "@phosphor-icons/react";
-import {
-    IconButton,
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuList,
-} from "@chakra-ui/react";
-import { AddIcon, EditIcon, HamburgerIcon } from "@chakra-ui/icons";
 import HomeLayout from "@/Layouts/HomeLayout";
+import NavbarLanding from "@/Components/NavbarLanding/NavbarLanding";
+import { Tutor, Rules, ListStyle } from "@/Components/Fragments/ListStyle";
 
 const LandingPage = () => {
     const [isBorder, setBorder] = useState(false);
@@ -18,79 +10,58 @@ const LandingPage = () => {
         setBorder(window.scrollY > 110 ? true : false);
     };
     window.addEventListener("scroll", borderChange);
+
+    const handleClickScrollRules = () => {
+        const element = document.getElementById("rules");
+        if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+        }
+    };
     return (
         <>
             <Head title="Home" />
-            <HomeLayout>
-                <nav
-                    className={`bg-azka flex justify-between py-3 px-7 ${
-                        isBorder ? "shadow-lg border-b border-cyan-600" : ""
-                    }`}
-                >
-                    <div className="flex items-center gap-3 text-white">
-                        <a href="https://smkn7semarang.sch.id/">
-                            <img className="w-14 md:w-20" src={LogoSMK} />
-                        </a>
-                        <h1 className="font-semibold text-lg hidden xl:block">
-                            SMK N 7 Semarang
+            <HomeLayout
+                navbar={<NavbarLanding isBorder={isBorder} />}
+                handleClickScrollRules={handleClickScrollRules}
+            >
+                <section className="min-w-full min-h-screen py-6 px-2 space-y-14 3xl:space-y-40">
+                    <div className="w-full flex py-5 px-4 justify-center">
+                        <h1 className="text-2xl 3xl:text-3xl font-bold text-azka">
+                            Cara Peminjaman
                         </h1>
                     </div>
-                    <div className="hidden md:flex items-center gap-5 text-white">
-                        <Link
-                            href="/login"
-                            className="flex items-center gap-2 hover:bg-white hover:text-azka w-min px-3 py-1 rounded-lg transition-all duration-200 ease-in"
-                        >
-                            <SignIn size={20} />
-                            <h1 className="text-base font-bold">Login</h1>
-                        </Link>
-                        <Link
-                            href="/register"
-                            className="flex items-center gap-2 hover:bg-white hover:text-azka w-min px-3 py-1 rounded-lg transition-all duration-200 ease-in"
-                        >
-                            <NotePencil size={20} />
-                            <h1 className="text-base font-bold">Register</h1>
-                        </Link>
+                    <div className="space-y-14 md:space-y-0 md:grid md:px-20 grid-cols-3 grid-rows-2 gap-y-60 gap-x-10 place-content-end">
+                        {Tutor.map((tutor, index) => (
+                            <div
+                                key={index}
+                                className="flex md:flex-col md:items-center gap-2"
+                            >
+                                <div>
+                                    <h1 className="bg-azka flex items-center justify-center w-10 h-10 3xl:w-14 3xl:h-14 rounded-full md:text-xl text-white">
+                                        {index + 1 + "."}
+                                    </h1>
+                                </div>
+                                <p className="text-lg 3xl:text-xl md:text-center">
+                                    {tutor}
+                                </p>
+                            </div>
+                        ))}
                     </div>
-                    <div className="md:hidden flex items-center">
-                        <Menu>
-                            <MenuButton
-                                as={IconButton}
-                                aria-label="Options"
-                                icon={
-                                    <HamburgerIcon
-                                        color="#fff"
-                                        _hover={{ color: "#6A91A7" }}
-                                    />
-                                }
-                                variant="outline"
-                            />
-                            <MenuList minW="min-content">
-                                <MenuItem
-                                    icon={<EditIcon />}
-                                    _hover={{
-                                        background: "#6A91A7",
-                                        color: "#fff",
-                                    }}
-                                    as={Link}
-                                    href="/login"
-                                >
-                                    Login
-                                </MenuItem>
-                                <MenuItem
-                                    icon={<AddIcon />}
-                                    _hover={{
-                                        background: "#6A91A7",
-                                        color: "#fff",
-                                    }}
-                                    as={Link}
-                                    href="/register"
-                                >
-                                    Register
-                                </MenuItem>
-                            </MenuList>
-                        </Menu>
+                </section>
+                <section
+                    className="min-w-full min-h-screen py-10 md:py-20 px-5 md:px-28 bg-azka flex flex-col items-center space-y-10"
+                    id="rules"
+                >
+                    <h1 className="text-2xl md:text-3xl 3xl:text-4xl font-bold text-white">Rules</h1>
+                    <div className="p-4 bg-white rounded-lg shadow-rules md:shadow-rules-md 3xl:shadow-rules-md flex flex-col text-lg 3xl:text-2xl 3xl:space-y-3">
+                        {Rules.map((rule, index) => (
+                            <div key={index} className="inline-flex gap-2">
+                                <span>{index + 1}.</span>
+                                <h1>{rule}</h1>
+                            </div>
+                        ))}
                     </div>
-                </nav>
+                </section>
             </HomeLayout>
         </>
     );

@@ -2,30 +2,10 @@ import InputSearch from "@/Components/Fragments/InputSearch";
 import Pagination from "@/Components/Fragments/Pagination";
 import ItemForm from "@/Components/ItemDashboard/ItemForm";
 import AdminLayout from "@/Layouts/AdminLayout";
-import Action from "../../../../asset/triple-point.png";
-import {
-    Button,
-    useDisclosure,
-    useToast,
-    Menu,
-    MenuButton,
-    MenuItem,
-    MenuList,
-    Switch,
-    Box,
-    FormControl,
-    FormLabel,
-    Input,
-    NumberInput,
-    NumberInputField,
-    CloseButton,
-} from "@chakra-ui/react";
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import { Button, useDisclosure, useToast } from "@chakra-ui/react";
 import { useForm, router } from "@inertiajs/react";
-import { UploadSimple, UserPlus } from "@phosphor-icons/react";
-import AlertDelete from "@/Components/Fragments/AlertDelete";
+import { UserPlus } from "@phosphor-icons/react";
 import { useState } from "react";
-import { useEffect } from "react";
 import ModalEditItem from "@/Components/ItemDashboard/ModalEditItem";
 import TableRow from "@/Components/ItemDashboard/TableRow";
 
@@ -53,12 +33,9 @@ export default function BarangPage({ items, item_count }) {
     });
 
     const editItem = useForm({
-        name: selectedItem && selectedItem.name,
-        total_item: selectedItem && selectedItem.total_item,
-        file:
-            selectedItem &&
-            new File([Blob], selectedItem.cover, { type: "image/*" }),
-        _method: "PUT",
+        name: "",
+        total_item: 0,
+        file: null,
     });
 
     const handleSubmit = (e) => {
@@ -136,6 +113,12 @@ export default function BarangPage({ items, item_count }) {
     const handleEditClick = (item) => {
         setSelectedItem(item);
         setModalEdit(!isEditModal);
+        editItem.setData({
+            name: item.name,
+            total_item: Number(item.total_item),
+            file: new File([Blob], item.cover, { type: "image/*" }),
+            _method: "PUT",
+        });
     };
 
     return (
@@ -152,6 +135,7 @@ export default function BarangPage({ items, item_count }) {
                         id="add_item"
                         data={createItem.data}
                         setData={createItem.setData}
+                        errors={createItem.errors}
                         handleChange={handleChangeCreate}
                         onSubmit={handleSubmit}
                     />
@@ -216,7 +200,9 @@ export default function BarangPage({ items, item_count }) {
             </AdminLayout>
             <ModalEditItem
                 isEditModal={isEditModal}
-                editItem={editItem}
+                data={editItem.data}
+                setData={editItem.setData}
+                errors={editItem.errors}
                 handleChangeEdit={handleChangeEdit}
                 onModalClose={() => setModalEdit(!isEditModal)}
                 onSubmit={(e) => {

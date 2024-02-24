@@ -14,19 +14,23 @@ export default {
         extend: {
             fontFamily: {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
-                main: ['Josefin Sans', 'sans-serif'],
-                upload: ['Oooh Baby', 'cursive'],
+                main: ["Josefin Sans", "sans-serif"],
+                upload: ["Oooh Baby", "cursive"],
             },
             colors: {
                 main: "#EDEDED",
                 secondary: "#212143",
-                hover_secondary: '#464662',
-                azka: '#6A91A7',
-                upload: "#536D7C"
+                hover_secondary: "#464662",
+                azka: "#6A91A7",
+                upload: "#536D7C",
             },
             screens: {
-                '3xl': '1920px',
-              },
+                "3xl": "1920px",
+            },
+            boxShadow: {
+                "rules": "12px 12px 0px #000000",
+                "rules-md": "32px 32px 0px #000000",
+            },
         },
     },
 
