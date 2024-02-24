@@ -117,7 +117,10 @@ const Peminjaman = ({ items, rentals, auth, rental_count, return_count }) => {
                             isBorder ? "border-b-2 border-azka" : ""
                         }`}
                     >
-                        <Navbar peminjaman={rental_count} pengembalian={return_count} />
+                        <Navbar
+                            peminjaman={rental_count}
+                            pengembalian={return_count}
+                        />
                     </section>
                 </Headroom>
                 <section className="flex justify-center gap-2 relative">
@@ -200,6 +203,7 @@ const Peminjaman = ({ items, rentals, auth, rental_count, return_count }) => {
                                     }
                                     amountBorrow={isBorrowAmount}
                                     handlePlus={() =>
+                                        isBorrowAmount < item.total_item &&
                                         setBorrowAmount(isBorrowAmount + 1)
                                     }
                                     handleMinus={() =>

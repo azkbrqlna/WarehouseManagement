@@ -49,7 +49,7 @@ const HomePage = ({ rental_count, return_count }) => {
                                 <ListStyle items={Rules} />
                             </div>
                             <svg
-                                className="hidden md:block absolute md:-bottom-7 3xl:-bottom-[90px] -z-10"
+                                className="hidden md:block absolute md:-bottom-7 3xl:-bottom-[29px] -z-10"
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 1440 320"
                             >
