@@ -2,13 +2,25 @@ import TableRow from "@/Components/Fragments/TablePengembalian";
 import Navbar from "@/Layouts/Navbar";
 import { Button, CloseButton, Spinner, useToast } from "@chakra-ui/react";
 import { Head, router, useForm } from "@inertiajs/react";
-import { ArrowFatLineUp, Minus, PaperPlaneRight, UploadSimple } from "@phosphor-icons/react";
+import {
+    ArrowFatLineUp,
+    Minus,
+    PaperPlaneRight,
+    UploadSimple,
+} from "@phosphor-icons/react";
 import { useState } from "react";
 import Headroom from "react-headroom";
 import { AnimatePresence, motion } from "framer-motion";
 import SelectDropdown from "@/Components/Fragments/SelectDropdown";
 
-const Pengembalian = ({ rentals, auth, returns, rental_count, return_count }) => {
+const Pengembalian = ({
+    rentals,
+    auth,
+    returns,
+    rental_count,
+    return_count,
+    initial,
+}) => {
     const toast = useToast();
     const [selectedValue, setSelectedValue] = useState({});
     const [isOpen, setOpen] = useState(false);
@@ -94,7 +106,11 @@ const Pengembalian = ({ rentals, auth, returns, rental_count, return_count }) =>
                             isBorder ? "border-b-2 border-azka" : ""
                         }`}
                     >
-                        <Navbar peminjaman={rental_count} pengembalian={return_count} />
+                        <Navbar
+                            peminjaman={rental_count}
+                            pengembalian={return_count}
+                            initial={initial}
+                        />
                     </div>
                 </Headroom>
                 <section className="md:px-40 px-10 py-5 space-y-10 md:flex grow gap-5 justify-center items-center relative">
@@ -203,7 +219,9 @@ const Pengembalian = ({ rentals, auth, returns, rental_count, return_count }) =>
                                             <div className="flex flex-col max-h-full gap-2 text-base font-medium">
                                                 <h1>
                                                     Nama Item:{" "}
-                                                    <span>{rental.item.name}</span>
+                                                    <span>
+                                                        {rental.item.name}
+                                                    </span>
                                                 </h1>
                                                 <h1>
                                                     Tangal Peminjaman:{" "}

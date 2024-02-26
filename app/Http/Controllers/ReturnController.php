@@ -11,6 +11,8 @@ use App\Models\Log;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use PhpParser\Node\Stmt\Return_;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ReturnController extends Controller
 {
@@ -62,12 +64,20 @@ class ReturnController extends Controller
     public function indexUser()
     {
         $user = auth()->id();
+        $player = Auth::user();
+        $username = $player->username;
+        $words = explode(' ', $username);
+        $initial = '';
+        foreach ($words as $word) {
+            $initial .= Str::upper(Str::substr($word, 0, 1));
+        }
         return Inertia::render("Pengembalian/index", [
             'rentals' => Rental::with(['item', 'user'])->where('user_id', $user)->get(),
             'returns' => Returning::all(),
             'items' => Item::all(),
             'rental_count' => Rental::where('status', '!=', 1)->count(),
             'return_count' => Returning::where('status', '!=', 1)->whereNotNull('photo')->count(),
+            'initial' => $initial,
         ]);
     }
 

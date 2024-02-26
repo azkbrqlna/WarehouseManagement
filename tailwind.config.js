@@ -23,6 +23,7 @@ export default {
                 hover_secondary: "#464662",
                 azka: "#6A91A7",
                 upload: "#536D7C",
+                border_azka: "#5a7c8f",
             },
             screens: {
                 "3xl": "1920px",

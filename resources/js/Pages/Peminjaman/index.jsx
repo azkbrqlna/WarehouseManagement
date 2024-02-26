@@ -18,7 +18,7 @@ import { useState } from "react";
 import Headroom from "react-headroom";
 import { Bell } from "@phosphor-icons/react";
 
-const Peminjaman = ({ items, rentals, auth, rental_count, return_count }) => {
+const Peminjaman = ({ items, rentals, auth, rental_count, return_count, initial }) => {
     const [isBorder, setBorder] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const [isInfoOpen, setInfoOpen] = useState({});
@@ -120,6 +120,7 @@ const Peminjaman = ({ items, rentals, auth, rental_count, return_count }) => {
                         <Navbar
                             peminjaman={rental_count}
                             pengembalian={return_count}
+                            initial={initial}
                         />
                     </section>
                 </Headroom>

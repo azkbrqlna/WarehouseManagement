@@ -5,7 +5,7 @@ import HomeLayout from "@/Layouts/HomeLayout";
 import RulesImage from "../../../asset/rules-image.png";
 import { Rules, ListStyle, Misi } from "@/Components/Fragments/ListStyle";
 
-const HomePage = ({ rental_count, return_count }) => {
+const HomePage = ({ rental_count, return_count, initial }) => {
     const [isBorder, setBorder] = useState(false);
     const borderChange = () => {
         setBorder(window.scrollY > 110 ? true : false);
@@ -18,6 +18,7 @@ const HomePage = ({ rental_count, return_count }) => {
             element.scrollIntoView({ behavior: "smooth" });
         }
     };
+    console.log(initial);
     return (
         <>
             <Head title="Home" />
@@ -31,6 +32,7 @@ const HomePage = ({ rental_count, return_count }) => {
                         <Navbar
                             peminjaman={rental_count}
                             pengembalian={return_count}
+                            initial={initial}
                         />
                     </div>
                 }

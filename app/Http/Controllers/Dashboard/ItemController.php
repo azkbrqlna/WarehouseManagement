@@ -62,7 +62,6 @@ class ItemController extends Controller
 
     public function editItem($id, Request $request)
     {
-        // dd($id, $request->all());
         $request->validate([
             'name' => 'required|string',
             'total_item' => 'required|numeric',

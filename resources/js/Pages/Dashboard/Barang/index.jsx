@@ -47,6 +47,7 @@ export default function BarangPage({ items, item_count }) {
                     title: "Berhasil membuat barang!",
                     status: "success",
                 });
+                onModalClose();
             },
             onError: () => {
                 toast({
