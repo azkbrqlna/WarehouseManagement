@@ -63,7 +63,7 @@ class ReturnController extends Controller
     {
         $user = auth()->id();
         return Inertia::render("Pengembalian/index", [
-            'rentals' => Rental::with(['item', 'user'])->where('user_id', $user)->get(),
+            'rentals' => Rental::with(['item', 'user'])->where('user_id', $user)->latest()->get(),
             'returns' => Returning::all(),
             'items' => Item::all(),
             'rental_count' => Rental::where('status', '!=', 1)->count(),
