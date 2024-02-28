@@ -18,7 +18,7 @@ import { useState } from "react";
 import Headroom from "react-headroom";
 import { Bell } from "@phosphor-icons/react";
 
-const Peminjaman = ({ items, rentals, auth, rental_count, return_count }) => {
+const Peminjaman = ({ items, rentals, auth, rental_count, return_count, initial }) => {
     const [isBorder, setBorder] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const [isInfoOpen, setInfoOpen] = useState({});
@@ -117,7 +117,11 @@ const Peminjaman = ({ items, rentals, auth, rental_count, return_count }) => {
                             isBorder ? "border-b-2 border-azka" : ""
                         }`}
                     >
-                        <Navbar peminjaman={rental_count} pengembalian={return_count} />
+                        <Navbar
+                            peminjaman={rental_count}
+                            pengembalian={return_count}
+                            initial={initial}
+                        />
                     </section>
                 </Headroom>
                 <section className="flex justify-center gap-2 relative">
@@ -200,6 +204,7 @@ const Peminjaman = ({ items, rentals, auth, rental_count, return_count }) => {
                                     }
                                     amountBorrow={isBorrowAmount}
                                     handlePlus={() =>
+                                        isBorrowAmount < item.total_item &&
                                         setBorrowAmount(isBorrowAmount + 1)
                                     }
                                     handleMinus={() =>

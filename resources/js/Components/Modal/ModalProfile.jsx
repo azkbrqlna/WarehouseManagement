@@ -23,7 +23,6 @@ const ModalProfile = ({
     isModalOpen,
     onModalClose,
     onAlertDialogClose,
-    LogoProfile,
     onAlertDialogOpen,
     cancelRef,
     isAlertDialogOpen,
@@ -32,30 +31,30 @@ const ModalProfile = ({
     kelas,
     peminjaman,
     pengembalian,
+    initial
 }) => {
     return (
         <>
             <Modal isOpen={isModalOpen} onClose={onModalClose}>
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader>Profile</ModalHeader>
+                    <ModalHeader pb='0'>Profile</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        <Stack align="center" paddingBottom="20px">
+                        <Stack align="center" paddingBottom="40px">
                             <Flex
-                                borderRadius="lg"
-                                borderWidth="2px"
                                 p="20px"
                                 alignItems="center"
                                 direction="column"
                             >
-                                <Flex flexDirection="column" mb="30px">
-                                    <Avatar
-                                        name="Admin"
-                                        src={LogoProfile}
-                                        cursor="pointer"
-                                        mx="auto"
-                                    />
+                                <Flex flexDirection="column" mb="20px" gap='10px'>
+                                    <div
+                                        className="w-12 h-12 rounded-full self-center flex justify-center items-center border-2 border-border_azka bg-azka"
+                                    >
+                                        <span className="font-bold text-base text-white">
+                                            {initial}
+                                        </span>
+                                    </div>
                                     <Text
                                         fontWeight="600"
                                         textAlign="center"

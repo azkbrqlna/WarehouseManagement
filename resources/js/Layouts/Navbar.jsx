@@ -14,7 +14,7 @@ import {
 import { router, usePage } from "@inertiajs/react";
 import { Turn as Hamburger } from "hamburger-react";
 
-const Navbar = ({ peminjaman, pengembalian }) => {
+const Navbar = ({ peminjaman, pengembalian, initial }) => {
     const { auth } = usePage().props;
     const btnRef = useRef();
     const cancelRef = useRef();
@@ -86,15 +86,14 @@ const Navbar = ({ peminjaman, pengembalian }) => {
                     <Center height="30px">
                         <Divider orientation="vertical" />
                     </Center>
-                    <Stack>
-                        <Avatar
-                            w="40px"
-                            h="40px"
-                            src={LogoProfile}
-                            onClick={onModalOpen}
-                            cursor="pointer"
-                        />
-                    </Stack>
+                    <div
+                        className="w-12 h-12 rounded-full self-center flex justify-center items-center border-2 border-gray-300 bg-white cursor-pointer"
+                        onClick={onModalOpen}
+                    >
+                        <span className="font-bold text-base text-azka">
+                            {initial}
+                        </span>
+                    </div>
                     <ModalProfile
                         isModalOpen={isModalOpen}
                         onModalClose={onModalClose}
@@ -108,6 +107,7 @@ const Navbar = ({ peminjaman, pengembalian }) => {
                         kelas={auth.user.kelas}
                         peminjaman={peminjaman}
                         pengembalian={pengembalian}
+                        initial={initial}
                     />
                 </div>
             </nav>

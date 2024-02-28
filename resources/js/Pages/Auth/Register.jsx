@@ -52,7 +52,7 @@ const Register = () => {
                 Silahkan daftarkan akun anda!
             </h1>
             <p className="font-light text-lg mb-5 2xl:mb-10 md:text-lg">
-                Masukkan Username, NIS, Kelas, dan password!
+                Masukkan Username, NIS, Kelas, dan Password!
             </p>
             <form onSubmit={formik.handleSubmit} className="w-full">
                 <VStack spacing={5}>

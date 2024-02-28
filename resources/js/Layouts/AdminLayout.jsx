@@ -33,6 +33,7 @@ export default function AdminLayout({
                         <h1 className="font-bold text-2xl">{title}</h1>
                         <Button
                             onClick={onOpen}
+                            size='sm'
                             bg="black"
                             color="white"
                             gap="4px"

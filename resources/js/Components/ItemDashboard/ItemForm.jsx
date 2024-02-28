@@ -1,6 +1,7 @@
 import {
     Box,
     FormControl,
+    FormErrorMessage,
     FormLabel,
     Input,
     NumberInput,
@@ -15,6 +16,7 @@ export default function ItemForm({
     data,
     id,
     setData,
+    errors,
 }) {
     return (
         <div className="flex gap-4">
@@ -23,7 +25,7 @@ export default function ItemForm({
                 id={id}
                 className="space-y-3 2xl:space-y-7 w-1/2"
             >
-                <FormControl>
+                <FormControl isInvalid={errors.name}>
                     <FormLabel>Name of Item</FormLabel>
                     <Input
                         type="text"
@@ -32,19 +34,25 @@ export default function ItemForm({
                         onChange={handleChange}
                         placeholder="Input name of item"
                     />
+                    {errors.name && (
+                        <FormErrorMessage>{errors.name}</FormErrorMessage>
+                    )}
                 </FormControl>
-                <FormControl>
+                <FormControl isInvalid={errors.total_item}>
                     <FormLabel>Quantity</FormLabel>
                     <NumberInput>
                         <NumberInputField
                             name="total_item"
-                            value={data.total_item || ""}
+                            value={data.total_item || 0}
                             onChange={handleChange}
                             placeholder="Input Quantity"
                         />
                     </NumberInput>
+                    {errors.total_item && (
+                        <FormErrorMessage>{errors.total_item}</FormErrorMessage>
+                    )}
                 </FormControl>
-                <FormControl>
+                <FormControl isInvalid={errors.file}>
                     <FormLabel htmlFor="file_upload">
                         Input Item Picture
                     </FormLabel>
@@ -63,7 +71,12 @@ export default function ItemForm({
                         alignItems="center"
                         fontSize="700"
                     >
-                        <Box as={UploadSimple} size={30} color="#888" transition="color 0.3s ease-in-out" />
+                        <Box
+                            as={UploadSimple}
+                            size={30}
+                            color="#888"
+                            transition="color 0.3s ease-in-out"
+                        />
                         <Input
                             id="file_upload"
                             name="file"
@@ -72,6 +85,9 @@ export default function ItemForm({
                             onChange={(e) => setData("file", e.target.files[0])}
                         />
                     </FormLabel>
+                    {errors.file && (
+                        <FormErrorMessage>{errors.file}</FormErrorMessage>
+                    )}
                 </FormControl>
             </form>
             <div className="w-1/2 flex">

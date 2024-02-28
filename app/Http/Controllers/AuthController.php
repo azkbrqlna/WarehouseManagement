@@ -56,7 +56,7 @@ class AuthController extends Controller
 
         if ($validated == true) {
             User::create($request->all());
-            return redirect('/home');
+            return redirect('/login');
         }
         return back()->with('error', 'SignUp gagal pastikan mengisi credential dengan benar');
     }
