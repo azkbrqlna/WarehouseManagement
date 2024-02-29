@@ -1,7 +1,15 @@
 import { CaretDown, CheckCircle } from "@phosphor-icons/react";
 import React from "react";
 
-const SelectDropdown = ({ rentals, auth, selectedValue, handleOptionSelect, isOpen, toggleDropdown }) => {
+const SelectDropdown = ({
+    rentals,
+    returns,
+    auth,
+    selectedValue,
+    handleOptionSelect,
+    isOpen,
+    toggleDropdown,
+}) => {
     return (
         <div className="relative">
             <div className="mt-2">
@@ -21,19 +29,18 @@ const SelectDropdown = ({ rentals, auth, selectedValue, handleOptionSelect, isOp
                 </button>
 
                 {isOpen && (
-                    <ul
-                        className="absolute z-10 mt-1 max-h-56 w-full cursor-pointer overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-                    >
+                    <ul className="absolute z-10 mt-1 max-h-56 w-full cursor-pointer overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                         {rentals.map((rental) => {
-                            if (
+                            const isReturned = returns.some((ret) => ret.rent_date === rental.rent_date && !ret.status)
+                            return (
                                 rental.user_id === auth.user.id &&
-                                rental.status
-                            ) {
-                                return (
+                                rental.status &&
+                                isReturned && (
                                     <li
                                         key={rental.id}
                                         className={`text-gray-800 select-none py-2 pl-3 pr-10 hover:bg-slate-100 ${
-                                            rental.rent_date === selectedValue.rent_date
+                                            rental.rent_date ===
+                                            selectedValue.rent_date
                                                 ? "font-bold text-black"
                                                 : "font-normal"
                                         }`}
@@ -51,8 +58,8 @@ const SelectDropdown = ({ rentals, auth, selectedValue, handleOptionSelect, isOp
                                             )}
                                         </div>
                                     </li>
-                                );
-                            }
+                                )
+                            );
                         })}
                     </ul>
                 )}

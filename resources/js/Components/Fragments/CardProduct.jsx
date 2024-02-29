@@ -31,7 +31,7 @@ const CardProduct = ({
         <>
             <div className="flex flex-col gap-3 rounded-3xl w-40 h-min md:w-[200px] bg-white px-5 py-2 pb-5 shadow-top-right-bottom">
                 <div>
-                    <h1 className="font-bold text-lg md:text-3xl">
+                    <h1 className="font-bold text-lg md:text-3xl truncate">
                         {itemName}
                     </h1>
                     <Badge
