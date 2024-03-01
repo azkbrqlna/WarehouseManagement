@@ -47,7 +47,7 @@ const ModalProfile = ({
                                 alignItems="center"
                                 direction="column"
                             >
-                                <Flex flexDirection="column" mb="20px" gap='10px'>
+                                <Flex flexDirection="column" mb="10px" gap='10px'>
                                     <div
                                         className="w-12 h-12 rounded-full self-center flex justify-center items-center border-2 border-border_azka bg-azka"
                                     >
@@ -106,6 +106,7 @@ const ModalProfile = ({
                                 <Button
                                     onClick={onAlertDialogOpen}
                                     p="2"
+                                    bg="#e5e7eb"
                                     borderWidth="1px"
                                     borderRadius="lg"
                                     w="100%"
@@ -113,6 +114,7 @@ const ModalProfile = ({
                                 >
                                     Log Out
                                 </Button>
+                                <a href="#" className="mt-2 w-full rounded-lg bg-gray-200 text-base py-2 px-4 text-center text-black">Riwayat Peminjaman</a>
                                 <AlertDialog
                                     isOpen={isAlertDialogOpen}
                                     leastDestructiveRef={cancelRef}

@@ -91,7 +91,7 @@ const Pengembalian = ({
     };
 
     let acceptData = 1;
-    const MenuAccept = returns.map((returning, index) => {
+    const MenuAccept = returns.map((returning) => {
         const currentDate = new Date();
         const returnDate = new Date(returning.actual_return_date);
         const diffTime = currentDate.getTime() - returnDate.getTime();

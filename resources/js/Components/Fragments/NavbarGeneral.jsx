@@ -7,7 +7,7 @@ const NavbarGeneral = () => {
           <List href="/home">Home</List>
           <List href="/peminjaman">Peminjaman</List>
           <List href="/pengembalian">Pengembalian</List>
-          <List href="#visimisi">About</List>
+          <List href="/about">About</List>
         </ul>
       </>
     );
