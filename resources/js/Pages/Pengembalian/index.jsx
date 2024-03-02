@@ -22,6 +22,7 @@ import { useState } from "react";
 import Headroom from "react-headroom";
 import { AnimatePresence, motion } from "framer-motion";
 import SelectDropdown from "@/Components/Fragments/SelectDropdown";
+import { formatDateMonthYear } from "@/Components/Fragments/ListStyle";
 
 const Pengembalian = ({
     rentals,
@@ -43,15 +44,6 @@ const Pengembalian = ({
         file: [],
     });
     const infoLoading = [...isLoading];
-    const formattedDate = (inputFormat) => {
-        let date = new Date(inputFormat);
-        let day = date.toLocaleDateString("id-ID", {
-            year: "numeric",
-            month: "long",
-            day: "2-digit",
-        });
-        return day;
-    };
 
     const handleRefund = (e, itemID, date, index) => {
         e.preventDefault();
@@ -110,7 +102,7 @@ const Pengembalian = ({
                         {returning.item.name}
                     </td>
                     <td className="px-4 py-2 whitespace-nowrap">
-                        {formattedDate(returning.actual_return_date)}
+                        {formatDateMonthYear(returning.actual_return_date)}
                     </td>
                     <td className="px-4 py-2 whitespace-nowrap">
                         {returning.status && "Diterima"}
@@ -317,32 +309,36 @@ const Pengembalian = ({
                                                 </div>
                                             </div>
                                             <div className="flex flex-col max-h-full gap-2 text-base font-medium">
-                                                <h1>
-                                                    Nama Item:{" "}
-                                                    <span>
-                                                        {rental.item.name}
-                                                    </span>
-                                                </h1>
-                                                <h1>
-                                                    Tangal Peminjaman:{" "}
-                                                    <span>
-                                                        {formattedDate(
-                                                            rental.rent_date
-                                                        )}
-                                                    </span>
-                                                </h1>
-                                                <h1>
-                                                    Tangal Pengembalian:{" "}
-                                                    <span>
-                                                        {formattedDate(
-                                                            rental.return_date
-                                                        )}
-                                                    </span>
-                                                </h1>
+                                                <div className="flex mb-4">
+                                                    <div className="font-semibold space-y-3 w-1/2">
+                                                        <h2>Nama Item</h2>
+                                                        <h2>
+                                                            Tanggal Peminjaman
+                                                        </h2>
+                                                        <h2>
+                                                            Tanggal Pengembalian
+                                                        </h2>
+                                                    </div>
+                                                    <div className="space-y-3 w-1/2">
+                                                        <h2 className="truncate">
+                                                            {rental.item.name}
+                                                        </h2>
+                                                        <h2>
+                                                            {formatDateMonthYear(
+                                                                rental.rent_date
+                                                            )}
+                                                        </h2>
+                                                        <h2 className="truncate">
+                                                            {formatDateMonthYear(
+                                                                rental.return_date
+                                                            )}
+                                                        </h2>
+                                                    </div>
+                                                </div>
                                                 {!dateReturn?.photo ? (
                                                     <label
                                                         htmlFor="file"
-                                                        className="flex w-10 bg-blue-300 py-2 rounded-md cursor-pointer justify-center items-center font-bold hover:bg-blue-400 transition-colors duration-200 ease-in"
+                                                        className="flex mx-auto w-1/3 bg-blue-300 py-2 rounded-md cursor-pointer justify-center items-center font-bold hover:bg-blue-400 transition-colors duration-200 ease-in"
                                                     >
                                                         <UploadSimple
                                                             size={20}

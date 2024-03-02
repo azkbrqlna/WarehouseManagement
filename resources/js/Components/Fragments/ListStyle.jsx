@@ -36,4 +36,49 @@ const Tutor = [
     "Lalu klick “Submit” untuk meminjam barang",
 ];
 
-export { Rules, Misi, Tutor };
+const formatDateMonthYear = (inputFormat) => {
+    let date = new Date(inputFormat);
+    let day = date.toLocaleDateString("id-ID", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit",
+    });
+    return day;
+};
+
+const formatDateMonth = (inputDate) => {
+    const date = new Date(inputDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const diffInDays = Math.floor((today - date) / (1000 * 60 * 60 * 24));
+
+    if (diffInDays === 1) {
+        const formattedTime = date.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+        return `Yesterday, ${formattedTime}`;
+    } else if (diffInDays > 1) {
+        const formattedDate = date.toLocaleDateString([], {
+            day: "2-digit",
+            month: "short",
+        });
+        const month = formattedDate.split(" ")[1];
+        const day = formattedDate.split(" ")[0];
+        const formattedTime = date.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+        return `${month}-${day}, ${formattedTime}`;
+    } else {
+        return date.toLocaleDateString([], {
+            month: "short",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+    }
+};
+
+export { Rules, Misi, Tutor, formatDateMonthYear, formatDateMonth };

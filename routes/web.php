@@ -8,6 +8,7 @@ use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\ReturnController;
+use App\Http\Controllers\RiwayatController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
@@ -28,9 +29,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/",[HomeController::class, "landing"])->withoutMiddleware('auth');
 });
 Route::get("/about", [AboutController::class, "index"])->middleware('only_user');
-// ROute::controller(AboutController::class)->middleware('auth')->group(function () {
-//     Route::get('/about', 'index');
-// });
 
 Route::controller(AuthController::class)->middleware('guest')->group(function () {
     Route::get('/login', 'login')->name('login');
@@ -88,4 +86,8 @@ Route::controller(ReturnController::class)->middleware('auth')->group(function (
         Route::patch('/request/return/{id}', 'acceptReturn');
         Route::delete('/request/return/{id}', 'rejectReturn');
     });
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get("/riwayat", [RiwayatController::class, "index"])->middleware('only_user');
 });

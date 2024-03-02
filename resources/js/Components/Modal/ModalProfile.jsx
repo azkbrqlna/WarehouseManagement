@@ -7,9 +7,6 @@ import {
     ModalCloseButton,
     ModalBody,
     Stack,
-    Flex,
-    Text,
-    Avatar,
     Button,
     AlertDialog,
     AlertDialogOverlay,
@@ -19,7 +16,7 @@ import {
     AlertDialogBody,
 } from "@chakra-ui/react";
 
-const ModalProfile = ({
+export default function ModalProfile({
     isModalOpen,
     onModalClose,
     onAlertDialogClose,
@@ -31,90 +28,65 @@ const ModalProfile = ({
     kelas,
     peminjaman,
     pengembalian,
-    initial
-}) => {
+    initial,
+}) {
     return (
         <>
-            <Modal isOpen={isModalOpen} onClose={onModalClose}>
+            <Modal
+                isOpen={isModalOpen}
+                onClose={onModalClose}
+                size={{ base: "xs", md: "sm" }}
+            >
                 <ModalOverlay />
                 <ModalContent>
-                    <ModalHeader pb='0'>Profile</ModalHeader>
+                    <ModalHeader pb="0">Profile</ModalHeader>
                     <ModalCloseButton />
                     <ModalBody>
-                        <Stack align="center" paddingBottom="40px">
-                            <Flex
-                                p="20px"
-                                alignItems="center"
-                                direction="column"
-                            >
-                                <Flex flexDirection="column" mb="10px" gap='10px'>
-                                    <div
-                                        className="w-12 h-12 rounded-full self-center flex justify-center items-center border-2 border-border_azka bg-azka"
-                                    >
+                        <Stack align="center" paddingBottom="20px">
+                            <div className="flex items-center flex-col">
+                                <div className="flex flex-col gap-2">
+                                    <div className="w-12 h-12 rounded-full self-center flex justify-center items-center border-2 border-border_azka bg-azka">
                                         <span className="font-bold text-base text-white">
                                             {initial}
                                         </span>
                                     </div>
-                                    <Text
-                                        fontWeight="600"
-                                        textAlign="center"
-                                        fontSize="xl"
-                                    >
+                                    <p className="font-bold text-center text-xl">
                                         {user}
-                                    </Text>
-                                    <Text
-                                        color="gray.400"
-                                        textAlign="center"
-                                        fontSize="sm"
-                                        fontWeight="500"
-                                    >
+                                    </p>
+                                    <p className="font-medium text-gray-400 text-center text-sm">
                                         {kelas}
-                                    </Text>
-                                </Flex>
-                                <Flex
-                                    paddingBottom="20px"
-                                    justify="center"
-                                    gap="30px"
-                                    w="100%"
-                                    px="36px"
-                                >
-                                    <Flex flexDirection="column">
-                                        <Text
-                                            fontWeight="600"
-                                            fontSize="xl"
-                                            textAlign="center"
-                                        >
+                                    </p>
+                                </div>
+                                <div className="flex justify-center gap-7 w-full px-9 pb-5">
+                                    <div className="flex flex-col">
+                                        <span className="font-bold text-xl text-center">
                                             {peminjaman}
-                                        </Text>
-                                        <Text color="gray.400" fontWeight="500">
+                                        </span>
+                                        <p className="text-gray-400 font-medium">
                                             Peminjaman
-                                        </Text>
-                                    </Flex>
-                                    <Flex flexDirection="column">
-                                        <Text
-                                            fontWeight="600"
-                                            fontSize="xl"
-                                            textAlign="center"
-                                        >
+                                        </p>
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <span className="font-bold text-xl text-center">
                                             {pengembalian}
-                                        </Text>
-                                        <Text color="gray.400" fontWeight="500">
+                                        </span>
+                                        <p className="text-gray-400 font-medium">
                                             Pengembalian
-                                        </Text>
-                                    </Flex>
-                                </Flex>
-                                <Button
+                                        </p>
+                                    </div>
+                                </div>
+                                <button
+                                    className="p-1 w-4/5 md:w-full bg-gray-200 rounded-lg text-center text-black"
                                     onClick={onAlertDialogOpen}
-                                    p="2"
-                                    bg="#e5e7eb"
-                                    borderWidth="1px"
-                                    borderRadius="lg"
-                                    w="100%"
-                                    textAlign="center"
                                 >
                                     Log Out
-                                </Button>
-                                <a href="#" className="mt-2 w-full rounded-lg bg-gray-200 text-base py-2 px-4 text-center text-black">Riwayat Peminjaman</a>
+                                </button>
+                                <a
+                                    href="/riwayat"
+                                    className="mt-2 w-4/5 md:w-full rounded-lg bg-gray-200 text-base p-1 text-center text-black"
+                                >
+                                    Riwayat Peminjaman
+                                </a>
                                 <AlertDialog
                                     isOpen={isAlertDialogOpen}
                                     leastDestructiveRef={cancelRef}
@@ -151,13 +123,11 @@ const ModalProfile = ({
                                         </AlertDialogContent>
                                     </AlertDialogOverlay>
                                 </AlertDialog>
-                            </Flex>
+                            </div>
                         </Stack>
                     </ModalBody>
                 </ModalContent>
             </Modal>
         </>
     );
-};
-
-export default ModalProfile;
+}

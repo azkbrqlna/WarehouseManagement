@@ -4,7 +4,7 @@ import OverviewCard from "@/Components/Fragments/OverviewCard";
 import Dashboardlayout from "@/Layouts/DashboardLayout";
 import { Badge } from "@chakra-ui/react";
 import Pagination from "@/Components/Fragments/Pagination";
-import { Link, router } from "@inertiajs/react";
+import { router } from "@inertiajs/react";
 
 const Dashboard = ({
     auth,
@@ -18,9 +18,6 @@ const Dashboard = ({
     total_requests,
     logs,
 }) => {
-    const handleDownload = () => {
-        router.visit("/dashboard/export");
-    };
     return (
         <>
             <Dashboardlayout title="Dashboard">
