@@ -41,7 +41,10 @@ class RentalController extends Controller
         $rental = Rental::find($request->id);
         $item = Item::find($request->item_id);
 
-        if ($rental && $item) {
+        if ($rental->amount_rental > $item->total_item) {
+            dd('error');
+            return redirect('/request/rental');
+        }else {
             // Mengurangi stok barang
             $item->total_item -= $rental->amount_rental;
             $item->save();
@@ -55,7 +58,7 @@ class RentalController extends Controller
                 'user_id' => $request->user_id,
                 'item_id' => $request->item_id,
                 'reason' => $request->reason,
-                'amount_rental' => $rental->amount_rental, // Mengambil nilai amount_rental dari $rental
+                'amount_rental' => $rental->amount_rental,
                 'rent_date' => $request->rent_date,
                 'return_date' => $request->return_date,
             ]);
@@ -64,10 +67,9 @@ class RentalController extends Controller
             Returning::create([
                 'user_id' => $request->user_id,
                 'item_id' => $request->item_id,
-                'amount_return' => $rental->amount_rental, // Mengambil nilai amount_rental dari $rental
+                'amount_return' => $rental->amount_rental,
                 'rent_date' => $request->rent_date,
             ]);
-
             return redirect('/request/rental');
         }
     }

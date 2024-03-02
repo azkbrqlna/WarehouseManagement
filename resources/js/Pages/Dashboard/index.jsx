@@ -50,13 +50,13 @@ const Dashboard = ({
                 </section>
                 <section className="grid grid-cols-4 gap-5 mt-5">
                     <OverviewCard
-                        title="Total Requests"
+                        title="Requests Borrow"
                         total={rental_count}
                         content="Borrow"
                         value={rental_all}
                     />
                     <OverviewCard
-                        title="Total Requests"
+                        title="Requests Return"
                         total={return_count}
                         content="Return"
                         value={return_all}
