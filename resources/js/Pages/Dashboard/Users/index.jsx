@@ -41,8 +41,8 @@ const UsersPage = ({ users, users_count }) => {
         password: "",
     });
 
-    const handleClick = (slug) => {
-        createUser.delete(`/user/${slug}`, {
+    const handleClick = (id) => {
+        createUser.delete(`/user/${id}`, {
             onSuccess: () => {
                 toast({
                     title: "Berhasil menghapus user!",

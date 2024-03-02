@@ -41,11 +41,11 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function destroy($slug)
+    public function destroy($id)
     {
-        $user = User::where('slug', $slug)->first();
+        $user = User::find($id);
         $user->delete();
-        return redirect()->back();
+        return redirect('/users');
     }
 
     public function updateUser($id, Request $request)

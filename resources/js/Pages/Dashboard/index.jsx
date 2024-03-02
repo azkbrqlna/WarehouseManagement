@@ -13,9 +13,10 @@ const Dashboard = ({
     item_all,
     item_available,
     item_notAvailable,
+    rental_all,
+    return_all,
     rental_count,
     return_count,
-    total_requests,
     logs,
 }) => {
     const handleDownload = () => {
@@ -50,15 +51,15 @@ const Dashboard = ({
                 <section className="grid grid-cols-4 gap-5 mt-5">
                     <OverviewCard
                         title="Total Requests"
-                        total={total_requests}
+                        total={rental_count}
                         content="Borrow"
-                        value={rental_count}
+                        value={rental_all}
                     />
                     <OverviewCard
                         title="Total Requests"
-                        total={total_requests}
+                        total={return_count}
                         content="Return"
-                        value={return_count}
+                        value={return_all}
                     />
                     <OverviewCard
                         title="Total Users"
