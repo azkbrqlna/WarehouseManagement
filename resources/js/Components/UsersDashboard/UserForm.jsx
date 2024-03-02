@@ -48,7 +48,7 @@ export default function UserForm({
                         <FormErrorMessage>{errors.nis}</FormErrorMessage>
                     </FormControl>
                     <FormControl isInvalid={errors.kelas}>
-                        <FormLabel>Kelas</FormLabel>
+                        <FormLabel>Class</FormLabel>
                         <Input
                             type="text"
                             name="kelas"
