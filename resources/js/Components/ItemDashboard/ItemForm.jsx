@@ -94,7 +94,7 @@ export default function ItemForm({
                 {data.file && (
                     <div className="mx-auto">
                         <h1 className="text-base font-semibold">
-                            Preview Gambar:{" "}
+                            Picture Preview :{" "}
                         </h1>
                         <figure className="w-60 h-60 border overflow-hidden">
                             <img

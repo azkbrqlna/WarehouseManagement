@@ -31,7 +31,7 @@ export default function AlertDelete({
                         <Button onClick={onAlertDialogClose}>Cancel</Button>
                         <Button
                             colorScheme="red"
-                            onClick={() => handleClick(data.slug)}
+                            onClick={() => handleClick(data.id)}
                             ml={3}
                         >
                             Delete

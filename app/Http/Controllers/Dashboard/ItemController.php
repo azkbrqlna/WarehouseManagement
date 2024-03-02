@@ -25,26 +25,29 @@ class ItemController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validate = $request->validate([
             'name' => 'required|string',
             'total_item' => 'required|numeric',
             'file' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
+        if(!$validate){
+            return('error');
+        }
         // Ini untuk tambah gambar
         if ($request->file("file")) {
             $extension = $request->file("file")->getClientOriginalExtension();
-            $newName = strtolower($request->name) . '-' . now()->timestamp . '.' . $extension;
+            $newName = now()->timestamp . '.' . $extension;
             Storage::disk('public')->putFileAs('cover', $request->file("file"), $newName);
             $request['cover'] = $newName;
-        };
+        }
 
         Item::create($request->all());
         return redirect('items')->with('success', 'Berhasil menambah barang!');
     }
 
-    public function destroy($slug)
+    public function destroy($id)
     {
-        $item = Item::whereSlug($slug)->first();
+        $item = Item::find($id);
         Storage::delete('cover/' . $item->cover);
         $item->delete();
         return redirect('/items');
@@ -74,7 +77,7 @@ class ItemController extends Controller
         if ($request->file("file")) {
             Storage::delete('cover/' . $item->cover);
             $extension = $request->file("file")->getClientOriginalExtension();
-            $newName = strtolower($request->name) . '-' . now()->timestamp . '.' . $extension;
+            $newName = now()->timestamp . '.' . $extension;
             Storage::disk('public')->putFileAs('cover', $request->file("file"), $newName);
             $item->cover = $newName;
         }

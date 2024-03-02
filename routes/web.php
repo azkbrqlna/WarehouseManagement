@@ -49,7 +49,7 @@ Route::controller(UserController::class)->middleware('auth')->group(function () 
     Route::middleware('only_admin')->group(function () {
         Route::get('/users', 'index');
         Route::post('/users', 'store');
-        Route::delete('/user/{slug}', 'destroy');
+        Route::delete('/user/{id}', 'destroy');
         Route::put('/user/{id}', 'editUser'); 
     });
 });
@@ -58,7 +58,7 @@ Route::controller(ItemController::class)->middleware('auth')->group(function () 
     Route::middleware('only_admin')->group(function () {
         Route::get('/items', 'index');
         Route::post('/items', 'store');
-        Route::delete('/item/{slug}', 'destroy');
+        Route::delete('/item/{id}', 'destroy');
         Route::put('/item/{id}', 'editItem');
         Route::patch('/item/{id}', 'update');
     });

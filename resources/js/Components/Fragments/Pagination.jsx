@@ -38,9 +38,9 @@ export default function Pagination({
             {withInfo && (
                 <div>
                     <p>
-                        Menampilkan{" "}
-                        <span className="font-semibold">{from}</span> sampai{" "}
-                        <span className="font-semibold">{to}</span> dari{" "}
+                        Displays {" "}
+                        <span className="font-semibold">{from}</span> to{" "}
+                        <span className="font-semibold">{to}</span> of{" "}
                         <span className="font-semibold">{total}</span> data.
                     </p>
                 </div>
