@@ -18,7 +18,14 @@ import { useState } from "react";
 import Headroom from "react-headroom";
 import { Bell } from "@phosphor-icons/react";
 
-const Peminjaman = ({ items, rentals, auth, rental_count, return_count, initial }) => {
+const Peminjaman = ({
+    items,
+    rentals,
+    auth,
+    rental_count,
+    return_count,
+    initial,
+}) => {
     const [isBorder, setBorder] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const [isInfoOpen, setInfoOpen] = useState({});
@@ -62,6 +69,7 @@ const Peminjaman = ({ items, rentals, auth, rental_count, return_count, initial 
                     setLoading(false);
                     setInfoOpen(false);
                     setData("reason", "");
+                    setBorrowAmount(1);
                 },
             }
         );
@@ -77,6 +85,11 @@ const Peminjaman = ({ items, rentals, auth, rental_count, return_count, initial 
 
     let acceptData = 1;
     const MenuAccept = rentals.map((rental, index) => {
+        const return_date = new Date(rental.return_date);
+        const selisih = Math.ceil(
+            (return_date - Date.now()) / (1000 * 60 * 60 * 24)
+        );
+        console.log(Date.now())
         return auth.user.id === rental.user_id ? (
             <tr
                 key={rental.id}
@@ -86,17 +99,15 @@ const Peminjaman = ({ items, rentals, auth, rental_count, return_count, initial 
                 <td className="px-4 py-2 whitespace-nowrap">
                     {rental.item.name}
                 </td>
-                <td className="px-4 py-2 whitespace-nowrap">
+                <td className="px-4 py-2 whitespace-nowrap text-center">
                     {rental.status ? (
-                        rental.return_date
+                        `${selisih} hari lagi`
                     ) : (
                         <Progress isIndeterminate size="xs" />
                     )}
                 </td>
             </tr>
-        ) : (
-            ""
-        );
+        ) : null;
     });
 
     const handleSearch = (value) => {
@@ -176,7 +187,7 @@ const Peminjaman = ({ items, rentals, auth, rental_count, return_count, initial 
                                                 Item
                                             </th>
                                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Keterangan
+                                                Pengembalian
                                             </th>
                                         </tr>
                                     </thead>

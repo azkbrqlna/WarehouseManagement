@@ -28,6 +28,7 @@
         "framer-motion": "^10.16.16",
         "hamburger-react": "^2.5.0",
         "moment": "^2.30.1",
+        "react-fast-marquee": "^1.6.4",
         "react-headroom": "^3.2.1",
         "react-router-dom": "^6.21.1",
         "react-wavify": "^1.9.0",

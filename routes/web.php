@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\ItemController;
@@ -26,6 +27,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/home", [HomeController::class, "index"])->middleware('only_user');
     Route::get("/",[HomeController::class, "landing"])->withoutMiddleware('auth');
 });
+Route::get("/about", [AboutController::class, "index"])->middleware('only_user');
+// ROute::controller(AboutController::class)->middleware('auth')->group(function () {
+//     Route::get('/about', 'index');
+// });
 
 Route::controller(AuthController::class)->middleware('guest')->group(function () {
     Route::get('/login', 'login')->name('login');

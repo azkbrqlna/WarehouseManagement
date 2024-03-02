@@ -58,11 +58,11 @@ const Return = ({ refund, index }) => {
     return (
         <>
             <tr key={index}>
-                <td className="px-4 py-2 w-16">{index + 1 + "."}</td>
-                <td className="px-4 py-2 w-60">{refund.user.username}</td>
-                <td className="px-4 py-2 w-10">{refund.user.nis}</td>
-                <td className="px-4 py-2 w-20">{refund.user.kelas}</td>
-                <td className="px-4 py-2 w-20">
+                <td className="align-top px-4 py-2 w-16">{index + 1 + "."}</td>
+                <td className="align-top px-4 py-2 w-60">{refund.user.username}</td>
+                <td className="align-top px-4 py-2 w-10">{refund.user.nis}</td>
+                <td className="align-top px-4 py-2 w-20">{refund.user.kelas}</td>
+                <td className="align-top px-4 py-2 w-20">
                     <button
                         onClick={onToggle}
                         className="p-2 bg-black rounded-md w-full text-white flex justify-center items-center"

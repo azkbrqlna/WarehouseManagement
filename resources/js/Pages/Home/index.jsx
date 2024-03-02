@@ -18,7 +18,6 @@ const HomePage = ({ rental_count, return_count, initial }) => {
             element.scrollIntoView({ behavior: "smooth" });
         }
     };
-    console.log(initial);
     return (
         <>
             <Head title="Home" />
@@ -40,7 +39,7 @@ const HomePage = ({ rental_count, return_count, initial }) => {
             >
                 <>
                     <section id="rules">
-                        <div className="flex flex-wrap h-screen justify-center relative overflow-hidden z-0">
+                        <div className="flex flex-wrap h-screen justify-center relative z-0">
                             <div className="hidden xl:flex w-full md:w-5/12 justify-center items-center py-2">
                                 <img className="w-96 h-96" src={RulesImage} />
                             </div>
@@ -51,7 +50,7 @@ const HomePage = ({ rental_count, return_count, initial }) => {
                                 <ListStyle items={Rules} />
                             </div>
                             <svg
-                                className="hidden md:block absolute md:-bottom-7 3xl:-bottom-[29px] -z-10"
+                                className="hidden md:block absolute md:-bottom-1 lg:-bottom-5 3xl:-bottom-[29px] -z-10"
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 1440 320"
                             >
@@ -84,7 +83,7 @@ const HomePage = ({ rental_count, return_count, initial }) => {
                                 className="h-full flex justify-center bg-white w-full"
                                 id="visimisi"
                             >
-                                <div className="flex flex-col justify-center items-center gap-5 w-1/2 text-azka">
+                                <div className="flex flex-col justify-center items-center gap-5 w-3/4 md:w-1/2 text-azka">
                                     <h1 className="text-3xl font-bold">Misi</h1>
                                     <ListStyle items={Misi} />
                                 </div>

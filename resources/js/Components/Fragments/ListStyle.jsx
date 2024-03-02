@@ -34,6 +34,6 @@ const Tutor = [
     "Cari barang yang akan anda pinjam",
     "Masukkan alasan peminjaman barang",
     "Lalu klick “Submit” untuk meminjam barang",
-]
+];
 
 export { Rules, Misi, Tutor };

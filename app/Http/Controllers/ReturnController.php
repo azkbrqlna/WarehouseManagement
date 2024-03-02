@@ -72,8 +72,8 @@ class ReturnController extends Controller
             $initial .= Str::upper(Str::substr($word, 0, 1));
         }
         return Inertia::render("Pengembalian/index", [
-            'rentals' => Rental::with(['item', 'user'])->where('user_id', $user)->latest()->get(),
-            'returns' => Returning::all(),
+            'rentals' => Rental::with(['item', 'user'])->where('user_id', $user)->get(),
+            'returns' => Returning::with(['item'])->get(),
             'items' => Item::all(),
             'rental_count' => Rental::where('status', '!=', 1)->count(),
             'return_count' => Returning::where('status', '!=', 1)->whereNotNull('photo')->count(),

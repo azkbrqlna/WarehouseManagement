@@ -1,9 +1,19 @@
 import TableRow from "@/Components/Fragments/TablePengembalian";
 import Navbar from "@/Layouts/Navbar";
-import { Button, CloseButton, Spinner, useToast } from "@chakra-ui/react";
-import { Head, router, useForm } from "@inertiajs/react";
+import {
+    Button,
+    CloseButton,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
+    Spinner,
+    useToast,
+} from "@chakra-ui/react";
+import { Head, router, useForm, usePage } from "@inertiajs/react";
 import {
     ArrowFatLineUp,
+    Bell,
     Minus,
     PaperPlaneRight,
     UploadSimple,
@@ -26,7 +36,6 @@ const Pengembalian = ({
     const [isOpen, setOpen] = useState(false);
     const [isSelect, setSelect] = useState(false);
     const [isBorder, setBorder] = useState(false);
-    const [isInfoOpen, setInfoOpen] = useState({});
     const [isLoading, setIsLoading] = useState(() =>
         Array(rentals.length).fill(false)
     );
@@ -34,6 +43,15 @@ const Pengembalian = ({
         file: [],
     });
     const infoLoading = [...isLoading];
+    const formattedDate = (inputFormat) => {
+        let date = new Date(inputFormat);
+        let day = date.toLocaleDateString("id-ID", {
+            year: "numeric",
+            month: "long",
+            day: "2-digit",
+        });
+        return day;
+    };
 
     const handleRefund = (e, itemID, date, index) => {
         e.preventDefault();
@@ -72,12 +90,35 @@ const Pengembalian = ({
         setData("file", newFileUpload);
     };
 
-    const handleButtonInfo = (idx) => {
-        setInfoOpen((prevState) => ({
-            ...prevState,
-            [idx]: !prevState[idx] || false,
-        }));
-    };
+    let acceptData = 1;
+    const MenuAccept = returns.map((returning) => {
+        const currentDate = new Date();
+        const returnDate = new Date(returning.actual_return_date);
+        const diffTime = currentDate.getTime() - returnDate.getTime();
+        const diffDay = Math.ceil(diffTime / (1000 * 3600 * 24));
+        if (diffDay > 7) {
+            return null;
+        }
+        return (
+            auth.user.id === returning.user_id &&
+            returning.status && (
+                <tr
+                    key={returning.id}
+                    className="bg-white hover:bg-gray-100 divide-x divide-gray-100 text-gray-700"
+                >
+                    <td className="px-4 py-2 whitespace-nowrap">
+                        {returning.item.name}
+                    </td>
+                    <td className="px-4 py-2 whitespace-nowrap">
+                        {formattedDate(returning.actual_return_date)}
+                    </td>
+                    <td className="px-4 py-2 whitespace-nowrap">
+                        {returning.status && "Diterima"}
+                    </td>
+                </tr>
+            )
+        );
+    });
 
     const borderChange = () => {
         setBorder(window.scrollY > 110 ? true : false);
@@ -113,9 +154,9 @@ const Pengembalian = ({
                         />
                     </div>
                 </Headroom>
-                <section className="md:px-40 px-10 py-5 space-y-10 md:flex grow gap-5 justify-center items-center relative">
-                    <div className="hidden md:block absolute w-[1100px] h-[1100px] bg-white -bottom-[570px] -right-[570px] rotate-[45deg] -z-0" />
-                    <div className="space-y-5 md:w-1/2 self-start">
+                <section className="md:px-14 px-10 py-5 space-y-10 md:flex gap-20 justify-center items-center relative">
+                    <div className="hidden md:block absolute w-[1100px] h-[1100px] bg-white -bottom-[570px] md:-bottom-[620px] -right-[570px] rotate-[45deg] -z-0" />
+                    <div className="space-y-5 md:w-1/2">
                         <h1 className="text-xl md:text-4xl 3xl:text-6xl font-bold text-white">
                             Pengembalian Barang Warehouse Management SMKN 7
                             Semarang
@@ -124,20 +165,76 @@ const Pengembalian = ({
                             <p className="font-bold md:text-xl">
                                 Pilih Nama Item
                             </p>
-                            <SelectDropdown
-                                rentals={rentals}
-                                auth={auth}
-                                selectedValue={selectedValue}
-                                handleOptionSelect={handleOptionSelect}
-                                isOpen={isSelect}
-                                toggleDropdown={() => setSelect(!isSelect)}
-                            />
+                            <div className="flex items-end">
+                                <div className="flex-1">
+                                    <SelectDropdown
+                                        returns={returns}
+                                        rentals={rentals}
+                                        auth={auth}
+                                        selectedValue={selectedValue}
+                                        handleOptionSelect={handleOptionSelect}
+                                        isOpen={isSelect}
+                                        toggleDropdown={() =>
+                                            setSelect(!isSelect)
+                                        }
+                                    />
+                                </div>
+                                <Menu>
+                                    <MenuButton
+                                        as={Button}
+                                        width="10px"
+                                        bg="transparent"
+                                        _active={{ bg: "transparent" }}
+                                        _hover={{ bg: "transparent" }}
+                                    >
+                                        <div className="absolute bottom-0 left-4">
+                                            <Bell size={36} color="#fff" />
+                                            {returns.map((returning) => {
+                                                return auth.user.id ===
+                                                    returning.user_id &&
+                                                    returning.status ? (
+                                                    <div
+                                                        className="rounded-full bg-white w-4 h-4 flex justify-center items-center absolute bottom-4 left-4"
+                                                        key={returning.id}
+                                                    >
+                                                        <p className="text-azka text-xs">
+                                                            {acceptData++}
+                                                        </p>
+                                                    </div>
+                                                ) : (
+                                                    ""
+                                                );
+                                            })}
+                                        </div>
+                                    </MenuButton>
+                                    <MenuList zIndex={2}>
+                                        <MenuItem>
+                                            <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+                                                <thead className="bg-gray-200">
+                                                    <tr className="divide-x divide-gray-50">
+                                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                            Item
+                                                        </th>
+                                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                            Tanggal
+                                                        </th>
+                                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                            Keterangan
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>{MenuAccept}</tbody>
+                                            </table>
+                                        </MenuItem>
+                                    </MenuList>
+                                </Menu>
+                            </div>
                         </div>
                     </div>
-                    <div className="w-full md:w-1/2 md:h-96 md:px-20 3xl:px-40 h-60 rounded-md z-10">
+                    <div className="w-full md:w-1/2 md:flex items-center md:h-96 h-60 rounded-md z-0">
                         <button
                             onClick={() => setOpen(!isOpen)}
-                            className="text-white flex flex-col items-center justify-center w-full h-full bg-upload rounded-lg"
+                            className="text-white flex flex-col items-center justify-center w-full h-48 xl:h-60 3xl:h-[275px] bg-upload rounded-lg"
                         >
                             <div className="flex justify-center">
                                 <div className="animate-bounce">
@@ -182,7 +279,10 @@ const Pengembalian = ({
                                             date.rent_date === rental.rent_date
                                     );
                                     return (
-                                        <div className="flex-col flex px-5 gap-4">
+                                        <div
+                                            key={rental.id}
+                                            className="flex-col flex px-5 gap-4"
+                                        >
                                             <div className="flex flex-col self-center">
                                                 <h1 className="font-bold text-lg">
                                                     Preview Upload
@@ -226,16 +326,17 @@ const Pengembalian = ({
                                                 <h1>
                                                     Tangal Peminjaman:{" "}
                                                     <span>
-                                                        {rental.rent_date.slice(
-                                                            0,
-                                                            10
+                                                        {formattedDate(
+                                                            rental.rent_date
                                                         )}
                                                     </span>
                                                 </h1>
                                                 <h1>
                                                     Tangal Pengembalian:{" "}
                                                     <span>
-                                                        {rental.return_date}
+                                                        {formattedDate(
+                                                            rental.return_date
+                                                        )}
                                                     </span>
                                                 </h1>
                                                 {!dateReturn?.photo ? (
@@ -323,40 +424,3 @@ const Pengembalian = ({
 };
 
 export default Pengembalian;
-
-{
-    /* <table className="bg-white shadow-xl rounded-lg overflow-hidden text-xs md:text-lg min-w-min">
-                        <thead className="bg-blue-300 text-left">
-                            <tr className="divide-x-2 divide-blue-400">
-                                <th className="px-4 py-2 md:w-10">No.</th>
-                                <th className="px-4 py-2 md:w-60">Item</th>
-                                <th className="px-4 py-2 md:w-20">Upload</th>
-                                <th className="px-4 py-2">Keterangan</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {rentals.map((ren, idx) => {
-                                if (
-                                    auth.user.id === ren.user_id &&
-                                    ren.status
-                                ) {
-                                    return (
-                                        <TableRow
-                                            key={ren.id}
-                                            ren={ren}
-                                            idx={idx}
-                                            data={data}
-                                            handleFileChange={handleFileChange}
-                                            handleRefund={handleRefund}
-                                            isLoading={isLoading}
-                                            handleButtonInfo={handleButtonInfo}
-                                            isInfoOpen={isInfoOpen}
-                                            returns={returns}
-                                            infoLoading={infoLoading}
-                                        />
-                                    );
-                                }
-                            })}
-                        </tbody>
-                    </table> */
-}
