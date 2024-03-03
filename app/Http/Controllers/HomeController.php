@@ -25,7 +25,7 @@ class HomeController extends Controller
         }
         return Inertia::render("Home/index", [
             'rental_count' => Rental::where('user_id',$player)->where('status',1)->count(),
-            'return_count' => Returning::where('user_id',$player)->where('status',1)->whereNotNull('photo')->count(),
+            'return_count' => Returning::where('user_id',$player)->where('status',1)->count(),
             'initial' => $initial,
         ]);
     }
