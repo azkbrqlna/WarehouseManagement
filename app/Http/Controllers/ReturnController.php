@@ -63,7 +63,7 @@ class ReturnController extends Controller
     //For User
     public function indexUser()
     {
-        $user = auth()->id();
+        $user = Auth::id();
         $player = Auth::user();
         $username = $player->username;
         $words = explode(' ', $username);

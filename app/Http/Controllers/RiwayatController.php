@@ -23,8 +23,6 @@ class RiwayatController extends Controller
             $initial .= Str::upper(Str::substr($word, 0, 1));
         }
         return Inertia::render("Riwayat/index", [
-            'rental_count' => Rental::where('status', '!=', 1)->count(),
-            'return_count' => Returning::where('status', '!=', 1)->whereNotNull('photo')->count(),
             'initial' => $initial,
             'logs' => Log::with(['item', 'user'])->get(),
         ]);
