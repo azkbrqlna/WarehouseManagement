@@ -96,7 +96,7 @@ const Pengembalian = ({
             returning.status && (
                 <tr
                     key={returning.id}
-                    className="bg-white hover:bg-gray-100 divide-x divide-gray-100 text-gray-700"
+                    className="bg-white hover:bg-gray-100 divide-x divide-gray-100 text-gray-700 text-[11px]"
                 >
                     <td className="px-4 py-2 whitespace-nowrap">
                         {returning.item.name}
@@ -201,16 +201,16 @@ const Pengembalian = ({
                                     </MenuButton>
                                     <MenuList zIndex={2}>
                                         <MenuItem>
-                                            <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+                                            <table className="min-w-full bg-white shadow-md rounded-lg">
                                                 <thead className="bg-gray-200">
                                                     <tr className="divide-x divide-gray-50">
-                                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        <th className="px-4 py-2 text-left text-[11px] font-medium text-gray-500 uppercase tracking-wider">
                                                             Item
                                                         </th>
-                                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        <th className="px-4 py-2 text-left text-[11px] font-medium text-gray-500 uppercase tracking-wider">
                                                             Tanggal
                                                         </th>
-                                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                        <th className="px-4 py-2 text-left text-[11px] font-medium text-gray-500 uppercase tracking-wider">
                                                             Keterangan
                                                         </th>
                                                     </tr>
