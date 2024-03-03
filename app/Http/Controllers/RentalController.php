@@ -18,12 +18,8 @@ class RentalController extends Controller
     //for admin
     public function indexAdmin()
     {
-        return Inertia::render("Dashboard/Request/index", [
-            'rental_count' => Rental::where('status', '!=', 1)->count(),
-            'return_count' => Returning::where('status', '!=', 1)->whereNotNull('photo')->count(),
-        ]);
+        return Inertia::render("Dashboard/Request/index");
     }
-
     public function rentalAdmin()
     {
         return Inertia::render("Dashboard/Request/Rental/index", [
@@ -84,6 +80,7 @@ class RentalController extends Controller
     //for user
     public function indexUser()
     {
+        $player = Auth::id();
         $user = Auth::user();
         $username = $user->username;
         $words = explode(' ', $username);
@@ -94,8 +91,8 @@ class RentalController extends Controller
         return Inertia::render("Peminjaman/index", [
             'items' => Item::all(),
             'rentals' => Rental::with(['item', 'user'])->get(),
-            'rental_count' => Rental::where('status', '!=', 1)->count(),
-            'return_count' => Returning::where('status', '!=', 1)->whereNotNull('photo')->count(),
+            'rental_count' => Rental::where('user_id',$player)->where('status',1)->count(),
+            'return_count' => Returning::where('user_id',$player)->where('status',1)->count(),
             'initial' => $initial
         ]);
     }
