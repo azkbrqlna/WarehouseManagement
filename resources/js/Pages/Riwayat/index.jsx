@@ -47,6 +47,8 @@ export default function Riwayat({
         setSelectedData(data);
         setOpen(true);
     };
+
+    console.log(process);
     return (
         <>
             <Head title="Riwayat" />
@@ -94,10 +96,15 @@ export default function Riwayat({
                     <div className="md:grid md:grid-cols-2 lg:grid-cols-3 gap-x-10">
                         {activeData.map((data, index) => {
                             const currentDate = new Date();
-                            const returnDate = new Date(data.actual_return_date);
-                            const diffTime = currentDate.getTime() - returnDate.getTime();
-                            const diffDay = Math.ceil(diffTime / (1000 * 3600 * 24));
-                            if (diffDay > 25) {
+                            const returnDate = new Date(
+                                data.actual_return_date
+                            );
+                            const diffTime =
+                                currentDate.getTime() - returnDate.getTime();
+                            const diffDay = Math.ceil(
+                                diffTime / (1000 * 3600 * 24)
+                            );
+                            if (data.actual_return_date && diffDay > 25) {
                                 return null;
                             }
                             return (
@@ -164,13 +171,25 @@ export default function Riwayat({
                                                     Detail
                                                 </button>
                                             </div>
-                                            <div className="px-2 grow" id="qty">
-                                                <h1 className="text-4xl relative">
-                                                    <span className="absolute right-3 rounded-full px-[6px] bg-border_azka text-white text-sm">
+                                            <div
+                                                className={`px-2 grow ${
+                                                    !data.actual_return_date &&
+                                                    "text-right"
+                                                }`}
+                                                id="qty"
+                                            >
+                                                {data.actual_return_date ? (
+                                                    <h1 className="text-4xl relative">
+                                                        <span className="absolute right-3 rounded-full px-[6px] bg-border_azka text-white text-sm">
+                                                            {data.amount_rental}
+                                                        </span>
+                                                        <ShoppingCart />
+                                                    </h1>
+                                                ) : (
+                                                    <h1 className="text-xl">
                                                         {data.amount_rental}
-                                                    </span>
-                                                    <ShoppingCart />
-                                                </h1>
+                                                    </h1>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
