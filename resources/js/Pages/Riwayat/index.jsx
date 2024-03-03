@@ -47,8 +47,6 @@ export default function Riwayat({
         setSelectedData(data);
         setOpen(true);
     };
-    console.log(rental_count);
-    console.log(return_count);
     return (
         <>
             <Head title="Riwayat" />
@@ -94,77 +92,91 @@ export default function Riwayat({
                         </li>
                     </ul>
                     <div className="md:grid md:grid-cols-2 lg:grid-cols-3 gap-x-10">
-                        {activeData.map((data, index) => (
-                            <div className="text-white" key={index}>
-                                <div className="border-b p-2">
-                                    <span
-                                        className={`font-semibold ${
-                                            !data.actual_return_date && "hidden"
-                                        }`}
-                                        id="tanggal"
-                                    >
-                                        {formatDateMonth(
-                                            data.actual_return_date
-                                        )}
-                                    </span>
-                                    <div className="flex gap-2">
-                                        <figure
-                                            className={`w-24 overflow-hidden rounded-lg ${
-                                                !data.photo && "hidden"
+                        {activeData.map((data, index) => {
+                            const currentDate = new Date();
+                            const returnDate = new Date(data.actual_return_date);
+                            const diffTime = currentDate.getTime() - returnDate.getTime();
+                            const diffDay = Math.ceil(diffTime / (1000 * 3600 * 24));
+                            if (diffDay > 25) {
+                                return null;
+                            }
+                            return (
+                                <div className="text-white" key={index}>
+                                    <div className="border-b p-2">
+                                        <span
+                                            className={`font-semibold ${
+                                                !data.actual_return_date &&
+                                                "hidden"
                                             }`}
+                                            id="tanggal"
                                         >
-                                            <img
-                                                src={`/storage/photos/${data.photo}`}
-                                            />
-                                        </figure>
-                                        <div className="px-1 grow space-y-2">
-                                            <h1
-                                                className="font-bold truncate"
-                                                id="nama"
-                                            >
-                                                {data.item.name}
-                                            </h1>
-                                            {activeTab === "riwayat" ? (
-                                                <div className="flex gap-1 items-center">
-                                                    <span className="rounded-full bg-green-500 text-white flex items-center justify-center p-1 text-xs">
-                                                        <Check />
-                                                    </span>
-                                                    <p
-                                                        className="text-sm font-medium"
-                                                        id="status"
-                                                    >
-                                                        Peminjaman sudah selesai
-                                                    </p>
-                                                </div>
-                                            ) : (
-                                                <div className="flex gap-1 items-center">
-                                                    <p>Sedang dipinjam . . .</p>
-                                                </div>
+                                            {formatDateMonth(
+                                                data.actual_return_date
                                             )}
-                                            <button
-                                                className={`px-10 py-1 bg-blue-500 rounded-lg ${
-                                                    !data.actual_return_date &&
-                                                    "hidden"
+                                        </span>
+                                        <div className="flex gap-2">
+                                            <figure
+                                                className={`w-24 overflow-hidden rounded-lg ${
+                                                    !data.photo && "hidden"
                                                 }`}
-                                                onClick={() =>
-                                                    handleDetailClick(data)
-                                                }
                                             >
-                                                Detail
-                                            </button>
-                                        </div>
-                                        <div className="px-2 grow" id="qty">
-                                            <h1 className="text-4xl relative">
-                                                <span className="absolute right-3 rounded-full px-[6px] bg-border_azka text-white text-sm">
-                                                    {data.amount_rental}
-                                                </span>
-                                                <ShoppingCart />
-                                            </h1>
+                                                <img
+                                                    src={`/storage/photos/${data.photo}`}
+                                                />
+                                            </figure>
+                                            <div className="px-1 grow space-y-2">
+                                                <h1
+                                                    className="font-bold truncate"
+                                                    id="nama"
+                                                >
+                                                    {data.item.name}
+                                                </h1>
+                                                {activeTab === "riwayat" ? (
+                                                    <div className="flex gap-1 items-center">
+                                                        <span className="rounded-full bg-green-500 text-white flex items-center justify-center p-1 text-xs">
+                                                            <Check />
+                                                        </span>
+                                                        <p
+                                                            className="text-sm font-medium"
+                                                            id="status"
+                                                        >
+                                                            Peminjaman sudah
+                                                            selesai
+                                                        </p>
+                                                    </div>
+                                                ) : (
+                                                    <div className="flex gap-1 items-center">
+                                                        <p>
+                                                            Sedang dipinjam . .
+                                                            .
+                                                        </p>
+                                                    </div>
+                                                )}
+                                                <button
+                                                    className={`px-10 py-1 bg-blue-500 rounded-lg ${
+                                                        !data.actual_return_date &&
+                                                        "hidden"
+                                                    }`}
+                                                    onClick={() =>
+                                                        handleDetailClick(data)
+                                                    }
+                                                >
+                                                    Detail
+                                                </button>
+                                            </div>
+                                            <div className="px-2 grow" id="qty">
+                                                <h1 className="text-4xl relative">
+                                                    <span className="absolute right-3 rounded-full px-[6px] bg-border_azka text-white text-sm">
+                                                        {data.amount_rental}
+                                                    </span>
+                                                    <ShoppingCart />
+                                                </h1>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </nav>
             </div>

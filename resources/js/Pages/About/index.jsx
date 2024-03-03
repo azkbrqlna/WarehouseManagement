@@ -72,7 +72,7 @@ export default function About({ rental_count, return_count, initial }) {
                             Our Sponsor
                         </h1>
                         <Marquee className="z-0">
-                            <div className="flex gap-[7.6px] md:gap-1 lg:gap-4">
+                            <div className="flex gap-[4.3px] md:gap-1 lg:gap-4">
                                 <CardSponsor
                                     link="https://citra.net.id/"
                                     src={SIJA}
