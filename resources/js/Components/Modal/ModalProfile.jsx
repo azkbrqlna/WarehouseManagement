@@ -91,6 +91,7 @@ export default function ModalProfile({
                                     isOpen={isAlertDialogOpen}
                                     leastDestructiveRef={cancelRef}
                                     onClose={onAlertDialogClose}
+                                    size={{ base: "xs", md: "sm" }}
                                 >
                                     <AlertDialogOverlay>
                                         <AlertDialogContent>

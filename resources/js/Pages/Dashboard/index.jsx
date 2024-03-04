@@ -78,7 +78,7 @@ const Dashboard = ({
                         </p>
                     </OverviewCard>
                 </section>
-                <section className="bg-white mt-5 rounded-md max-h-full p-4">
+                <section className="bg-white mt-5 rounded-md max-h-full p-4 z-10">
                     <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden text-xs">
                         <thead className="bg-neutral-200 text-left">
                             <tr className="divide-x-2 divide-neutral-300">
@@ -184,12 +184,14 @@ const Dashboard = ({
                         currentPage={logs?.current_page}
                     />
                 </section>
-                <div className="absolute bottom-0 left-0 right-0 flex items-end justify-end p-4">
+                <div className="absolute bottom-0 right-0 flex items-end justify-end p-4 z-0">
                     <a
                         href="/dashboard/export"
-                        className="p-3 rounded-full bg-white hover:bg-slate-50 hover:animate-bounce transition-colors duration-200 ease-in-out"
+                        className="p-2 rounded-full bg-white group hover:bg-green-500 hover:scale-110 transition-colors duration-200 ease-in-out"
                     >
-                        <MicrosoftExcelLogo size={25} color="#16a34a" />
+                        <h1 className="text-2xl text-green-500 group-hover:text-white transition-colors duration-150 ease-in-out">
+                            <MicrosoftExcelLogo />
+                        </h1>
                     </a>
                 </div>
             </Dashboardlayout>

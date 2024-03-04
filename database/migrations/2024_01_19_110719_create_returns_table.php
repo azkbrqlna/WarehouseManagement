@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('item_id')->constrained('items')->cascadeOnDelete();
-            $table->string('amount_return')->nullable();
+            $table->integer('amount_return')->nullable();
             $table->dateTime('rent_date')->nullable();
             $table->dateTime('actual_return_date')->nullable();
             $table->string('photo')->nullable();

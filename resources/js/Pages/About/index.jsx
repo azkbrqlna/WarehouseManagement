@@ -81,7 +81,7 @@ export default function About({ rental_count, return_count, initial }) {
                         ></path>
                     </svg>
                 </header>
-                <main className="min-h-0 lg:min-h-screen w-full px-10 md:px-20 py-10 space-y-20">
+                <main className="min-h-screen w-full px-10 md:px-20 md:py-10 space-y-20">
                     <section id="sponsor" className="mt-10 space-y-10">
                         <h1 className="text-4xl font-bold text-center text-white">
                             Our Sponsor
@@ -149,7 +149,7 @@ export default function About({ rental_count, return_count, initial }) {
                         </p>
                     </div>
                 </main>
-                <main className="min-h-0 lg:min-h-screen w-full px-10 md:px-20 md:py-10 space-y-10 bg-white">
+                <main className="min-h-0 lg:min-h-screen w-full px-10 md:px-20 py-10 space-y-10 bg-white">
                     <div id="benefit" className="text-white space-y-3">
                         <h1 className="text-4xl font-bold text-center text-azka">
                             Benefit

@@ -25,6 +25,7 @@ class RentalController extends Controller
         return Inertia::render("Dashboard/Request/Rental/index", [
             'rentals' => Rental::where('status', false)->with(['item', 'user'])->paginate(10),
             'users' => User::all(),
+            'items' => Item::all(),
         ]);
     }
 

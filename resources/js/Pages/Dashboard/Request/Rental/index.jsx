@@ -1,61 +1,70 @@
 import { ArrowDown, ArrowLeft, Check, X } from "@phosphor-icons/react";
-import {
-    Box,
-    Button,
-    Collapse,
-    Table,
-    Tbody,
-    Td,
-    Th,
-    Thead,
-    Tr,
-    useDisclosure,
-    useToast,
-} from "@chakra-ui/react";
+import { Collapse, useDisclosure, useToast } from "@chakra-ui/react";
 import { router } from "@inertiajs/react";
 import AdminLayout from "@/Layouts/AdminLayout";
 import Pagination from "@/Components/Fragments/Pagination";
 
-const Rental = ({ rental, index }) => {
+const Rental = ({ rental, index, items, rentals }) => {
     const toast = useToast();
     const { isOpen, onToggle } = useDisclosure();
+    const availableItem = items.find((item) => item.id === rental.item_id);
 
     const handleAccept = (id, status) => {
-        router.patch(
-            `/request/rental/${id}`,
-            {
-                user_id: rental.user_id,
-                item_id: rental.item_id,
-                reason: rental.reason,
-                status,
-                rent_date: rental.rent_date,
-                return_date: rental.return_date,
-            },
-            {
-                onSuccess: () => {
-                    toast({
-                        title: "Berhasil menyetujui peminjaman",
-                        status: "success",
-                    });
+        if (availableItem?.total_item >= rental.amount_rental) {
+            router.patch(
+                `/request/rental/${id}`,
+                {
+                    user_id: rental.user_id,
+                    item_id: rental.item_id,
+                    reason: rental.reason,
+                    status,
+                    rent_date: rental.rent_date,
+                    return_date: rental.return_date,
                 },
-                onError: (error) => {
-                    console.log(error);
-                    toast({
-                        title: "Gagal menyetujui peminjaman",
-                        status: "error",
-                    });
-                },
-            }
-        );
+                {
+                    onSuccess: () => {
+                        toast({
+                            title: "Berhasil menyetujui peminjaman",
+                            status: "success",
+                        });
+                        const availableItemAfterAccept = rentals?.data.find(
+                            (borrow) => borrow.item_id === rental.item_id
+                        );
+                        if (
+                            availableItem?.total_item - rental.amount_rental <
+                            availableItemAfterAccept.amount_rental
+                        ) {
+                            handleDeclined(availableItemAfterAccept?.id, true);
+                        }
+                    },
+                    onError: (error) => {
+                        console.log(error);
+                        toast({
+                            title: "Gagal menyetujui peminjaman",
+                            status: "error",
+                        });
+                    },
+                }
+            );
+        } else {
+            alert("Request melebihi jumlah barang!");
+        }
     };
 
-    const handleDeclined = (id) => {
+    const handleDeclined = (id, isFromAccept) => {
         router.delete(`/request/rental/${id}`, {
             onSuccess: () => {
-                toast({
-                    title: "Berhasil menolak peminjaman",
-                    status: "success",
-                });
+                if (isFromAccept) {
+                    toast({
+                        title: "Menghapus request yang melebihi jumlah barang",
+                        status: "info",
+                    });
+                } else {
+                    toast({
+                        title: "Berhasil menolak peminjaman",
+                        status: "success",
+                    });
+                }
             },
             onError: () => {
                 toast({
@@ -71,8 +80,12 @@ const Rental = ({ rental, index }) => {
             <tr key={index}>
                 <td className="align-top px-4 pt-4">{index + 1}</td>
                 <td className="align-top px-4 pt-4">{rental.user.username}</td>
-                <td className="align-top px-4 pt-4 max-w-max">{rental.user.nis}</td>
-                <td className="align-top px-4 pt-4 max-w-max">{rental.user.kelas}</td>
+                <td className="align-top px-4 pt-4 max-w-max">
+                    {rental.user.nis}
+                </td>
+                <td className="align-top px-4 pt-4 max-w-max">
+                    {rental.user.kelas}
+                </td>
                 <td className="px-4 py-2 w-80">
                     <button
                         onClick={onToggle}
@@ -112,7 +125,7 @@ const Rental = ({ rental, index }) => {
                         <Check size={20} />
                     </button>
                     <button
-                        onClick={() => handleDeclined(rental.id)}
+                        onClick={() => handleDeclined(rental.id, false)}
                         className="p-2 bg-red-600 hover:bg-red-500 transition-all duration-100 ease-in rounded-md w-full text-white flex justify-center items-center"
                     >
                         <X size={20} />
@@ -122,7 +135,7 @@ const Rental = ({ rental, index }) => {
         </>
     );
 };
-const RequestPage = ({ rentals }) => {
+const RequestPage = ({ rentals, items }) => {
     return (
         <>
             <AdminLayout
@@ -148,7 +161,9 @@ const RequestPage = ({ rentals }) => {
                                 <Rental
                                     key={index}
                                     rental={rental}
+                                    rentals={rentals}
                                     index={index}
+                                    items={items}
                                 />
                             ))}
                         </tbody>
