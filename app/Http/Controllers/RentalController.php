@@ -26,6 +26,7 @@ class RentalController extends Controller
             'rentals' => Rental::where('status', false)->with(['item', 'user'])->paginate(10),
             'users' => User::all(),
             'items' => Item::all(),
+            'over_qty' => '',
         ]);
     }
 
@@ -38,37 +39,38 @@ class RentalController extends Controller
         $rental = Rental::find($request->id);
         $item = Item::find($request->item_id);
 
-        if ($rental->amount_rental > $item->total_item) {
-            dd('error');
-            return redirect('/request/rental');
-        }else {
-            // Mengurangi stok barang
-            $item->total_item -= $rental->amount_rental;
-            $item->save();
+        // Mengurangi stok barang
+        $item->total_item -= $rental->amount_rental;
+        $item->save();
 
-            // Mengubah status penyewaan
-            $rental->status = true;
-            $rental->save();
 
-            // Membuat log
-            Log::create([
-                'user_id' => $request->user_id,
-                'item_id' => $request->item_id,
-                'reason' => $request->reason,
-                'amount_rental' => $rental->amount_rental,
-                'rent_date' => $request->rent_date,
-                'return_date' => $request->return_date,
-            ]);
-
-            // Membuat data pengembalian
-            Returning::create([
-                'user_id' => $request->user_id,
-                'item_id' => $request->item_id,
-                'amount_return' => $rental->amount_rental,
-                'rent_date' => $request->rent_date,
-            ]);
-            return redirect('/request/rental');
+        // Mengubah status penyewaan
+        $rental->status = true;
+        $rental->save();
+        if ($item->total_item <= 0) {
+            $hapusUserReload = Rental::where('item_id', $request->item_id)->where('status', false);
+            $hapusUserReload->delete();
         }
+        
+        // Membuat log
+        Log::create([
+            'user_id' => $request->user_id,
+            'item_id' => $request->item_id,
+            'reason' => $request->reason,
+            'amount_rental' => $rental->amount_rental,
+            'rent_date' => $request->rent_date,
+            'return_date' => $request->return_date,
+        ]);
+
+        // Membuat data pengembalian
+        Returning::create([
+            'user_id' => $request->user_id,
+            'item_id' => $request->item_id,
+            'amount_return' => $rental->amount_rental,
+            'rent_date' => $request->rent_date,
+        ]);
+
+        return redirect('/request/rental');
     }
 
     public function rejectRental(Request $request)
@@ -92,8 +94,8 @@ class RentalController extends Controller
         return Inertia::render("Peminjaman/index", [
             'items' => Item::all(),
             'rentals' => Rental::with(['item', 'user'])->get(),
-            'rental_count' => Rental::where('user_id',$player)->where('status',1)->count(),
-            'return_count' => Returning::where('user_id',$player)->where('status',1)->count(),
+            'rental_count' => Rental::where('user_id', $player)->where('status', 1)->count(),
+            'return_count' => Returning::where('user_id', $player)->where('status', 1)->count(),
             'initial' => $initial
         ]);
     }
@@ -114,9 +116,6 @@ class RentalController extends Controller
             'rent_date' => $request->rent_date,
             'return_date' => $request->return_date,
         ]);
-        // $item = Item::find($request->item_id);
-        // $item->total_item -= $request->amount_rental;
-        // $item->save();
 
         return redirect('/peminjaman');
     }
