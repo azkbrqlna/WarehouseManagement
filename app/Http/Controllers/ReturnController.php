@@ -63,20 +63,21 @@ class ReturnController extends Controller
     //For User
     public function indexUser()
     {
-        $user = Auth::id();
-        $player = Auth::user();
-        $username = $player->username;
+        $player = Auth::id();
+        $user = Auth::user();
+        $username = $user->username;
         $words = explode(' ', $username);
-        $initial = '';
-        foreach ($words as $word) {
-            $initial .= Str::upper(Str::substr($word, 0, 1));
-        }
+        $initials = array_map(function ($word) {
+            return strtoupper(substr($word, 0, 1));
+        }, $words);
+        $initial = implode('', $initials);
+        $initial = substr($initial, 0, 3);
         return Inertia::render("Pengembalian/index", [
             'rentals' => Rental::with(['item', 'user'])->where('user_id', $user)->get(),
             'returns' => Returning::with(['item'])->get(),
             'items' => Item::all(),
-            'rental_count' => Rental::where('user_id',$user)->where('status',1)->count(),
-            'return_count' => Returning::where('user_id',$user)->where('status',1)->count(),
+            'rental_count' => Rental::where('user_id',$player)->where('status',1)->count(),
+            'return_count' => Returning::where('user_id',$player)->where('status',1)->count(),
             'initial' => $initial,
         ]);
     }

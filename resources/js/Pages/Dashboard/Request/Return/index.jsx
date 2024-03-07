@@ -107,6 +107,7 @@ const RequestPage = ({ returns }) => {
                 content="Back"
                 href="/requests"
                 icon={ArrowLeft}
+                onOpen={() => window.location.href = "/dashboard"}
             >
                 <header className="bg-white mt-5 rounded-md max-h-screen p-7">
                     <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
