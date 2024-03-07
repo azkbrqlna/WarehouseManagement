@@ -27,15 +27,29 @@ const Rental = ({ rental, index, items, rentals }) => {
                             title: "Berhasil menyetujui peminjaman",
                             status: "success",
                         });
+<<<<<<< HEAD
                         const availableItemAfterAccept = rentals?.data.filter(
                             (borrow) => borrow.item_id === rental.item_id
+=======
+                        const userSameItem = rentals?.data.filter(
+                            (borrow) =>
+                                borrow.item_id === rental.item_id &&
+                                borrow.id !== rental.id
+>>>>>>> c1b71fc77293482547912fecc58a0b29a501bb78
                         );
-                        if (
-                            availableItem?.total_item - rental.amount_rental <
-                            availableItemAfterAccept.amount_rental
-                        ) {
-                            handleDeclined(availableItemAfterAccept?.id, true);
-                        }
+                        userSameItem.forEach((item) => {
+                            if (
+                                availableItem?.total_item -
+                                    rental.amount_rental <
+                                item.amount_rental
+                            ) {
+                                // handleDeclined(item.id, true);
+                                toast({
+                                    title: `Menghapus request ${item.id} karena melebihi quota`,
+                                    status: "success",
+                                });
+                            }
+                        });
                     },
                     onError: (error) => {
                         console.log(error);
@@ -56,7 +70,7 @@ const Rental = ({ rental, index, items, rentals }) => {
             onSuccess: () => {
                 if (isFromAccept) {
                     toast({
-                        title: "Menghapus request yang melebihi jumlah barang",
+                        title: `Menghapus request ${id} karena melebihi jumlah barang`,
                         status: "info",
                     });
                 } else {
@@ -161,9 +175,9 @@ const RequestPage = ({ rentals, items }) => {
                                 <Rental
                                     key={index}
                                     rental={rental}
-                                    rentals={rentals}
                                     index={index}
                                     items={items}
+                                    rentals={rentals}
                                 />
                             ))}
                         </tbody>

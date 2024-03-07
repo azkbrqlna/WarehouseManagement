@@ -184,7 +184,7 @@ const Dashboard = ({
                         currentPage={logs?.current_page}
                     />
                 </section>
-                <div className="absolute bottom-0 right-0 flex items-end justify-end p-4 z-0">
+                <div className="absolute bottom-0 right-0 flex items-end justify-end p-2 z-0">
                     <a
                         href="/dashboard/export"
                         className="p-2 rounded-full bg-white group hover:bg-green-500 hover:scale-110 transition-colors duration-200 ease-in-out"

@@ -36,7 +36,13 @@ const Register = () => {
             username: yup.string().required("Username is required"),
             nis: yup.string().required("NIS is required").min(10).max(10),
             kelas: yup.string().required("Class is required"),
-            password: yup.string().required("Password is required"),
+            password: yup
+                .string()
+                .required("Password is required")
+                .matches(
+                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+                    "Password must have lowercase, uppercase, number, special character, and 8 letter"
+                ),
             confirmpassword: yup
                 .string()
                 .oneOf([yup.ref("password"), null], "Passwords must match"),
@@ -47,8 +53,8 @@ const Register = () => {
         formik.setFieldValue(event.target.name, event.target.value);
     };
     return (
-        <AuthLayout endpoint='Register'>
-            <h1 className="font-bold text-3xl md:text-4xl 2xl:text-3xl mb-2 capitalize">
+        <AuthLayout endpoint="Register">
+            <h1 className="font-bold text-2xl 2xl:text-3xl mb-2 capitalize">
                 Silahkan daftarkan akun anda!
             </h1>
             <p className="font-light text-lg mb-5 2xl:mb-10 md:text-lg">
@@ -89,66 +95,69 @@ const Register = () => {
                                     {formik.errors.username}
                                 </FormErrorMessage>
                             </FormControl>
-                            <FormControl
-                                isInvalid={
-                                    formik.errors.nis && formik.touched.nis
-                                }
-                            >
-                                <FormLabel
-                                    display={{
-                                        base: "none",
-                                        md: "block",
-                                    }}
+                            <div className="lg:flex gap-4 space-y-4 lg:space-y-0">
+                                <FormControl
+                                    isInvalid={
+                                        formik.errors.nis && formik.touched.nis
+                                    }
                                 >
-                                    NIS
-                                </FormLabel>
-                                <Input
-                                    onChange={handleFormInput}
-                                    value={formik.values.nis}
-                                    name="nis"
-                                    placeholder="NIS"
-                                    _placeholder={{
-                                        color: {
-                                            base: "white",
-                                            xl: "gray.500",
-                                        },
-                                        opacity: 0.5,
-                                    }}
-                                />
-                                <FormErrorMessage>
-                                    {formik.errors.nis}
-                                </FormErrorMessage>
-                            </FormControl>
-                            <FormControl
-                                isInvalid={
-                                    formik.errors.kelas && formik.touched.kelas
-                                }
-                            >
-                                <FormLabel
-                                    display={{
-                                        base: "none",
-                                        md: "block",
-                                    }}
+                                    <FormLabel
+                                        display={{
+                                            base: "none",
+                                            md: "block",
+                                        }}
+                                    >
+                                        NIS
+                                    </FormLabel>
+                                    <Input
+                                        onChange={handleFormInput}
+                                        value={formik.values.nis}
+                                        name="nis"
+                                        placeholder="NIS"
+                                        _placeholder={{
+                                            color: {
+                                                base: "white",
+                                                xl: "gray.500",
+                                            },
+                                            opacity: 0.5,
+                                        }}
+                                    />
+                                    <FormErrorMessage>
+                                        {formik.errors.nis}
+                                    </FormErrorMessage>
+                                </FormControl>
+                                <FormControl
+                                    isInvalid={
+                                        formik.errors.kelas &&
+                                        formik.touched.kelas
+                                    }
                                 >
-                                    Kelas
-                                </FormLabel>
-                                <Input
-                                    onChange={handleFormInput}
-                                    value={formik.values.kelas}
-                                    name="kelas"
-                                    placeholder="Kelas"
-                                    _placeholder={{
-                                        color: {
-                                            base: "white",
-                                            xl: "gray.500",
-                                        },
-                                        opacity: 0.5,
-                                    }}
-                                />
-                                <FormErrorMessage>
-                                    {formik.errors.kelas}
-                                </FormErrorMessage>
-                            </FormControl>
+                                    <FormLabel
+                                        display={{
+                                            base: "none",
+                                            md: "block",
+                                        }}
+                                    >
+                                        Kelas
+                                    </FormLabel>
+                                    <Input
+                                        onChange={handleFormInput}
+                                        value={formik.values.kelas}
+                                        name="kelas"
+                                        placeholder="Kelas"
+                                        _placeholder={{
+                                            color: {
+                                                base: "white",
+                                                xl: "gray.500",
+                                            },
+                                            opacity: 0.5,
+                                        }}
+                                    />
+                                    <FormErrorMessage>
+                                        {formik.errors.kelas}
+                                    </FormErrorMessage>
+                                </FormControl>
+                            </div>
                         </div>
                         <div className="flex flex-col gap-4 md:gap-2 2xl:w-full">
                             <FormControl
