@@ -37,6 +37,7 @@ class ReturnController extends Controller
         $item = Item::where('id', $rental->item_id)->first();
         $amount = Returning::find($request->item_id);
         $item->total_item += $amount->amount_return;
+        $item->status = true;
         $item->save();
 
         // Memperbarui log dengan informasi pengembalian
