@@ -27,7 +27,7 @@ const Rental = ({ rental, index, items, rentals }) => {
                             title: "Berhasil menyetujui peminjaman",
                             status: "success",
                         });
-                        const availableItemAfterAccept = rentals?.data.find(
+                        const availableItemAfterAccept = rentals?.data.filter(
                             (borrow) => borrow.item_id === rental.item_id
                         );
                         if (
