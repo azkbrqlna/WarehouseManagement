@@ -27,15 +27,10 @@ const Rental = ({ rental, index, items, rentals }) => {
                             title: "Berhasil menyetujui peminjaman",
                             status: "success",
                         });
-<<<<<<< HEAD
-                        const availableItemAfterAccept = rentals?.data.filter(
-                            (borrow) => borrow.item_id === rental.item_id
-=======
                         const userSameItem = rentals?.data.filter(
                             (borrow) =>
                                 borrow.item_id === rental.item_id &&
                                 borrow.id !== rental.id
->>>>>>> c1b71fc77293482547912fecc58a0b29a501bb78
                         );
                         userSameItem.forEach((item) => {
                             if (
