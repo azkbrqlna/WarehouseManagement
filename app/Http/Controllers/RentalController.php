@@ -47,8 +47,10 @@ class RentalController extends Controller
         $rental->status = true;
         $rental->save();
         if ($item->total_item <= 0) {
-            $hapusUserReload = Rental::where('item_id', $request->item_id)->where('status', false);
-            $hapusUserReload->delete();
+            Rental::where('item_id', $request->item_id)->where('status', false)->delete();
+
+            $item->status = false;
+            $item->save();
         }
         
         // Membuat log
