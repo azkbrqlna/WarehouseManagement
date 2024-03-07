@@ -26,7 +26,6 @@ class RentalController extends Controller
             'rentals' => Rental::where('status', false)->with(['item', 'user'])->paginate(10),
             'users' => User::all(),
             'items' => Item::all(),
-            'over_qty' => '',
         ]);
     }
 
@@ -87,10 +86,11 @@ class RentalController extends Controller
         $user = Auth::user();
         $username = $user->username;
         $words = explode(' ', $username);
-        $initial = '';
-        foreach ($words as $word) {
-            $initial .= Str::upper(Str::substr($word, 0, 1));
-        }
+        $initials = array_map(function ($word) {
+            return strtoupper(substr($word, 0, 1));
+        }, $words);
+        $initial = implode('', $initials);
+        $initial = substr($initial, 0, 3);
         return Inertia::render("Peminjaman/index", [
             'items' => Item::all(),
             'rentals' => Rental::with(['item', 'user'])->get(),

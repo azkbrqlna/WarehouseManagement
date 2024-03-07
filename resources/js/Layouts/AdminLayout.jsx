@@ -28,7 +28,7 @@ export default function AdminLayout({
             <Head title={title} />
             <div className="w-full h-screen flex bg-main">
                 <Sidebar />
-                <main className="h-screen w-full bg-main px-8 py-16">
+                <main className="h-screen w-full bg-main px-8 py-16 overflow-y-auto none-scrollbar">
                     <div className="flex justify-between">
                         <h1 className="font-bold text-2xl">{title}</h1>
                         <Button

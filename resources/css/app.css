@@ -16,3 +16,11 @@ body {
 .shadow-top-right-bottom {
     box-shadow: 20px 20px 5px -5px rgba(100, 100, 100, 100.75);
 }
+
+.none-scrollbar {
+    scrollbar-width: none;
+}
+
+.none-scrollbar::-webkit-scrollbar {
+    display: none;
+}

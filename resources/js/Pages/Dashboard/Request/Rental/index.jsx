@@ -60,20 +60,13 @@ const Rental = ({ rental, index, items, rentals }) => {
         }
     };
 
-    const handleDeclined = (id, isFromAccept) => {
+    const handleDeclined = (id) => {
         router.delete(`/request/rental/${id}`, {
             onSuccess: () => {
-                if (isFromAccept) {
-                    toast({
-                        title: `Menghapus request ${id} karena melebihi jumlah barang`,
-                        status: "info",
-                    });
-                } else {
-                    toast({
-                        title: "Berhasil menolak peminjaman",
-                        status: "success",
-                    });
-                }
+                toast({
+                    title: "Berhasil menolak peminjaman",
+                    status: "success",
+                });
             },
             onError: () => {
                 toast({
@@ -152,6 +145,7 @@ const RequestPage = ({ rentals, items }) => {
                 content="Back"
                 href="/requests"
                 icon={ArrowLeft}
+                onOpen={() => window.location.href = "/dashboard"}
             >
                 <header className="bg-white rounded-md max-h-screen p-3 mt-5">
                     <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
