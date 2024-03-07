@@ -73,7 +73,7 @@ class ReturnController extends Controller
         $initial = implode('', $initials);
         $initial = substr($initial, 0, 3);
         return Inertia::render("Pengembalian/index", [
-            'rentals' => Rental::with(['item', 'user'])->where('user_id', $user)->get(),
+            'rentals' => Rental::with(['item', 'user'])->get(),
             'returns' => Returning::with(['item'])->get(),
             'items' => Item::all(),
             'rental_count' => Rental::where('user_id',$player)->where('status',1)->count(),
