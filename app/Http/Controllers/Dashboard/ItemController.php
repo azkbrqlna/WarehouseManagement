@@ -18,11 +18,6 @@ class ItemController extends Controller
         ]);
     }
 
-    public function create()
-    {
-        return Inertia::render('Dashboard/Barang/create');
-    }
-
     public function store(Request $request)
     {
         $validate = $request->validate([

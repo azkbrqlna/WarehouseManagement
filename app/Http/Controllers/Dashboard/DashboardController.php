@@ -30,7 +30,7 @@ class DashboardController extends Controller
             'rental_all' => Rental::where('status',1)->count(),
             'return_all' => Returning::where('status',1)->count(),
             'rental_count' => Rental::where('status', 0)->count(),
-            'return_count' => Returning::where('status', 0)->where('photo','!=',null)->count(),
+            'return_count' => Returning::where('status', 0)->where('photo', null)->count(),
             'logs' => Log::with(['item', 'user'])->paginate(6),
         ]);
         

@@ -207,6 +207,8 @@ const Register = () => {
                                     Confirm Password
                                 </FormLabel>
                                 <Input
+                                    onChange={handleFormInput}
+                                    value={formik.values.confirmpassword}
                                     name="confirmpassword"
                                     type="password"
                                     placeholder="Confirm Password"

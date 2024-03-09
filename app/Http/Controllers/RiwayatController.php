@@ -19,13 +19,14 @@ class RiwayatController extends Controller
         $user = Auth::user();
         $username = $user->username;
         $words = explode(' ', $username);
-        $initial = '';
-        foreach ($words as $word) {
-            $initial .= Str::upper(Str::substr($word, 0, 1));
-        }
+        $initials = array_map(function ($word) {
+            return strtoupper(substr($word, 0, 1));
+        }, $words);
+        $initial = implode('', $initials);
+        $initial = substr($initial, 0, 3);
         return Inertia::render("Riwayat/index", [
-            'rental_count' => Rental::where('user_id',$player)->where('status',1)->count(),
-            'return_count' => Returning::where('user_id',$player)->where('status',1)->count(),
+            'rental_count' => Rental::where('user_id', $player)->where('status', 1)->count(),
+            'return_count' => Returning::where('user_id', $player)->where('status', 1)->count(),
             'initial' => $initial,
             'logs' => Log::with(['item', 'user'])->get(),
         ]);
