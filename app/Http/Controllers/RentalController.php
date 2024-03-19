@@ -52,7 +52,7 @@ class RentalController extends Controller
             $item->status = false;
             $item->save();
         }
-        
+
         // Membuat log
         Log::create([
             'user_id' => $request->user_id,
@@ -107,7 +107,15 @@ class RentalController extends Controller
         $request->validate([
             'reason' => 'required',
             'amount_rental' => 'required',
+            'item_id' => 'required',
         ]);
+
+        $item = Item::find($request->item_id);
+
+        if ($item->status == 0) {
+            return redirect('/peminjaman')->with('error', 'Item tidak tersedia untuk dipinjam saat ini.');
+        }
+        
         $request['rent_date'] = Carbon::now('Asia/Jakarta')->toDateTimeString();
         $request['return_date'] = Carbon::now()->addDays(7)->toDateString();
         Rental::create([
@@ -118,7 +126,7 @@ class RentalController extends Controller
             'rent_date' => $request->rent_date,
             'return_date' => $request->return_date,
         ]);
-
+        
         return redirect('/peminjaman');
     }
 }
