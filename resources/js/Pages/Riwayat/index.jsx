@@ -128,6 +128,7 @@ export default function Riwayat({
                                                 }`}
                                             >
                                                 <img
+                                                    className="w-full h-full object-cover"
                                                     src={`/storage/photos/${data.photo}`}
                                                 />
                                             </figure>
@@ -229,6 +230,7 @@ export default function Riwayat({
                         <main className="py-2 px-3">
                             <figure className="w-40 overflow-hidden rounded-lg border mx-auto mb-10">
                                 <img
+                                    className="w-full h-full object-cover"
                                     src={`/storage/photos/${selectedData.photo}`}
                                 />
                             </figure>

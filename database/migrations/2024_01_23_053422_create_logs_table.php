@@ -17,8 +17,11 @@ return new class extends Migration
             $table->foreignId('item_id')->nullable()->constrained('items')->cascadeOnDelete();
             $table->string('reason')->nullable();
             $table->integer('amount_rental')->nullable();
+            $table->integer('amount_pickup')->nullable();
             $table->dateTime('rent_date')->nullable();
+            $table->dateTime('pickup_date')->nullable();
             $table->date('return_date')->nullable();
+            $table->dateTime('pickup_date_received')->nullable();
             $table->dateTime('actual_return_date')->nullable();
             $table->string('photo')->nullable();
             $table->timestamps();

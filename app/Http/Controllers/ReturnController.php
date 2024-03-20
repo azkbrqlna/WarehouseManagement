@@ -77,8 +77,8 @@ class ReturnController extends Controller
             'rentals' => Rental::with(['item', 'user'])->get(),
             'returns' => Returning::with(['item'])->get(),
             'items' => Item::all(),
-            'rental_count' => Rental::where('user_id',$player)->where('status',1)->count(),
-            'return_count' => Returning::where('user_id',$player)->where('status',1)->count(),
+            'rental_count' => Rental::where('user_id', $player)->where('status', 1)->count(),
+            'return_count' => Returning::where('user_id', $player)->where('status', 1)->count(),
             'initial' => $initial,
         ]);
     }

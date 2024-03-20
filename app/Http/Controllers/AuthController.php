@@ -49,7 +49,7 @@ class AuthController extends Controller
     {
         $validated = $request->validate([
             'username' => 'required|string',
-            'password' => 'required|string',
+            'password' => 'required|string|min:8',
             'kelas' => 'required|string',
             'nis' => 'required|unique:users|numeric|digits_between:9,10',
         ]);

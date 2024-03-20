@@ -18,21 +18,21 @@ import { useState } from "react";
 import Headroom from "react-headroom";
 import { Bell } from "@phosphor-icons/react";
 
-const Peminjaman = ({
+export default function Pengambilan({
     items,
-    rentals,
+    pickups,
     auth,
     rental_count,
     return_count,
     initial,
-}) => {
+}) {
     const [isBorder, setBorder] = useState(false);
     const [isLoading, setLoading] = useState(false);
     const [isInfoOpen, setInfoOpen] = useState({});
     const [isBorrowAmount, setBorrowAmount] = useState(1);
     const [filteredItems, setFilteredItems] = useState(
         items.filter((item) => {
-            return item.jenis === "peminjaman";
+            return item.jenis === "pengambilan";
         })
     );
     const toast = useToast();
@@ -46,15 +46,34 @@ const Peminjaman = ({
         reason: "",
     });
 
-    const handleSubmit = (e, itemID, amount_rental) => {
+    function timeAgo(date) {
+        const seconds = Math.floor((Date.now() - date) / 1000);
+        const intervals = {
+            tahun: Math.floor(seconds / 31536000),
+            bulan: Math.floor(seconds / 2592000),
+            hari: Math.floor(seconds / 86400),
+            jam: Math.floor(seconds / 3600),
+            menit: Math.floor(seconds / 60),
+        };
+
+        for (const [unit, interval] of Object.entries(intervals)) {
+            if (interval >= 1) {
+                return `${interval} ${unit} yang lalu`;
+            }
+        }
+
+        return `${Math.floor(seconds)} detik yang lalu`;
+    }
+
+    const handleSubmit = (e, itemID, amount_pickup) => {
         e.preventDefault();
         setLoading(true);
         router.post(
-            "/peminjaman",
+            "/pengambilan",
             {
                 reason: data.reason,
                 item_id: itemID,
-                amount_rental,
+                amount_pickup,
             },
             {
                 onSuccess: () => {
@@ -88,42 +107,18 @@ const Peminjaman = ({
     };
 
     let acceptData = 1;
-    const MenuAccept = rentals.map((rental, index) => {
-        const return_date = new Date(rental.return_date);
-        const selisih = Math.ceil(
-            (return_date - Date.now()) / (1000 * 60 * 60 * 24)
-        );
-        console.log(Date.now())
-        return auth.user.id === rental.user_id ? (
-            <tr
-                key={rental.id}
-                className="bg-white hover:bg-gray-100 divide-x divide-gray-100"
-            >
-                <td className="px-4 py-2 whitespace-nowrap">{index + 1}</td>
-                <td className="px-4 py-2 whitespace-nowrap">
-                    {rental.item.name}
-                </td>
-                <td className="px-4 py-2 whitespace-nowrap text-center">
-                    {rental.status ? (
-                        `${selisih} hari lagi`
-                    ) : (
-                        <Progress isIndeterminate size="xs" />
-                    )}
-                </td>
-            </tr>
-        ) : null;
-    });
-
     const handleSearch = (value) => {
-        const filtered = items.filter((item) =>
-            item.jenis === 'peminjaman' && item.name.toLowerCase().includes(value.toLowerCase())
+        const filtered = items.filter(
+            (item) =>
+                item.jenis === "pengambilan" &&
+                item.name.toLowerCase().includes(value.toLowerCase())
         );
         setFilteredItems(filtered);
     };
 
     return (
         <>
-            <Head title="Peminjaman" />
+            <Head title="Pengambilan" />
             <div className="bg-azka pb-5 min-h-screen">
                 <Headroom>
                     <section
@@ -163,11 +158,11 @@ const Peminjaman = ({
                         >
                             <div className="absolute bottom-1 left-4">
                                 <Bell size={32} color="#ffffff" />
-                                {rentals.map((rental) => {
-                                    return auth.user.id === rental.user_id ? (
+                                {pickups.map((pickup) => {
+                                    return auth.user.id === pickup.user_id ? (
                                         <div
                                             className="rounded-full bg-white w-4 h-4 flex justify-center items-center absolute bottom-4 left-4"
-                                            key={rental.id}
+                                            key={pickup.id}
                                         >
                                             <p className="text-black text-xs">
                                                 {acceptData++}
@@ -181,22 +176,69 @@ const Peminjaman = ({
                         </MenuButton>
                         <MenuList zIndex={0.1}>
                             <MenuItem>
-                                <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
-                                    <thead className="bg-gray-200">
-                                        <tr className="divide-x divide-gray-50">
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                No.
-                                            </th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Item
-                                            </th>
-                                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Pengembalian
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>{MenuAccept}</tbody>
-                                </table>
+                                <div className="max-h-40 overflow-y-auto [scrollbar-width:none]">
+                                    <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+                                        <thead className="bg-gray-200">
+                                            <tr className="divide-x divide-gray-50">
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    No.
+                                                </th>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Item
+                                                </th>
+                                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                    Keterangan
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody className="divide-y divide-gray-200">
+                                            {pickups.map((pickup, index) => {
+                                                const currentDate = new Date();
+                                                const receivedDate = new Date(
+                                                    pickup.pickup_date_received
+                                                );
+                                                const diffTime =
+                                                    currentDate.getTime() -
+                                                    receivedDate.getTime();
+                                                const diffYear = Math.ceil(
+                                                    diffTime /
+                                                        (1000 * 3600 * 24)
+                                                );
+                                                if (diffYear > 365) {
+                                                    return null;
+                                                }
+                                                return auth.user.id ===
+                                                    pickup.user_id ? (
+                                                    <tr
+                                                        key={pickup.id}
+                                                        className="bg-white hover:bg-gray-100 divide-x divide-gray-100"
+                                                    >
+                                                        <td className="px-4 py-2 whitespace-nowrap">
+                                                            {index + 1}.
+                                                        </td>
+                                                        <td className="px-4 py-2 whitespace-nowrap">
+                                                            {pickup.item.name}
+                                                        </td>
+                                                        <td className="px-4 py-2 whitespace-nowrap text-center">
+                                                            {pickup.status ? (
+                                                                timeAgo(
+                                                                    new Date(
+                                                                        pickup.pickup_date_received
+                                                                    )
+                                                                )
+                                                            ) : (
+                                                                <Progress
+                                                                    isIndeterminate
+                                                                    size="xs"
+                                                                />
+                                                            )}
+                                                        </td>
+                                                    </tr>
+                                                ) : null;
+                                            })}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </MenuItem>
                         </MenuList>
                     </Menu>
@@ -237,7 +279,7 @@ const Peminjaman = ({
                                     isLoading={isLoading}
                                     infoOpen={() => handleButtonInfo(idx)}
                                     openInfo={isInfoOpen[idx]}
-                                    pageType="Peminjaman"
+                                    pageType="Pengambilan"
                                 />
                             ))
                         ) : (
@@ -250,6 +292,4 @@ const Peminjaman = ({
             </div>
         </>
     );
-};
-
-export default Peminjaman;
+}

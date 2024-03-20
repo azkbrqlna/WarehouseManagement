@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('cover')->nullable();
             $table->integer('total_item');
+            $table->string('jenis');
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

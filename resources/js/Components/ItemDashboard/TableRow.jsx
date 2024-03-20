@@ -26,6 +26,7 @@ export default function TableRow({
                 />
             </td>
             <td className="px-2 py-1 text-center">{item.total_item}</td>
+            <td className="px-2 py-1 text-center">{item.jenis}</td>
             <td className="px-2 py-1 text-center">
                 <Menu>
                     <MenuButton>

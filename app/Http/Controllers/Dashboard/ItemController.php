@@ -18,16 +18,12 @@ class ItemController extends Controller
         ]);
     }
 
-    public function create()
-    {
-        return Inertia::render('Dashboard/Barang/create');
-    }
-
     public function store(Request $request)
     {
         $validate = $request->validate([
             'name' => 'required|string',
             'total_item' => 'required|numeric',
+            'jenis' => 'required|string',
             'file' => 'required|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
         if(!$validate){
@@ -68,6 +64,7 @@ class ItemController extends Controller
         $request->validate([
             'name' => 'required|string',
             'total_item' => 'required|numeric',
+            'jenis' => 'required|string',
             'file' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
         ]);
 

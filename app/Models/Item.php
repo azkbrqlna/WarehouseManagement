@@ -19,6 +19,7 @@ class Item extends Model
         'name',
         'cover',
         'total_item',
+        'jenis',
         'status',
     ];
 

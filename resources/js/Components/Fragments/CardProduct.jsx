@@ -25,7 +25,8 @@ const CardProduct = ({
     amount,
     handlePlus,
     handleMinus,
-    amountBorrow
+    amountBorrow,
+    pageType
 }) => {
     return (
         <>
@@ -58,7 +59,7 @@ const CardProduct = ({
                         onClick={infoOpen}
                         className="w-full px-2 py-1 border border-azka rounded-2xl text-lg hover:bg-azka hover:text-white transition-all duration-200 ease-in"
                     >
-                        Pinjam
+                        {pageType === 'Peminjaman' ? 'Pinjam' : 'Ambil'}
                     </button>
                 </div>
             </div>
@@ -92,7 +93,7 @@ const CardProduct = ({
                                     </Badge>
                                     <div className="flex flex-col justify-between w-40">
                                         <h1 className="text-base font-semibold text-center">
-                                            Jumlah Peminjaman
+                                        {pageType === 'Peminjaman' ? 'Jumlah Peminjaman' : 'Jumlah Pengambilan'}
                                         </h1>
                                         <div className="flex gap-3 justify-center py-1">
                                             <button type="button" onClick={handleMinus}>
@@ -105,7 +106,7 @@ const CardProduct = ({
                                         </div>
                                     </div>
                                 </Text>
-                                <Text>Masukan Alasan Peminjaman:</Text>
+                                <Text>Masukan Alasan {pageType === 'Peminjaman' ? 'Peminjaman' : 'Pengambilan'}:</Text>
                                 <Textarea
                                     onChange={onChange}
                                     name={name}
