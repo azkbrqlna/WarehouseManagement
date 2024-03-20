@@ -28,13 +28,15 @@ export default function BarangPage({ items, item_count }) {
 
     const createItem = useForm({
         name: "",
-        total_item: "",
+        total_item: 0,
+        jenis: "",
         file: null,
     });
 
     const editItem = useForm({
         name: "",
         total_item: 0,
+        jenis: "",
         file: null,
     });
 
@@ -121,6 +123,7 @@ export default function BarangPage({ items, item_count }) {
             _method: "PUT",
         });
     };
+    console.log(createItem)
 
     return (
         <>
@@ -167,6 +170,7 @@ export default function BarangPage({ items, item_count }) {
                                     <th className="px-4 py-2">Item</th>
                                     <th className="px-4 py-2 w-28">Status</th>
                                     <th className="px-4 py-2 w-10">Quantity</th>
+                                    <th className="px-4 py-2 w-10">Jenis</th>
                                     <th className="px-4 py-2 w-10">Action</th>
                                 </tr>
                             </thead>

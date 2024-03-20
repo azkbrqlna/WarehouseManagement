@@ -6,6 +6,7 @@ import {
     Input,
     NumberInput,
     NumberInputField,
+    Select,
 } from "@chakra-ui/react";
 import { UploadSimple } from "@phosphor-icons/react";
 import React from "react";
@@ -51,6 +52,19 @@ export default function ItemForm({
                     {errors.total_item && (
                         <FormErrorMessage>{errors.total_item}</FormErrorMessage>
                     )}
+                </FormControl>
+                <FormControl isInvalid={errors.jenis}>
+                    <FormLabel>Jenis</FormLabel>
+                    <Select
+                        name="jenis"
+                        value={data.jenis}
+                        onChange={handleChange}
+                        cursor="pointer"
+                    >
+                        <option value="" className="hidden"></option>
+                        <option value="peminjaman">Peminjaman</option>
+                        <option value="pengambilan">Pengambilan</option>
+                    </Select>
                 </FormControl>
                 <FormControl isInvalid={errors.file}>
                     <FormLabel htmlFor="file_upload">

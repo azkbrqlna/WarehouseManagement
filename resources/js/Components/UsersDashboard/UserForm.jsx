@@ -66,7 +66,7 @@ export default function UserForm({
                             value={data.role_id}
                             onChange={handleChange}
                         >
-                            <option value=""></option>
+                            <option value="" className="hidden"></option>
                             <option value="1">Admin</option>
                             <option value="2">User</option>
                         </Select>

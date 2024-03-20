@@ -104,6 +104,10 @@ class RentalController extends Controller
 
     public function storeUser(Request $request)
     {
+        $item = Item::find($request->item_id);
+        if (!$item || $item->total_item < $request->amount_rental) {
+            abort(404);
+        };
         $request->validate([
             'reason' => 'required',
             'amount_rental' => 'required',

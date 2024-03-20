@@ -12,7 +12,7 @@ const Sidebar = () => {
     };
 
     useEffect(() => {
-        if (url === "/request/rental" || url === "/request/return") {
+        if (url === "/request/rental" || url === "/request/return" || url === "/request/pickup") {
             setIsOpen(true);
         } else {
             setIsOpen(false);
@@ -78,6 +78,16 @@ const Sidebar = () => {
                                             }`}
                                         >
                                             <span>Borrow</span>
+                                        </Link>
+                                        <Link
+                                            href="/request/pickup"
+                                            className={`text-white px-3 py-2 flex text-xs rounded-lg hover:bg-secondary transition-all duration-200 ease-in-out ${
+                                                url === "/request/pickup"
+                                                    ? "bg-secondary"
+                                                    : ""
+                                            }`}
+                                        >
+                                            <span>Pick Up</span>
                                         </Link>
                                         <Link
                                             href="/request/return"

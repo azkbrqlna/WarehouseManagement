@@ -6,6 +6,7 @@ use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\ItemController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PengambilanController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\ReturnController;
 use App\Http\Controllers\RiwayatController;
@@ -85,6 +86,18 @@ Route::controller(ReturnController::class)->middleware('auth')->group(function (
         Route::get('/request/return', 'returnAdmin');
         Route::patch('/request/return/{id}', 'acceptReturn');
         Route::delete('/request/return/{id}', 'rejectReturn');
+    });
+});
+
+Route::controller(PengambilanController::class)->middleware('auth')->group(function () {
+    Route::middleware('only_user')->group(function(){
+        Route::get('/pengambilan', 'indexUser');
+        Route::post('/pengambilan', 'storeUser');
+    });
+    Route::middleware('only_admin')->group(function () {
+        Route::get('/request/pickup', 'rentalAdmin');
+        Route::patch('/request/pickup/{id}', 'acceptPickup');
+        Route::delete('/request/pickup/{id}', 'rejectPickup');
     });
 });
 

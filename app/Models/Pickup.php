@@ -5,23 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Log extends Model
+class Pickup extends Model
 {
     use HasFactory;
-
+    protected $table = 'pickup';
+    
     protected $fillable = [
         'user_id',
         'item_id',
         'reason',
-        'amount_rental',
+        'pilihan',
         'amount_pickup',
-        'rent_date',
         'pickup_date',
-        'return_date',
-        'pickup_date_received',
-        'actual_return_date',
-        'photo',
     ];
+    /**
+     * Get the item that owns the Rental
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function item()
     {
         return $this->belongsTo(Item::class, 'item_id', 'id');
@@ -31,6 +32,4 @@ class Log extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-
 }
-

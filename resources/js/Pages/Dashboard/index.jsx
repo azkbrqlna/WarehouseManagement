@@ -84,7 +84,7 @@ const Dashboard = ({
                             <tr className="divide-x-2 divide-neutral-300">
                                 <th className="p-2 w-10">No.</th>
                                 <th className="px-2">Username</th>
-                                <th className="px-2 w-32">Barang</th>
+                                <th className="px-2 w-36">Barang</th>
                                 <th className="px-2 w-48">Peminjaman</th>
                                 <th className="px-2 w-20">Pengembalian</th>
                                 <th className="px-2 w-[150px]">
@@ -150,7 +150,7 @@ const Dashboard = ({
                                                     Late
                                                 </Badge>
                                             ) : actualDate &&
-                                              actualDate < returnDate ? (
+                                              actualDate < returnDate || log.pickup_date_received ? (
                                                 <Badge
                                                     borderRadius="10px"
                                                     textTransform="capitalize"

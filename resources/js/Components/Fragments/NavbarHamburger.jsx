@@ -30,6 +30,9 @@ const NavbarHamburger = ({ isOpen, onClose, btnRef, onToggle }) => {
                                 <ListHamburger href="/pengembalian">
                                     Pengembalian
                                 </ListHamburger>
+                                <ListHamburger href="/pengembalian">
+                                    Pengembalian
+                                </ListHamburger>
                                 <ListHamburger href="/about">
                                     About
                                 </ListHamburger>
