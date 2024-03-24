@@ -93,7 +93,6 @@ const Peminjaman = ({
         const selisih = Math.ceil(
             (return_date - Date.now()) / (1000 * 60 * 60 * 24)
         );
-        console.log(Date.now())
         return auth.user.id === rental.user_id ? (
             <tr
                 key={rental.id}
