@@ -117,7 +117,7 @@ class RentalController extends Controller
         $item = Item::find($request->item_id);
 
         if ($item->status == 0) {
-            return redirect('/peminjaman')->with('error', 'Item tidak tersedia untuk dipinjam saat ini.');
+            return view('errors.404');
         }
         
         $request['rent_date'] = Carbon::now('Asia/Jakarta')->toDateTimeString();
