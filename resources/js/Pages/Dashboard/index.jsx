@@ -119,14 +119,14 @@ const Dashboard = ({
                                         </td>
                                         <td className="px-2 py-1 text-center">
                                             {log.rent_date ? (
-                                                formatDateMonth(log.rent_date)
+                                                formatTimeDateMonth(log.rent_date)
                                             ) : (
                                                 <Minus />
                                             )}
                                         </td>
                                         <td className="px-2 py-1 text-center">
                                             {log.actual_return_date ? (
-                                                log.actual_return_date
+                                                formatTimeDateMonth(log.actual_return_date)
                                             ) : (
                                                 <Minus />
                                             )}

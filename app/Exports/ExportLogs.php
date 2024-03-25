@@ -14,7 +14,18 @@ class ExportLogs implements FromQuery,WithMapping,WithHeadings
     use Exportable;
     public function query()
     {
-        return Log::query()->whereMonth('rent_date', date('m'))->whereYear('rent_date', date('Y'));
+        $currentMonth = date('m');
+        $currentYear = date('Y');
+        
+        return Log::query()
+            ->where(function($query) use ($currentMonth, $currentYear) {
+                $query->whereMonth('rent_date', $currentMonth)
+                      ->whereYear('rent_date', $currentYear);
+            })
+            ->orWhere(function($query) use ($currentMonth, $currentYear) {
+                $query->whereMonth('pickup_date', $currentMonth)
+                      ->whereYear('pickup_date', $currentYear);
+            });
     }
 
     public function headings(): array
@@ -26,6 +37,8 @@ class ExportLogs implements FromQuery,WithMapping,WithHeadings
             'Alasan',
             'Tanggal Peminjaman',
             'Tanggal Pengembalian',
+            'Tanggal Pengambilan',
+            'Tipe',
         ];
     }
     //untuk menambah data ke rows dan memanggil relasi agar masuk di row, jangan lupa memasukan WithMapping
@@ -38,6 +51,8 @@ class ExportLogs implements FromQuery,WithMapping,WithHeadings
             $log->reason,
             $log->rent_date,
             $log->actual_return_date,
+            $log->pickup_date,
+            $log->type,
         ];
     }
 

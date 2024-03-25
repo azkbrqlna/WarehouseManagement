@@ -33,7 +33,7 @@ const Tutor = [
     "Login ke akun anda",
     "Cari barang yang akan anda pinjam",
     "Masukkan alasan peminjaman barang",
-    "Lalu klick “Submit” untuk meminjam barang",
+    "Lalu klik “Submit” untuk meminjam barang",
 ];
 
 const formatDateMonthYear = (inputFormat) => {

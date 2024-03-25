@@ -21,16 +21,24 @@ class DashboardController extends Controller
     public function index()
     {
         return Inertia::render("Dashboard/index", [
+            //count user
             'user_all' => User::where('role_id', 2)->count(),
             'user_rental' => Rental::where('status', 1)->count(),
+            //count item
             'item_all' => Item::count(),
             'item_available' => Item::where('status', 1)->count(),
             'item_notAvailable' => Item::where('status', 0)->count(),
-            'logs_count' => Log::count(),
+            //count log
+            // 'logs_count' => Log::count(),
+            //count rental and return
             'rental_all' => Rental::where('status',1)->count(),
             'return_all' => Returning::where('status',1)->count(),
             'rental_count' => Rental::where('status', 0)->count(),
-            'return_count' => Returning::where('status', 0)->where('photo', null)->count(),
+            'return_count' => Returning::where('status', 0)->where('photo','!=', null)->count(),
+            //count pickup
+            'pickup_all' => Returning::where('status',1)->count(),
+            'pickup_count' => Returning::where('status', 0)->count(),
+            
             'logs' => Log::with(['item', 'user'])->paginate(6),
         ]);
         
