@@ -4,8 +4,7 @@ import OverviewCard from "@/Components/Fragments/OverviewCard";
 import Dashboardlayout from "@/Layouts/DashboardLayout";
 import { Badge } from "@chakra-ui/react";
 import Pagination from "@/Components/Fragments/Pagination";
-import { router } from "@inertiajs/react";
-import { formatDateMonth, formatTimeDateMonth } from "@/Components/Fragments/ListStyle";
+import { formatTimeDateMonth } from "@/Components/Fragments/ListStyle";
 
 const Dashboard = ({
     auth,
@@ -19,6 +18,8 @@ const Dashboard = ({
     rental_count,
     return_count,
     logs,
+    pickup_all,
+    pickup_count
 }) => {
     return (
         <>
@@ -46,7 +47,7 @@ const Dashboard = ({
                         />
                     </div>
                 </section>
-                <section className="grid grid-cols-4 gap-5 mt-5">
+                <section className="grid grid-cols-3 gap-5 mt-5">
                     <OverviewCard
                         title="Requests Borrow"
                         total={rental_count}
@@ -58,6 +59,12 @@ const Dashboard = ({
                         total={return_count}
                         content="Return"
                         value={return_all}
+                    />
+                    <OverviewCard
+                        title="Requests Pick Up"
+                        total={pickup_count}
+                        content="Pick Up"
+                        value={pickup_all}
                     />
                     <OverviewCard
                         title="Total Users"
