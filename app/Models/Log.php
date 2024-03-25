@@ -21,6 +21,7 @@ class Log extends Model
         'pickup_date_received',
         'actual_return_date',
         'photo',
+        'type',
     ];
     public function item()
     {

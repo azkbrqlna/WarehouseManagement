@@ -24,6 +24,7 @@ return new class extends Migration
             $table->dateTime('pickup_date_received')->nullable();
             $table->dateTime('actual_return_date')->nullable();
             $table->string('photo')->nullable();
+            $table->string('type')->nullable();
             $table->timestamps();
         });
     }

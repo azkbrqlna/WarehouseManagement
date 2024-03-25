@@ -5,6 +5,7 @@ import Dashboardlayout from "@/Layouts/DashboardLayout";
 import { Badge } from "@chakra-ui/react";
 import Pagination from "@/Components/Fragments/Pagination";
 import { router } from "@inertiajs/react";
+import { formatDateMonth, formatTimeDateMonth } from "@/Components/Fragments/ListStyle";
 
 const Dashboard = ({
     auth,
@@ -83,17 +84,14 @@ const Dashboard = ({
                         <thead className="bg-neutral-200 text-left">
                             <tr className="divide-x-2 divide-neutral-300">
                                 <th className="p-2 w-10">No.</th>
-                                <th className="px-2">Username</th>
-                                <th className="px-2 w-36">Barang</th>
-                                <th className="px-2 w-48">Peminjaman</th>
-                                <th className="px-2 w-20">Pengembalian</th>
-                                <th className="px-2 w-[150px]">
-                                    Tanggal Peminjaman
-                                </th>
-                                <th className="px-2 w-[150px]">
-                                    Tanggal Pengembalian
-                                </th>
-                                <th className="px-2 w-24">Action</th>
+                                <th className="px-2 w-1/5">Username</th>
+                                <th className="px-2 w-1/5">Barang</th>
+                                <th className="px-2">Jenis</th>
+                                <th className="px-2">Reason</th>
+                                <th className="px-2">Tanggal Peminjaman</th>
+                                <th className="px-2">Tanggal Pengembalian</th>
+                                <th className="px-2">Tanggal Pengambilan</th>
+                                <th className="px-2">Action</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-200">
@@ -114,29 +112,30 @@ const Dashboard = ({
                                             {log.item.name}
                                         </td>
                                         <td className="px-2 py-1">
+                                            {log.type}
+                                        </td>
+                                        <td className="px-2 py-1">
                                             {log.reason}
                                         </td>
                                         <td className="px-2 py-1 text-center">
-                                            <div className="w-full overflow-hidden flex justify-center">
-                                                {log.photo ? (
-                                                    <h1>Returning</h1>
-                                                ) : (
-                                                    <div className="h-full flex items-center justify-center">
-                                                        <Minus />
-                                                    </div>
-                                                )}
-                                            </div>
-                                        </td>
-                                        <td className="px-2 py-1 text-center">
-                                            {log.rent_date}
+                                            {log.rent_date ? (
+                                                formatDateMonth(log.rent_date)
+                                            ) : (
+                                                <Minus />
+                                            )}
                                         </td>
                                         <td className="px-2 py-1 text-center">
                                             {log.actual_return_date ? (
                                                 log.actual_return_date
                                             ) : (
-                                                <div className="flex justify-center">
-                                                    <Minus />
-                                                </div>
+                                                <Minus />
+                                            )}
+                                        </td>
+                                        <td className="px-2 py-1 text-center">
+                                            {log.pickup_date_received ? (
+                                                formatTimeDateMonth(log.pickup_date_received)
+                                            ) : (
+                                                <Minus />
                                             )}
                                         </td>
                                         <td className="px-2 py-1 text-center">
@@ -149,8 +148,9 @@ const Dashboard = ({
                                                 >
                                                     Late
                                                 </Badge>
-                                            ) : actualDate &&
-                                              actualDate < returnDate || log.pickup_date_received ? (
+                                            ) : (actualDate &&
+                                                  actualDate < returnDate) ||
+                                              log.pickup_date_received ? (
                                                 <Badge
                                                     borderRadius="10px"
                                                     textTransform="capitalize"

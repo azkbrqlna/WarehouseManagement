@@ -81,4 +81,31 @@ const formatDateMonth = (inputDate) => {
     }
 };
 
-export { Rules, Misi, Tutor, formatDateMonthYear, formatDateMonth };
+const formatTimeDateMonth = (inputDate) => {
+    const date = new Date(inputDate);
+
+    // Mendapatkan bulan dalam format teks penuh
+    const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                        "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+    const month = monthNames[date.getMonth()];
+
+    // Mendapatkan tanggal dalam format dua digit
+    const day = ("0" + date.getDate()).slice(-2);
+
+    // Mendapatkan tahun dalam format empat digit
+    const year = date.getFullYear();
+
+    // Mendapatkan jam dalam format dua digit
+    const hour = ("0" + date.getHours()).slice(-2);
+
+    // Mendapatkan menit dalam format dua digit
+    const minute = ("0" + date.getMinutes()).slice(-2);
+
+    // Menggabungkan semua komponen menjadi format yang diinginkan
+    const formattedDateTime = `${hour}.${minute}, ${day} ${month} ${year}`;
+
+    return formattedDateTime;
+};
+
+
+export { Rules, Misi, Tutor, formatDateMonthYear, formatDateMonth, formatTimeDateMonth };

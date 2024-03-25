@@ -56,6 +56,7 @@ class PengambilanController extends Controller
             'amount_pickup' => $pickup->amount_pickup,
             'pickup_date' => $pickup->pickup_date,
             'pickup_date_received' => $pickup->pickup_date_received,
+            'type' => 'pengambilan',
         ]);
 
         return redirect('/request/pickup');

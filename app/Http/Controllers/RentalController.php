@@ -61,6 +61,7 @@ class RentalController extends Controller
             'amount_rental' => $rental->amount_rental,
             'rent_date' => $request->rent_date,
             'return_date' => $request->return_date,
+            'type' => 'peminjaman'
         ]);
 
         // Membuat data pengembalian
